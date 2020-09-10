@@ -1,6 +1,6 @@
 import api from './api';
 
-interface ProfileInfo {
+export interface ProfileInfo {
   github_login: string;
   avatar_url: string;
 }

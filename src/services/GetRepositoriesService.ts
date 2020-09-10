@@ -1,6 +1,6 @@
 import api from './api';
 
-interface Repository {
+export interface Repository {
   name: string;
   full_name: string;
   description: string;
