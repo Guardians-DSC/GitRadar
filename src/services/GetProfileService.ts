@@ -1,9 +1,6 @@
-import GetUserService, { ProfileInfo } from './GetUserService';
-import GetRepositoriesService, { Repository } from './GetRepositoriesService';
-
-interface Profile extends ProfileInfo {
-  repositories: Repository[];
-}
+import GetUserService from './GetUserService';
+import GetRepositoriesService from './GetRepositoriesService';
+import Profile from '../entities/Profile';
 
 class GetProfileService {
   public async execute(username: string): Promise<Profile> {

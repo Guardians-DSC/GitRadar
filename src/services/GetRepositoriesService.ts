@@ -1,11 +1,5 @@
 import api from './api';
-
-export interface Repository {
-  name: string;
-  full_name: string;
-  description: string;
-  html_url: string;
-}
+import Repository from '../entities/Repository';
 
 class GetRepositoriesService {
   public async execute(username: string): Promise<Repository[]> {
