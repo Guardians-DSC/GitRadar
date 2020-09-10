@@ -1,12 +1,12 @@
 import api from './api';
 
-export interface ProfileInfo {
+interface Response {
   github_login: string;
   avatar_url: string;
 }
 
 class GetUserService {
-  public async execute(username: string): Promise<ProfileInfo> {
+  public async execute(username: string): Promise<Response> {
     const response = await api.get(`/users/${username}`);
     const { login, avatar_url } = response.data;
 
