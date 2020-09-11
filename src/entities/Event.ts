@@ -9,7 +9,7 @@ export default interface Event {
     url: string;
   };
   payload: {
-    commits: Commit[];
+    commits?: Commit[];
   };
   created_at: string;
 }
