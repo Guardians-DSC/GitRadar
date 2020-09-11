@@ -1,5 +1,6 @@
 import api from './api';
 import Event from '../entities/Event';
+import GetRepositoriesService from './GetRepositoriesService';
 
 interface EventsCounter {
   [type: string]: number;
@@ -15,6 +16,14 @@ interface Response {
   new_issues: number;
 }
 
+function isToday(a: Date, b: Date) {
+  return (
+    a.getDate() === b.getDate() &&
+    a.getMonth() === b.getMonth() &&
+    a.getFullYear() === b.getFullYear()
+  );
+}
+
 class GetDailyEventsService {
   public async execute(username: string): Promise<Response> {
     const response = await api.get(`/users/${username}/events`);
@@ -24,12 +33,7 @@ class GetDailyEventsService {
       const eventDate = new Date(item.created_at);
       const today = new Date();
 
-      const isToday =
-        eventDate.getDate() === today.getDate() &&
-        eventDate.getMonth() === today.getMonth() &&
-        eventDate.getFullYear() === today.getFullYear();
-
-      return isToday;
+      return isToday(today, eventDate);
     });
 
     const eventsCounter: EventsCounter = {};
@@ -41,14 +45,31 @@ class GetDailyEventsService {
       }
     });
 
+    const getRepositoriesService = new GetRepositoriesService();
+    let repositories = await getRepositoriesService.execute(username);
+
+    repositories = repositories.filter(item => {
+      const eventDate = new Date(item.created_at);
+      const today = new Date();
+
+      return isToday(today, eventDate);
+    });
+
+    const totalInteractions =
+      eventsCounter['ForkEvent'] +
+      eventsCounter['IssueEvent'] +
+      eventsCounter['PullRequestEvent'] +
+      eventsCounter['WatchEvent'] +
+      repositories.length;
+
     return {
       new_forks: eventsCounter['ForkEvent'],
       new_issues: eventsCounter['IssueEvent'],
       new_prs: eventsCounter['PullRequestEvent'],
       new_stars: eventsCounter['WatchEvent'],
-      new_repositories: 0,
+      new_repositories: repositories.length,
       new_commits: 0,
-      new_interactions: 0,
+      new_interactions: totalInteractions,
     };
   }
 }
