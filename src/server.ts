@@ -1,10 +1,17 @@
 import express from 'express';
 import routes from './routes';
 
-const app = express();
-app.use(express.json());
-app.use(routes);
+import GetUserDailyService from './services/GetUserDailyService';
 
-app.listen(3333, () => {
-  console.log('🚀 Server started on port 3333');
-});
+(async () => {
+  const response = await new GetUserDailyService().execute('davigsousa');
+  console.log(response);
+})();
+
+// const app = express();
+// app.use(express.json());
+// app.use(routes);
+
+// app.listen(3333, () => {
+//   console.log('🚀 Server started on port 3333');
+// });

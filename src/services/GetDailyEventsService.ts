@@ -35,7 +35,13 @@ class GetDailyEventsService {
       return isToday(today, eventDate);
     });
 
-    const eventsCounter: EventsCounter = {};
+    const eventsCounter: EventsCounter = {
+      ForkEvent: 0,
+      IssueEvent: 0,
+      PullRequestEvent: 0,
+      WatchEvent: 0,
+    };
+
     events.forEach(item => {
       if (eventsCounter[item.type]) {
         eventsCounter[item.type] += 1;
