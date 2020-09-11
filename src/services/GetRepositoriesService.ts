@@ -7,13 +7,14 @@ class GetRepositoriesService {
     let repositories = response.data as Repository[];
 
     repositories = repositories.map(item => {
-      const { name, full_name, description, html_url } = item;
+      const { name, full_name, description, html_url, language } = item;
 
       return {
         name,
         full_name,
         description,
         html_url,
+        language,
       };
     });
 

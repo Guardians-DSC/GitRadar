@@ -20,21 +20,15 @@ class GetLanguagesService {
 
     const languageCounter: LanguagesDictionary = {};
 
-    for (let i = 0; i < repositories.length; i++) {
-      const repository = repositories[i];
+    for (const repository of repositories) {
+      const { language } = repository;
+      if (!language) continue;
 
-      const response = await api.get(
-        `/repos/${username}/${repository.name}/languages`
-      );
-      const languages: LanguagesDictionary = response.data;
-
-      Object.keys(languages).forEach(item => {
-        if (languageCounter[item]) {
-          languageCounter[item] += languages[item];
-        } else {
-          languageCounter[item] = languages[item];
-        }
-      });
+      if (languageCounter[language]) {
+        languageCounter[language] += 1;
+      } else {
+        languageCounter[language] = 1;
+      }
     }
 
     let topLanguages = Object.keys(languageCounter).sort((a, b) => {
