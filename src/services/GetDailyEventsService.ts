@@ -1,20 +1,5 @@
 import api from './api';
-
-interface Commit {
-  message: string;
-}
-
-interface Event {
-  type: string;
-  repo: {
-    name: string;
-    url: string;
-  };
-  payload: {
-    commits: Commit[];
-  };
-  created_at: string;
-}
+import Event from '../entities/Event';
 
 interface EventsCounter {
   [type: string]: number;
