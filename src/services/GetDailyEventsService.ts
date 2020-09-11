@@ -10,7 +10,6 @@ interface Response {
   new_interactions: number;
   new_forks: number;
   new_stars: number;
-  new_commits: number;
   new_repositories: number;
   new_prs: number;
   new_issues: number;
@@ -68,7 +67,6 @@ class GetDailyEventsService {
       new_prs: eventsCounter['PullRequestEvent'],
       new_stars: eventsCounter['WatchEvent'],
       new_repositories: repositories.length,
-      new_commits: 0,
       new_interactions: totalInteractions,
     };
   }
