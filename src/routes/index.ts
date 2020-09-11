@@ -1,11 +1,9 @@
 import { Router } from 'express';
 
+import userRouter from './user.routes';
+
 const routes = Router();
 
-routes.get('/', (request, response) => {
-  response.json({
-    message: 'Hello World! 🌎',
-  });
-});
+routes.use('/user', userRouter);
 
 export default routes;
