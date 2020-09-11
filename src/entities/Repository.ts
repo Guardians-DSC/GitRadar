@@ -3,4 +3,5 @@ export default interface Repository {
   full_name: string;
   description: string;
   html_url: string;
+  language: string;
 }
