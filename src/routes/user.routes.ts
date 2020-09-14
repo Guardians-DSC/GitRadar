@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 
 import GetProfileService from '../services/GetProfileService';
 import GetLanguagesService from '../services/GetLanguagesService';
-import GetUserDailyService from '../services/GetUserDailyService';
+import GetUserDailyReportService from '../services/GetUserDailyReportService';
 
 const userRouter = Router();
 
@@ -34,9 +34,9 @@ userRouter.get('/daily/:username', async (request: Request, response: Response) 
       .status(400)
       .json({ error: 'GitHub username does not provided.' });
 
-  const getUserDailyService = new GetUserDailyService();
+  const getUserDailyReportService = new GetUserDailyReportService();
 
-  const dailyInfo = await getUserDailyService.execute(username);
+  const dailyInfo = await getUserDailyReportService.execute(username);
 
   return response.json({
     ...dailyInfo,
