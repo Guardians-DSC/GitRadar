@@ -35,7 +35,7 @@ class GetLanguagesService {
       return languageCounter[a] > languageCounter[b] ? -1 : 1;
     });
 
-    topLanguages = topLanguages.slice(0, 6);
+    topLanguages = topLanguages.slice(0, 5);
 
     return {
       top_language: topLanguages[0],
