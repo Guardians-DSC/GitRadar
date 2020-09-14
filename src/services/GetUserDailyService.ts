@@ -1,3 +1,4 @@
+import GetUserService from './GetUserService';
 import GetDailyCommitsService from './GetDailyCommitsService';
 import GetDailyEventsService from './GetDailyEventsService';
 
@@ -22,13 +23,16 @@ interface Response {
 
 class GetUserDaily {
   public async execute(username: string): Promise<Response> {
+    const getUserService = new GetUserService();
     const getDailyCommitsService = new GetDailyCommitsService();
     const getDailyEventsService = new GetDailyEventsService();
 
+    const userInfo = await getUserService.execute(username);
     const dailyCommits = await getDailyCommitsService.execute(username);
     const dailyEvents = await getDailyEventsService.execute(username);
 
     return {
+      ...userInfo,
       ...dailyEvents,
       ...dailyCommits,
     };
