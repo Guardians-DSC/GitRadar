@@ -6,8 +6,8 @@ import GetUserDailyService from '../services/GetUserDailyService';
 
 const userRouter = Router();
 
-userRouter.get('/', async (request: Request, response: Response) => {
-  const { username } = request.body;
+userRouter.get('/:username', async (request: Request, response: Response) => {
+  const { username } = request.params;
 
   if (!username)
     return response
@@ -26,8 +26,8 @@ userRouter.get('/', async (request: Request, response: Response) => {
   });
 });
 
-userRouter.get('/daily', async (request: Request, response: Response) => {
-  const { username } = request.body;
+userRouter.get('/daily/:username', async (request: Request, response: Response) => {
+  const { username } = request.params;
 
   if (!username)
     return response
