@@ -1,4 +1,3 @@
-import api from './api';
 import GetRepositoriesService from './GetRepositoriesService';
 import Repository from '../entities/Repository';
 
