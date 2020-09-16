@@ -29,7 +29,8 @@ class GetDailyCommitsService {
     try {
       response = await api.get(`/users/${username}/events`);
     } catch (error) {
-      throw new AppError(error.response.data.message);
+      const { data, status } = error.response;
+      throw new AppError(data.message, status);
     }
     let events: Event[] = response.data;
 
