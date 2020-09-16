@@ -1,4 +1,5 @@
 import api from './api';
+import { catchGitHubNotFound } from '../utils/exceptions';
 import Event from '../entities/Event';
 import GetRepositoriesService from './GetRepositoriesService';
 
@@ -25,7 +26,12 @@ function isToday(a: Date, b: Date) {
 
 class GetDailyEventsService {
   public async execute(username: string): Promise<Response> {
-    const response = await api.get(`/users/${username}/events`);
+    let response;
+    try {
+      response = await api.get(`/users/${username}/events`);
+    } catch (error) {
+      throw catchGitHubNotFound(error);
+    }
     let events: Event[] = response.data;
 
     events = events.filter(item => {
