@@ -1,5 +1,5 @@
 import api from './api';
-import AppError from '../errors/AppError';
+import { catchGitHubNotFound } from '../utils/exceptions';
 
 interface Response {
   github_login: string;
@@ -12,11 +12,7 @@ class GetUserService {
     try {
       response = await api.get(`/users/${username}`);
     } catch (error) {
-      const { data, status } = error.response;
-      if (status === 404)
-        throw new AppError('GitHub username not found!', 404);
-      else
-        throw new AppError(data.message, status);
+      throw catchGitHubNotFound(error);
     }
     const { login, avatar_url } = response.data;
 
