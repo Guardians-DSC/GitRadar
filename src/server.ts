@@ -1,6 +1,7 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import routes from './routes';
+import AppError from './errors/AppError';
 
 const app = express();
 app.use(express.json());
