@@ -12,7 +12,11 @@ class GetUserService {
     try {
       response = await api.get(`/users/${username}`);
     } catch (error) {
-      throw new AppError('GitHub username not found!', 404);
+      const { data, status } = error.response;
+      if (status === 404)
+        throw new AppError('GitHub username not found!', 404);
+      else
+        throw new AppError(data.message, status);
     }
     const { login, avatar_url } = response.data;
 
