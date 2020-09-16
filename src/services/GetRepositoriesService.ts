@@ -1,5 +1,5 @@
 import api from './api';
-import AppError from '../errors/AppError';
+import { catchGitHubNotFound } from '../utils/exceptions';
 import Repository from '../entities/Repository';
 
 class GetRepositoriesService {
@@ -8,13 +8,19 @@ class GetRepositoriesService {
     try {
       response = await api.get(`/users/${username}/repos`);
     } catch (error) {
-      const { data, status } = error.response;
-      throw new AppError(data.message, status);
+      throw catchGitHubNotFound(error);
     }
     let repositories: Repository[] = response.data;
 
     repositories = repositories.map(item => {
-      const { name, full_name, description, html_url, language, created_at } = item;
+      const {
+        name,
+        full_name,
+        description,
+        html_url,
+        language,
+        created_at,
+      } = item;
 
       return {
         name,

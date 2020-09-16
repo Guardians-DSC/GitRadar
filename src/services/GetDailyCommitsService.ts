@@ -1,6 +1,6 @@
 import api from './api';
 import Event from '../entities/Event';
-import AppError from '../errors/AppError';
+import { catchGitHubNotFound } from '../utils/exceptions';
 
 interface Commit {
   repository: {
@@ -29,8 +29,7 @@ class GetDailyCommitsService {
     try {
       response = await api.get(`/users/${username}/events`);
     } catch (error) {
-      const { data, status } = error.response;
-      throw new AppError(data.message, status);
+      throw catchGitHubNotFound(error);
     }
     let events: Event[] = response.data;
 
