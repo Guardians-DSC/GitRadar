@@ -69,7 +69,6 @@ Use essa rota para obter informações sobre o perfil de determinado usuário, b
       "created_at": "2020-05-27T14:50:25Z",
       "language": "C++"
 		},
-		...
     {
       "name": "doeteca",
       "full_name": "davigsousa/doeteca",
@@ -113,7 +112,6 @@ Use essa rota para obter informações de interações de determinado usuário n
       },
       "message": "initial Service structure created"
 		},
-		...
     {
       "repository": {
         "id": 293942092,
