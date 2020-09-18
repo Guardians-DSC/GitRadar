@@ -11,7 +11,7 @@
 ## 🧐 Sobre <a name = "sobre"></a>
 
 ### Qual a motivação?
-A idéia do GitRadar surgiu da necessidade dos professores de gerarem relatórios de utilização da plataforma do github pela turma da disciplina. Fazendo assim um maior acompanhamento e monitorar mais de perto alunos que estejam com poucas interações com a plataforma, por exemplo.
+A ideia do GitRadar surgiu da necessidade dos professores de gerarem relatórios de utilização da plataforma do github pela turma da disciplina. Fazendo assim um maior acompanhamento e monitorar mais de perto alunos que estejam com poucas interações com a plataforma, por exemplo.
 ### Objetivo do projeto <br>
 Ser uma plataforma no qual os professores poderão se cadastrar e criar turmas. Os alunos cadastrados no sistemas poderão se linkar com a turma através de um QRCODE gerado pelo professor. <br>
 Através dessas turmas, os professores poderão gerar relatórios do estado da turma. Trazendo dados como Engajamento médio com a plataforma e alunos com baixo engajamento. Além de poder traçar um perfil médio da turma.
@@ -68,7 +68,7 @@ Use essa rota para obter informações sobre o perfil de determinado usuário, b
       "html_url": "https://github.com/davigsousa/algorithms",
       "created_at": "2020-05-27T14:50:25Z",
       "language": "C++"
-		},
+    },
     {
       "name": "doeteca",
       "full_name": "davigsousa/doeteca",
@@ -111,7 +111,7 @@ Use essa rota para obter informações de interações de determinado usuário n
         "url": "https://api.github.com/repos/Guardians-DSC/GitRadar"
       },
       "message": "initial Service structure created"
-		},
+    },
     {
       "repository": {
         "id": 293942092,
