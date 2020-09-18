@@ -67,17 +67,17 @@ class GetDailyEventsService {
     });
 
     const totalInteractions =
-      eventsCounter['ForkEvent'] +
-      eventsCounter['IssueEvent'] +
-      eventsCounter['PullRequestEvent'] +
-      eventsCounter['WatchEvent'] +
+      eventsCounter.ForkEvent +
+      eventsCounter.IssueEvent +
+      eventsCounter.PullRequestEvent +
+      eventsCounter.WatchEvent +
       repositories.length;
 
     return {
-      new_forks: eventsCounter['ForkEvent'],
-      new_issues: eventsCounter['IssueEvent'],
-      new_prs: eventsCounter['PullRequestEvent'],
-      new_stars: eventsCounter['WatchEvent'],
+      new_forks: eventsCounter.ForkEvent,
+      new_issues: eventsCounter.IssueEvent,
+      new_prs: eventsCounter.PullRequestEvent,
+      new_stars: eventsCounter.WatchEvent,
       new_repositories: repositories.length,
       new_interactions: totalInteractions,
     };
