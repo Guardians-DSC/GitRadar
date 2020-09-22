@@ -1,4 +1,3 @@
-import api from './api';
 import GetRepositoriesService from './GetRepositoriesService';
 import Repository from '../entities/Repository';
 
@@ -15,7 +14,7 @@ class GetLanguagesService {
   public async execute(username: string): Promise<Response> {
     const getRepositoriesService = new GetRepositoriesService();
     const repositories: Repository[] = await getRepositoriesService.execute(
-      username
+      username,
     );
 
     const languageCounter: LanguagesDictionary = {};

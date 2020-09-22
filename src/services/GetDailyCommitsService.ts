@@ -1,5 +1,6 @@
 import api from './api';
 import Event from '../entities/Event';
+import { catchGitHubNotFound } from '../utils/exceptions';
 
 interface Commit {
   repository: {
@@ -24,7 +25,12 @@ function isToday(a: Date, b: Date) {
 
 class GetDailyCommitsService {
   public async execute(username: string) {
-    const response = await api.get(`/users/${username}/events`);
+    let response;
+    try {
+      response = await api.get(`/users/${username}/events`);
+    } catch (error) {
+      throw catchGitHubNotFound(error);
+    }
     let events: Event[] = response.data;
 
     events = events.filter(item => {
