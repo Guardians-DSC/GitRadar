@@ -11,14 +11,21 @@ interface Commit {
 }
 
 interface Response {
-  new_interactions: number;
-  new_forks: number;
-  new_stars: number;
-  new_repositories: number;
-  new_prs: number;
-  new_issues: number;
-  new_commits: number;
-  commits: Commit[];
+  user: {
+    github_login: string;
+    avatar_url: string;
+  };
+  payload: {
+    new_interactions: number;
+    new_forks: number;
+    new_stars: number;
+    new_repositories: number;
+    new_prs: number;
+    new_issues: number;
+    new_commits: number;
+    commits: Commit[];
+    created_at: string;
+  };
 }
 
 class GetUserDaily {
@@ -32,9 +39,14 @@ class GetUserDaily {
     const dailyEvents = await getDailyEventsService.execute(username);
 
     return {
-      ...userInfo,
-      ...dailyEvents,
-      ...dailyCommits,
+      user: {
+        ...userInfo,
+      },
+      payload: {
+        ...dailyEvents,
+        ...dailyCommits,
+        created_at: new Date().toISOString(),
+      },
     };
   }
 }
