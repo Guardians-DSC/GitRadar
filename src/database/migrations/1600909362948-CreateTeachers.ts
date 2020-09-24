@@ -2,6 +2,8 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export default class CreateTeachers1600909362948 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
+
     await queryRunner.createTable(
       new Table({
         name: 'teachers',
@@ -49,6 +51,7 @@ export default class CreateTeachers1600909362948 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP EXTENSION IF EXISTS "uuid-ossp"');
     await queryRunner.dropTable('teachers');
   }
 }
