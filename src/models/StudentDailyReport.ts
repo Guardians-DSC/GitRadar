@@ -11,7 +11,7 @@ import {
 import Student from './Student';
 
 @Entity('student_daily_reports')
-class Repository {
+class StudentDailyReport {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -56,4 +56,4 @@ class Repository {
   updated_at: Date;
 }
 
-export default Repository;
+export default StudentDailyReport;
