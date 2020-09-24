@@ -31,12 +31,12 @@ export default class CreateCommits1600914995731 implements MigrationInterface {
           {
             name: 'additions',
             type: 'int2',
-            isNullable: true,
+            isNullable: false,
           },
           {
             name: 'deletions',
             type: 'int2',
-            isNullable: true,
+            isNullable: false,
           },
           {
             name: 'created_at',

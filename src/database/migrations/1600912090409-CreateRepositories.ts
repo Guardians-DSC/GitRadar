@@ -27,7 +27,7 @@ export default class CreateRepositories1600912090409
           {
             name: 'full_name',
             type: 'varchar',
-            isNullable: true,
+            isNullable: false,
           },
           {
             name: 'description',
