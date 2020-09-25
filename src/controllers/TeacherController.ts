@@ -13,7 +13,7 @@ class TeacherController {
     try {
       await schema.validate(request.body);
     } catch (error) {
-      return response.status(400).json({ error: error.message });
+      return response.status(400).json({ message: error.message });
     }
 
     const { email, password } = request.body;
