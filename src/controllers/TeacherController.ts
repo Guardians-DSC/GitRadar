@@ -10,11 +10,7 @@ class TeacherController {
       password: yup.string().required('Password is required.'),
     });
 
-    try {
-      await schema.validate(request.body);
-    } catch (error) {
-      return response.status(400).json({ message: error.message });
-    }
+    await schema.validate(request.body);
 
     const { email, password } = request.body;
     const createTeacher = new CreateTeacherService();

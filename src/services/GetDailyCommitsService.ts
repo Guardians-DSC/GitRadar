@@ -1,5 +1,5 @@
 import api from './api';
-import Event from '../githubEntities/Event';
+import Event from '../entities/Event';
 import { catchGitHubNotFound } from '../utils/exceptions';
 
 interface Commit {
