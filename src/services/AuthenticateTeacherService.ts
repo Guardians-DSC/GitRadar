@@ -25,11 +25,12 @@ class AuthenticateTeacherService {
       throw new AppError('Incorrect password.', 401);
     }
 
-    if (!process.env.JWT_SECRET) {
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
       throw new AppError('Internal server error.', 500);
     }
 
-    const token = jwt.sign({ teacherId: teacher.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ teacherId: teacher.id }, secret, {
       subject: teacher.id,
       expiresIn: '7d',
     });
