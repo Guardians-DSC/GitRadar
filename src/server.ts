@@ -1,9 +1,12 @@
 import express from 'express';
 import 'express-async-errors';
 import 'reflect-metadata';
+import dotenv from 'dotenv';
 import routes from './routes';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import './database';
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
