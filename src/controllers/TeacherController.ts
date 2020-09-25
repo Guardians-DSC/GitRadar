@@ -21,6 +21,8 @@ class TeacherController {
 
     const teacher = await createTeacher.execute(email, password);
 
+    delete teacher.password;
+
     return response.json(teacher);
   }
 }
