@@ -30,7 +30,7 @@ class AuthenticateTeacherService {
       throw new AppError('Internal server error.', 500);
     }
 
-    const token = jwt.sign({ teacherId: teacher.id }, secret, {
+    const token = jwt.sign({}, secret, {
       subject: teacher.id,
       expiresIn: '7d',
     });
