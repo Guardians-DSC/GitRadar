@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { hash } from 'bcryptjs';
 import AppError from '../errors/AppError';
 import EditTeacherService from './EditTeacherService';
 
@@ -11,30 +12,36 @@ class RegisterTeacherGithubService {
       throw new AppError('Internal server error.', 500);
     }
 
-    const tokenRequest = await axios.post(
-      'https://github.com/login/oauth/access_token',
-      {
-        client_id: clientId,
-        client_secret: clientSecret,
-        code,
-      },
-      {
-        headers: {
-          Accept: 'application/json',
+    let tokenRequest;
+    try {
+      tokenRequest = await axios.post(
+        'https://github.com/login/oauth/access_token',
+        {
+          client_id: clientId,
+          client_secret: clientSecret,
+          code,
         },
-      },
-    );
-
-    const accesToken = tokenRequest.data.access_token;
-    if (!accesToken) {
-      throw new AppError('Not able to get github acess token.', 401);
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      );
+    } catch (error) {
+      throw new AppError('Not able to get github access token.', 401);
     }
+
+    const accessToken = tokenRequest.data.access_token;
+    if (!accessToken) {
+      throw new AppError('Not able to get github access token.', 401);
+    }
+    const hashedAccessToken = await hash(accessToken, 8);
 
     let response;
     try {
       response = await axios.get('https://api.github.com/user', {
         headers: {
-          Authorization: `token ${accesToken}`,
+          Authorization: `token ${accessToken}`,
         },
       });
     } catch (error) {
@@ -46,7 +53,7 @@ class RegisterTeacherGithubService {
     await editTeacher.execute(email, {
       name,
       avatar_url,
-      github_token: accesToken,
+      github_token: hashedAccessToken,
     });
   }
 }
