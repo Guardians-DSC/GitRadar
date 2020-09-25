@@ -31,16 +31,13 @@ class Commit {
   student: Student;
 
   @Column('varchar')
-  name: string;
+  message: string;
 
-  @Column('varchar')
-  full_name: string;
+  @Column('int2')
+  additions: number;
 
-  @Column('varchar')
-  description: string;
-
-  @Column('varchar')
-  html_url: string;
+  @Column('int2')
+  deletions: number;
 
   @CreateDateColumn()
   created_at: Date;
