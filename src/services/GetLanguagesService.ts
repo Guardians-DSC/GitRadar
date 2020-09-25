@@ -1,5 +1,5 @@
 import GetRepositoriesService from './GetRepositoriesService';
-import Repository from '../entities/Repository';
+import Repository from '../githubEntities/Repository';
 
 interface Response {
   top_language: string;

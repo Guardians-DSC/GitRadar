@@ -1,6 +1,6 @@
 import api from './api';
 import { catchGitHubNotFound } from '../utils/exceptions';
-import Event from '../entities/Event';
+import Event from '../githubEntities/Event';
 import GetRepositoriesService from './GetRepositoriesService';
 
 interface EventsCounter {

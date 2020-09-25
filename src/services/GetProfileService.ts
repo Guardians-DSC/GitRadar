@@ -1,6 +1,6 @@
 import GetUserService from './GetUserService';
 import GetRepositoriesService from './GetRepositoriesService';
-import Profile from '../entities/Profile';
+import Profile from '../githubEntities/Profile';
 
 class GetProfileService {
   public async execute(username: string): Promise<Profile> {
