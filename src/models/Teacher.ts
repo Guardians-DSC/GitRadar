@@ -23,6 +23,9 @@ class Teacher {
   @Column('varchar')
   github_token: string;
 
+  @Column('varchar')
+  avatar_url: string;
+
   @CreateDateColumn()
   created_at: Date;
 
