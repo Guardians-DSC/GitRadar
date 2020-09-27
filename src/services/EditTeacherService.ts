@@ -10,12 +10,14 @@ interface RequestOptions {
 }
 
 class EditModelService {
-  async execute(email: string, options: RequestOptions): Promise<Teacher> {
+  async execute(username: string, options: RequestOptions): Promise<Teacher> {
     const teachersRepository = getRepository(Teacher);
 
-    const teacher = await teachersRepository.findOne({ email });
+    const teacher = await teachersRepository.findOne({
+      github_login: username,
+    });
     if (!teacher) {
-      throw new AppError('Teacher E-mail not found.', 404);
+      throw new AppError('Teacher not found.', 404);
     }
 
     if (options.name) teacher.name = options.name;

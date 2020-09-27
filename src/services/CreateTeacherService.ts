@@ -3,11 +3,23 @@ import { hash } from 'bcryptjs';
 import AppError from '../errors/AppError';
 import Teacher from '../models/Teacher';
 
+interface CreateTeacherRequest {
+  avatar_url: string;
+  email: string;
+  github_login: string;
+  name: string;
+  password: string;
+}
+
 class CreateTeacherService {
-  async execute(email: string, password: string): Promise<Teacher> {
+  async execute(options: CreateTeacherRequest): Promise<Teacher> {
+    const { avatar_url, email, github_login, name, password } = options;
+
     const teachersRepository = getRepository(Teacher);
 
-    const userExists = await teachersRepository.findOne({ email });
+    const userExists = await teachersRepository.findOne({
+      email,
+    });
 
     if (userExists) {
       throw new AppError('E-mail address already used');
@@ -16,7 +28,10 @@ class CreateTeacherService {
     const hashedPassword = await hash(password, 8);
 
     const teacher = teachersRepository.create({
+      avatar_url,
       email,
+      github_login,
+      name,
       password: hashedPassword,
     });
     await teachersRepository.save(teacher);
