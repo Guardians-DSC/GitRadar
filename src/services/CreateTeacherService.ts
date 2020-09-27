@@ -2,21 +2,18 @@ import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import AppError from '../errors/AppError';
 import Teacher from '../models/Teacher';
+import GetUserService from './GetUserService';
 
 interface CreateTeacherRequest {
-  avatar_url: string;
   email: string;
   github_login: string;
-  name: string;
   password: string;
 }
 
 class CreateTeacherService {
   async execute({
-    avatar_url,
     email,
     github_login,
-    name,
     password,
   }: CreateTeacherRequest): Promise<Teacher> {
     const teachersRepository = getRepository(Teacher);
@@ -28,6 +25,9 @@ class CreateTeacherService {
     if (userExists) {
       throw new AppError('E-mail address already used');
     }
+
+    const getUser = new GetUserService();
+    const { avatar_url, name } = await getUser.execute(github_login);
 
     const hashedPassword = await hash(password, 8);
 
