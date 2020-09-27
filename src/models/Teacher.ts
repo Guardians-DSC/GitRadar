@@ -12,6 +12,9 @@ class Teacher {
   id: string;
 
   @Column('varchar')
+  github_login: string;
+
+  @Column('varchar')
   name: string;
 
   @Column('varchar')
@@ -22,6 +25,9 @@ class Teacher {
 
   @Column('varchar')
   github_token: string;
+
+  @Column('varchar')
+  avatar_url: string;
 
   @CreateDateColumn()
   created_at: Date;

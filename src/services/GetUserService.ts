@@ -4,6 +4,7 @@ import { catchGitHubNotFound } from '../utils/exceptions';
 interface Response {
   github_login: string;
   avatar_url: string;
+  name: string;
 }
 
 class GetUserService {
@@ -14,11 +15,12 @@ class GetUserService {
     } catch (error) {
       throw catchGitHubNotFound(error);
     }
-    const { login, avatar_url } = response.data;
+    const { login, avatar_url, name } = response.data;
 
     return {
       github_login: login,
       avatar_url,
+      name,
     };
   }
 }

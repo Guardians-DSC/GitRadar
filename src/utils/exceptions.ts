@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import AppError from '../errors/AppError';
 
-export function catchGitHubNotFound(error: AxiosError): AppError {
+const catchGitHubNotFound = (error: AxiosError): AppError => {
   if (error.response) {
     const { data, status } = error.response;
 
@@ -9,4 +9,6 @@ export function catchGitHubNotFound(error: AxiosError): AppError {
     return new AppError(data.message, status);
   }
   return new AppError('Internal server error!', 500);
-}
+};
+
+export { catchGitHubNotFound };
