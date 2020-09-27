@@ -12,9 +12,13 @@ interface CreateTeacherRequest {
 }
 
 class CreateTeacherService {
-  async execute(options: CreateTeacherRequest): Promise<Teacher> {
-    const { avatar_url, email, github_login, name, password } = options;
-
+  async execute({
+    avatar_url,
+    email,
+    github_login,
+    name,
+    password,
+  }: CreateTeacherRequest): Promise<Teacher> {
     const teachersRepository = getRepository(Teacher);
 
     const userExists = await teachersRepository.findOne({
