@@ -12,6 +12,9 @@ class Teacher {
   id: string;
 
   @Column('varchar')
+  github_login: string;
+
+  @Column('varchar')
   name: string;
 
   @Column('varchar')
