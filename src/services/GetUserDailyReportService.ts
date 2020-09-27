@@ -31,20 +31,37 @@ interface Response {
 class GetUserDaily {
   public async execute(username: string): Promise<Response> {
     const getUserService = new GetUserService();
-    const getDailyCommitsService = new GetDailyCommitsService();
-    const getDailyEventsService = new GetDailyEventsService();
+    const { github_login, avatar_url } = await getUserService.execute(username);
 
-    const userInfo = await getUserService.execute(username);
-    const dailyCommits = await getDailyCommitsService.execute(username);
-    const dailyEvents = await getDailyEventsService.execute(username);
+    const getDailyCommitsService = new GetDailyCommitsService();
+    const { new_commits, commits } = await getDailyCommitsService.execute(
+      username,
+    );
+
+    const getDailyEventsService = new GetDailyEventsService();
+    const {
+      new_forks,
+      new_interactions,
+      new_issues,
+      new_prs,
+      new_repositories,
+      new_stars,
+    } = await getDailyEventsService.execute(username);
 
     return {
       user: {
-        ...userInfo,
+        github_login,
+        avatar_url,
       },
       payload: {
-        ...dailyEvents,
-        ...dailyCommits,
+        new_forks,
+        new_interactions,
+        new_issues,
+        new_prs,
+        new_repositories,
+        new_stars,
+        new_commits,
+        commits,
         created_at: new Date().toISOString(),
       },
     };
