@@ -9,8 +9,11 @@ interface RequestOptions {
   avatar_url?: string;
 }
 
-class EditModelService {
-  async execute(username: string, options: RequestOptions): Promise<Teacher> {
+class EditTeacherService {
+  async execute(
+    username: string,
+    { name, password, avatar_url, github_token }: RequestOptions,
+  ): Promise<Teacher> {
     const teachersRepository = getRepository(Teacher);
 
     const teacher = await teachersRepository.findOne({
@@ -20,10 +23,10 @@ class EditModelService {
       throw new AppError('Teacher not found.', 404);
     }
 
-    if (options.name) teacher.name = options.name;
-    if (options.password) teacher.password = options.password;
-    if (options.github_token) teacher.github_token = options.github_token;
-    if (options.avatar_url) teacher.avatar_url = options.avatar_url;
+    if (name) teacher.name = name;
+    if (password) teacher.password = password;
+    if (github_token) teacher.github_token = github_token;
+    if (avatar_url) teacher.avatar_url = avatar_url;
 
     await teachersRepository.save(teacher);
 
@@ -31,4 +34,4 @@ class EditModelService {
   }
 }
 
-export default EditModelService;
+export default EditTeacherService;
