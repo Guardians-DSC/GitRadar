@@ -11,30 +11,59 @@ interface Commit {
 }
 
 interface Response {
-  new_interactions: number;
-  new_forks: number;
-  new_stars: number;
-  new_repositories: number;
-  new_prs: number;
-  new_issues: number;
-  new_commits: number;
-  commits: Commit[];
+  user: {
+    github_login: string;
+    avatar_url: string;
+  };
+  payload: {
+    new_interactions: number;
+    new_forks: number;
+    new_stars: number;
+    new_repositories: number;
+    new_prs: number;
+    new_issues: number;
+    new_commits: number;
+    commits: Commit[];
+    created_at: string;
+  };
 }
 
 class GetUserDaily {
   public async execute(username: string): Promise<Response> {
     const getUserService = new GetUserService();
-    const getDailyCommitsService = new GetDailyCommitsService();
-    const getDailyEventsService = new GetDailyEventsService();
+    const { github_login, avatar_url } = await getUserService.execute(username);
 
-    const userInfo = await getUserService.execute(username);
-    const dailyCommits = await getDailyCommitsService.execute(username);
-    const dailyEvents = await getDailyEventsService.execute(username);
+    const getDailyCommitsService = new GetDailyCommitsService();
+    const { new_commits, commits } = await getDailyCommitsService.execute(
+      username,
+    );
+
+    const getDailyEventsService = new GetDailyEventsService();
+    const {
+      new_forks,
+      new_interactions,
+      new_issues,
+      new_prs,
+      new_repositories,
+      new_stars,
+    } = await getDailyEventsService.execute(username);
 
     return {
-      ...userInfo,
-      ...dailyEvents,
-      ...dailyCommits,
+      user: {
+        github_login,
+        avatar_url,
+      },
+      payload: {
+        new_forks,
+        new_interactions,
+        new_issues,
+        new_prs,
+        new_repositories,
+        new_stars,
+        new_commits,
+        commits,
+        created_at: new Date().toISOString(),
+      },
     };
   }
 }

@@ -24,7 +24,7 @@ function isToday(a: Date, b: Date) {
 }
 
 class GetDailyCommitsService {
-  public async execute(username: string) {
+  public async execute(username: string): Promise<Response> {
     let response;
     try {
       response = await api.get(`/users/${username}/events`);
