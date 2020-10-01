@@ -19,16 +19,16 @@ class CreateRepositoryService {
   }: Request): Promise<Repository> {
     const repositoriesRepository = getRepository(Repository);
 
-    const teacher = repositoriesRepository.create({
+    const repository = repositoriesRepository.create({
       student_id,
       name,
       full_name,
       description,
       html_url,
     });
-    await repositoriesRepository.save(teacher);
+    await repositoriesRepository.save(repository);
 
-    return teacher;
+    return repository;
   }
 }
 
