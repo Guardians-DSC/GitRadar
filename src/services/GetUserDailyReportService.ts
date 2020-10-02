@@ -23,6 +23,8 @@ interface Response {
     new_prs: number;
     new_issues: number;
     new_commits: number;
+    additions: number;
+    deletions: number;
     commits: Commit[];
     created_at: string;
   };
@@ -37,6 +39,13 @@ class GetUserDaily {
     const { new_commits, commits } = await getDailyCommitsService.execute(
       username,
     );
+
+    let additions = 0;
+    let deletions = 0;
+    commits.forEach(item => {
+      additions += item.additions;
+      deletions += item.deletions;
+    });
 
     const getDailyEventsService = new GetDailyEventsService();
     const {
@@ -61,6 +70,8 @@ class GetUserDaily {
         new_repositories,
         new_stars,
         new_commits,
+        additions,
+        deletions,
         commits,
         created_at: new Date().toISOString(),
       },
