@@ -47,10 +47,10 @@ class RegisterTeacherGithubService {
     } catch (error) {
       throw new AppError('Unable to get user information on GitHub api.', 500);
     }
-    const { name, github_login, avatar_url } = response.data;
+    const { name, login, avatar_url } = response.data;
 
     const editTeacher = new EditTeacherService();
-    await editTeacher.execute(github_login, {
+    await editTeacher.execute(login, {
       name,
       avatar_url,
       github_token: hashedAccessToken,
