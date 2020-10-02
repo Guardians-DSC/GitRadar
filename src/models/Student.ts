@@ -31,8 +31,8 @@ class Student {
   @Column('varchar')
   top_language: string;
 
-  @Column('varchar')
-  github_id: string;
+  @Column('int2')
+  github_id: number;
 
   @CreateDateColumn()
   created_at: Date;
