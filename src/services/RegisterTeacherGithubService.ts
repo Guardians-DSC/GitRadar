@@ -1,23 +1,7 @@
 import axios from 'axios';
-import crypto from 'crypto';
 import AppError from '../errors/AppError';
+import { encrypt } from '../utils/crypto';
 import EditTeacherService from './EditTeacherService';
-
-function encrypt(word: string): string {
-  const cryptoAlgorithm = process.env.CRYPTO_ALGORITHM;
-  const cryptoSecret = process.env.CRYPTO_SECRET;
-  const cryptoType = 'hex';
-
-  if (!cryptoAlgorithm || !cryptoSecret) {
-    throw new AppError('Internal server error.', 500);
-  }
-
-  const iv = Buffer.alloc(16, 0);
-  const cipher = crypto.createCipheriv(cryptoAlgorithm, cryptoSecret, iv);
-
-  cipher.update(word);
-  return cipher.final(cryptoType);
-}
 
 class RegisterTeacherGithubService {
   async execute(code: string): Promise<void> {
