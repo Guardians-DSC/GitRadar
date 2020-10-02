@@ -7,6 +7,7 @@ class GetTeacherTokenService {
     const teachersRepository = getRepository(Teacher);
 
     const teacher = await teachersRepository.findOne();
+    if (!teacher) return '';
 
     const { github_token } = teacher;
 

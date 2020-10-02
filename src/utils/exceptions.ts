@@ -2,6 +2,8 @@ import { AxiosError } from 'axios';
 import AppError from '../errors/AppError';
 
 const catchGitHubNotFound = (error: AxiosError): AppError => {
+  console.log('error', error);
+
   if (error.response) {
     const { data, status } = error.response;
 
