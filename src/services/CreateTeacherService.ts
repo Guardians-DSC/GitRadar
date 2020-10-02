@@ -5,6 +5,7 @@ import Teacher from '../models/Teacher';
 import GetUserService from './GetUserService';
 
 interface CreateTeacherRequest {
+  github_id: number;
   email: string;
   github_login: string;
   password: string;
@@ -12,6 +13,7 @@ interface CreateTeacherRequest {
 
 class CreateTeacherService {
   async execute({
+    github_id,
     email,
     github_login,
     password,
@@ -34,6 +36,7 @@ class CreateTeacherService {
     const hashedPassword = await hash(password, 8);
 
     const teacher = teachersRepository.create({
+      github_id,
       avatar_url,
       email,
       github_login,

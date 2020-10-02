@@ -3,6 +3,7 @@ import Repository from '../models/Repository';
 
 interface Request {
   student_id: string;
+  github_id: number;
   name: string;
   full_name: string;
   description: string;
@@ -12,6 +13,7 @@ interface Request {
 class CreateRepositoryService {
   async execute({
     student_id,
+    github_id,
     name,
     full_name,
     description,
@@ -21,6 +23,7 @@ class CreateRepositoryService {
 
     const repository = repositoriesRepository.create({
       student_id,
+      github_id,
       name,
       full_name,
       description,
