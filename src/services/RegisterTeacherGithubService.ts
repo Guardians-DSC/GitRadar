@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { hash } from 'bcryptjs';
 import AppError from '../errors/AppError';
+import { encrypt } from '../utils/crypto';
 import EditTeacherService from './EditTeacherService';
 
 class RegisterTeacherGithubService {
@@ -35,7 +35,6 @@ class RegisterTeacherGithubService {
     if (!accessToken) {
       throw new AppError('Not able to get github access token.', 401);
     }
-    const hashedAccessToken = await hash(accessToken, 8);
 
     let response;
     try {
@@ -47,13 +46,15 @@ class RegisterTeacherGithubService {
     } catch (error) {
       throw new AppError('Unable to get user information on GitHub api.', 500);
     }
-    const { name, github_login, avatar_url } = response.data;
+    const { name, login, avatar_url } = response.data;
+
+    const encryptedToken = encrypt(accessToken);
 
     const editTeacher = new EditTeacherService();
-    await editTeacher.execute(github_login, {
+    await editTeacher.execute(login, {
       name,
       avatar_url,
-      github_token: hashedAccessToken,
+      github_token: encryptedToken,
     });
   }
 }
