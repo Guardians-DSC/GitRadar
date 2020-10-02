@@ -27,7 +27,9 @@ class CreateTeacherService {
     }
 
     const getUser = new GetUserService();
-    const { avatar_url, name } = await getUser.execute(github_login);
+    const { avatar_url, name } = await getUser.execute({
+      username: github_login,
+    });
 
     const hashedPassword = await hash(password, 8);
 
