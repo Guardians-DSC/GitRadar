@@ -1,7 +1,23 @@
 import axios from 'axios';
-import { hash } from 'bcryptjs';
+import crypto from 'crypto';
 import AppError from '../errors/AppError';
 import EditTeacherService from './EditTeacherService';
+
+function encrypt(word: string): string {
+  const cryptoAlgorithm = process.env.CRYPTO_ALGORITHM;
+  const cryptoSecret = process.env.CRYPTO_SECRET;
+  const cryptoType = 'hex';
+
+  if (!cryptoAlgorithm || !cryptoSecret) {
+    throw new AppError('Internal server error.', 500);
+  }
+
+  const iv = Buffer.alloc(16, 0);
+  const cipher = crypto.createCipheriv(cryptoAlgorithm, cryptoSecret, iv);
+
+  cipher.update(word);
+  return cipher.final(cryptoType);
+}
 
 class RegisterTeacherGithubService {
   async execute(code: string): Promise<void> {
@@ -35,7 +51,6 @@ class RegisterTeacherGithubService {
     if (!accessToken) {
       throw new AppError('Not able to get github access token.', 401);
     }
-    const hashedAccessToken = await hash(accessToken, 8);
 
     let response;
     try {
@@ -49,11 +64,13 @@ class RegisterTeacherGithubService {
     }
     const { name, login, avatar_url } = response.data;
 
+    const encryptedToken = encrypt(accessToken);
+
     const editTeacher = new EditTeacherService();
     await editTeacher.execute(login, {
       name,
       avatar_url,
-      github_token: hashedAccessToken,
+      github_token: encryptedToken,
     });
   }
 }
