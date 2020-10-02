@@ -55,6 +55,6 @@ export default class CreateRepositories1600912090409
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('respositories');
+    await queryRunner.dropTable('repositories');
   }
 }
