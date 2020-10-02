@@ -7,7 +7,10 @@ interface Commit {
     name: string;
     url: string;
   };
+  sha: string;
   message: string;
+  additions: number;
+  deletions: number;
 }
 
 interface Response {
