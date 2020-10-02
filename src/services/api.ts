@@ -10,7 +10,7 @@ api.interceptors.request.use(async config => {
   const token = await getTeacherToken.execute();
 
   if (token) {
-    config.headers.authorization = `Bearer ${token}`;
+    config.headers.authorization = `token ${token}`;
   }
 
   return config;
