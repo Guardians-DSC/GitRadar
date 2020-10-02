@@ -24,7 +24,7 @@ class GetRepositoriesService {
       } = item;
 
       return {
-        id,
+        id: String(id),
         name,
         full_name,
         description,

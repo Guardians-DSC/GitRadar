@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import Student from '../models/Student';
 
 interface Request {
-  github_id: number;
+  github_id: string;
   teacher_id: string;
   github_login: string;
   avatar_url: string;

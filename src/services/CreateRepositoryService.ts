@@ -3,7 +3,7 @@ import Repository from '../models/Repository';
 
 interface Request {
   student_id: string;
-  github_id: number;
+  github_id: string;
   name: string;
   full_name: string;
   description: string;

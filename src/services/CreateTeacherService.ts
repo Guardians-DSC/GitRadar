@@ -5,7 +5,7 @@ import Teacher from '../models/Teacher';
 import GetUserService from './GetUserService';
 
 interface CreateTeacherRequest {
-  github_id: number;
+  github_id: string;
   email: string;
   github_login: string;
   password: string;

@@ -8,7 +8,7 @@ interface Request {
 }
 
 interface Response {
-  github_id: number;
+  github_id: string;
   github_login: string;
   avatar_url: string;
   name: string;
@@ -35,7 +35,7 @@ class GetUserService {
     const { id, login, avatar_url, name } = response.data;
 
     return {
-      github_id: id,
+      github_id: String(id),
       github_login: login,
       avatar_url,
       name,

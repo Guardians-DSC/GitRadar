@@ -34,8 +34,8 @@ class Repository {
   @Column('varchar')
   html_url: string;
 
-  @Column('int2')
-  github_id: number;
+  @Column('varchar')
+  github_id: string;
 
   @CreateDateColumn()
   created_at: Date;

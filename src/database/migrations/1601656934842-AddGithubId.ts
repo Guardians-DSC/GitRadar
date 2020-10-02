@@ -6,7 +6,7 @@ export default class AddGithubId1601656934842 implements MigrationInterface {
       'teachers',
       new TableColumn({
         name: 'github_id',
-        type: 'int2',
+        type: 'varchar',
         isNullable: false,
       }),
     );
@@ -14,7 +14,7 @@ export default class AddGithubId1601656934842 implements MigrationInterface {
       'students',
       new TableColumn({
         name: 'github_id',
-        type: 'int2',
+        type: 'varchar',
         isNullable: false,
       }),
     );
@@ -22,7 +22,7 @@ export default class AddGithubId1601656934842 implements MigrationInterface {
       'repositories',
       new TableColumn({
         name: 'github_id',
-        type: 'int2',
+        type: 'varchar',
         isNullable: false,
       }),
     );
