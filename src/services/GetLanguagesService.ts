@@ -28,6 +28,7 @@ class GetLanguagesService {
       try {
         response = await api.get(`/repos/${full_name}/languages`);
       } catch (error) {
+        console.log(error);
         throw new AppError(`Unable to obtain ${full_name} languages.`, 500);
       }
       const languages = response.data;
