@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as yup from 'yup';
 
+import GetUserService from '../services/GetUserService';
 import CreateTeacherService from '../services/CreateTeacherService';
 
 class TeacherController {
@@ -15,8 +16,12 @@ class TeacherController {
 
     const { github_login, email, password } = request.body;
 
+    const getUser = new GetUserService();
+    const { github_id } = await getUser.execute({ username: github_login });
+
     const createTeacher = new CreateTeacherService();
     const teacher = await createTeacher.execute({
+      github_id,
       email,
       github_login,
       password,

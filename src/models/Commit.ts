@@ -39,6 +39,9 @@ class Commit {
   @Column('int2')
   deletions: number;
 
+  @Column('varchar')
+  sha: string;
+
   @CreateDateColumn()
   created_at: Date;
 

@@ -31,6 +31,9 @@ class Student {
   @Column('varchar')
   top_language: string;
 
+  @Column('varchar')
+  github_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 

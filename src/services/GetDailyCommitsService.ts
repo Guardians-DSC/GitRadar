@@ -8,6 +8,7 @@ interface Commit {
     name: string;
     url: string;
   };
+  sha: string;
   message: string;
   additions: number;
   deletions: number;
@@ -60,9 +61,10 @@ class GetDailyCommitsService {
             } catch (error) {
               throw new AppError('Unable to obtain stats commit', 500);
             }
-            const { stats } = response.data;
+            const { stats, sha } = response.data;
 
             newCommits.push({
+              sha,
               repository: item.repo,
               message: commit.message,
               additions: stats.additions,

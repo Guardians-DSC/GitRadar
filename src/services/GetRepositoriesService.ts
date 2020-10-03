@@ -14,6 +14,7 @@ class GetRepositoriesService {
 
     repositories = repositories.map(item => {
       const {
+        id,
         name,
         full_name,
         description,
@@ -23,6 +24,7 @@ class GetRepositoriesService {
       } = item;
 
       return {
+        id: String(id),
         name,
         full_name,
         description,

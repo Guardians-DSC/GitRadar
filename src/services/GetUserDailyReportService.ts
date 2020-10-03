@@ -7,7 +7,10 @@ interface Commit {
     name: string;
     url: string;
   };
+  sha: string;
   message: string;
+  additions: number;
+  deletions: number;
 }
 
 interface Response {
@@ -33,7 +36,9 @@ interface Response {
 class GetUserDaily {
   public async execute(username: string): Promise<Response> {
     const getUserService = new GetUserService();
-    const { github_login, avatar_url } = await getUserService.execute(username);
+    const { github_login, avatar_url } = await getUserService.execute({
+      username,
+    });
 
     const getDailyCommitsService = new GetDailyCommitsService();
     const { new_commits, commits } = await getDailyCommitsService.execute(

@@ -7,6 +7,7 @@ interface Request {
   message: string;
   additions: number;
   deletions: number;
+  sha: string;
 }
 
 class CreateCommitService {
@@ -16,6 +17,7 @@ class CreateCommitService {
     message,
     additions,
     deletions,
+    sha,
   }: Request): Promise<Commit> {
     const commitsRepository = getRepository(Commit);
 
@@ -25,6 +27,7 @@ class CreateCommitService {
       message,
       additions,
       deletions,
+      sha,
     });
     await commitsRepository.save(commit);
 
