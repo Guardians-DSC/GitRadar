@@ -7,7 +7,9 @@ class GetProfileService {
     const getUserService = new GetUserService();
     const getRepositoriesService = new GetRepositoriesService();
 
-    const { avatar_url, github_login } = await getUserService.execute(username);
+    const { avatar_url, github_login } = await getUserService.execute({
+      username,
+    });
     const repositories = await getRepositoriesService.execute(username);
 
     return {

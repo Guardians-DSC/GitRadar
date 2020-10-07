@@ -51,7 +51,7 @@ export default class CreateTeachers1600909362948 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP EXTENSION IF EXISTS "uuid-ossp"');
     await queryRunner.dropTable('teachers');
+    await queryRunner.query('DROP EXTENSION IF EXISTS "uuid-ossp"');
   }
 }

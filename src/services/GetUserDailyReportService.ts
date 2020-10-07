@@ -7,7 +7,10 @@ interface Commit {
     name: string;
     url: string;
   };
+  sha: string;
   message: string;
+  additions: number;
+  deletions: number;
 }
 
 interface Response {
@@ -23,6 +26,8 @@ interface Response {
     new_prs: number;
     new_issues: number;
     new_commits: number;
+    additions: number;
+    deletions: number;
     commits: Commit[];
     created_at: string;
   };
@@ -31,12 +36,21 @@ interface Response {
 class GetUserDaily {
   public async execute(username: string): Promise<Response> {
     const getUserService = new GetUserService();
-    const { github_login, avatar_url } = await getUserService.execute(username);
+    const { github_login, avatar_url } = await getUserService.execute({
+      username,
+    });
 
     const getDailyCommitsService = new GetDailyCommitsService();
     const { new_commits, commits } = await getDailyCommitsService.execute(
       username,
     );
+
+    let additions = 0;
+    let deletions = 0;
+    commits.forEach(item => {
+      additions += item.additions;
+      deletions += item.deletions;
+    });
 
     const getDailyEventsService = new GetDailyEventsService();
     const {
@@ -61,6 +75,8 @@ class GetUserDaily {
         new_repositories,
         new_stars,
         new_commits,
+        additions,
+        deletions,
         commits,
         created_at: new Date().toISOString(),
       },

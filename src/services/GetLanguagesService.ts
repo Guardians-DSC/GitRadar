@@ -1,5 +1,7 @@
 import GetRepositoriesService from './GetRepositoriesService';
 import Repository from '../entities/Repository';
+import AppError from '../errors/AppError';
+import api from './api';
 
 interface Response {
   top_language: string;
@@ -19,16 +21,30 @@ class GetLanguagesService {
 
     const languageCounter: LanguagesDictionary = {};
 
-    repositories.forEach(repository => {
-      const { language } = repository;
-      if (!language) return;
+    const countRepositoryLanguages = async (repository: Repository) => {
+      const { full_name } = repository;
 
-      if (languageCounter[language]) {
-        languageCounter[language] += 1;
-      } else {
-        languageCounter[language] = 1;
+      let response;
+      try {
+        response = await api.get(`/repos/${full_name}/languages`);
+      } catch (error) {
+        throw new AppError(`Unable to obtain ${full_name} languages.`, 500);
       }
-    });
+      const languages = response.data;
+
+      Object.keys(languages).forEach(language => {
+        if (languageCounter[language]) {
+          languageCounter[language] += languages[language];
+        } else {
+          languageCounter[language] = languages[language];
+        }
+      });
+    };
+
+    const promises = repositories.map(repository =>
+      countRepositoryLanguages(repository),
+    );
+    await Promise.all(promises);
 
     let topLanguages = Object.keys(languageCounter).sort((a, b) => {
       return languageCounter[a] > languageCounter[b] ? -1 : 1;

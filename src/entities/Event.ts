@@ -1,5 +1,6 @@
 interface Commit {
   message: string;
+  sha: string;
 }
 
 export default interface Event {
