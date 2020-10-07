@@ -4,6 +4,7 @@ import Commit from '../models/Commit';
 interface Request {
   repository_id: string;
   student_id: string;
+  student_daily_report_id: string;
   message: string;
   additions: number;
   deletions: number;
@@ -14,6 +15,7 @@ class CreateCommitService {
   async execute({
     student_id,
     repository_id,
+    student_daily_report_id,
     message,
     additions,
     deletions,
@@ -24,6 +26,7 @@ class CreateCommitService {
     const commit = commitsRepository.create({
       student_id,
       repository_id,
+      student_daily_report_id,
       message,
       additions,
       deletions,
