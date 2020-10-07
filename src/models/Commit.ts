@@ -10,6 +10,7 @@ import {
 
 import Repository from './Repository';
 import Student from './Student';
+import StudentDailyReport from './StudentDailyReport';
 
 @Entity('commits')
 class Commit {
@@ -29,6 +30,13 @@ class Commit {
   @ManyToOne(() => Student)
   @JoinColumn({ name: 'student_id' })
   student: Student;
+
+  @Column('uuid')
+  student_daily_report_id: string;
+
+  @ManyToOne(() => StudentDailyReport)
+  @JoinColumn({ name: 'student_daily_report_id' })
+  studentDailyReport: StudentDailyReport;
 
   @Column('varchar')
   message: string;
