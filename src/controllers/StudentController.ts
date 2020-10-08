@@ -38,7 +38,6 @@ class StudentController {
 
     const createRepository = new CreateRepositoryService();
     for (const repository of repositories) {
-      // eslint-disable-next-line no-await-in-loop
       await createRepository.execute({
         description: repository.description,
         full_name: repository.full_name,
