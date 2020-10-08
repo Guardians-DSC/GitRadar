@@ -53,7 +53,7 @@ class App {
         jobName: 'request students process',
         queueName: 'students-process-requester',
         opts: {
-          removeOnComplete: true,
+          removeOnComplete: false,
         },
       }),
     );
