@@ -5,7 +5,6 @@ import {
   QueueProvider,
   registerQueueRequest,
 } from '../QueueProvider';
-import redisConnection from '../../../config/redis';
 
 class BullQueueProvider implements QueueProvider {
   private queues: Queue[];
@@ -28,10 +27,8 @@ class BullQueueProvider implements QueueProvider {
       throw new Error('Queue name already registered.');
     }
 
-    this.queues.push(new Queue(queueName, { connection: redisConnection }));
-    this.queueSchedulers.push(
-      new QueueScheduler(queueName, { connection: redisConnection }),
-    );
+    this.queues.push(new Queue(queueName));
+    this.queueSchedulers.push(new QueueScheduler(queueName));
   }
 
   add({ queueName, job, jobName, opts }: addJobRequest): void {

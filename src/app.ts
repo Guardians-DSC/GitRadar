@@ -13,7 +13,6 @@ import BullQueueProvider from './providers/queue/implementations/BullQueueProvid
 import RequestStudentsProcessProcessor from './workers/RequestStudentsProcess/RequestStudentsProcessProcessor';
 import ProcessStudentProcessor from './workers/ProcessStudent/ProcessStudentProcessor';
 import { QueueProvider } from './providers/queue/QueueProvider';
-import redisConnection from './config/redis';
 import './database';
 
 dotenv.config();
@@ -70,12 +69,10 @@ class App {
     this.studentsProcessRequester = new Worker(
       'students-process-requester',
       RequestStudentsProcessProcessor,
-      { connection: redisConnection },
     );
     this.studentProcessor = new Worker(
       'student-processor',
       ProcessStudentProcessor,
-      { connection: redisConnection },
     );
   }
 
