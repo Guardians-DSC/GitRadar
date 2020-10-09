@@ -36,7 +36,8 @@
                 "ts": "never"
             }
             ],
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "no-restricted-syntax": "off"
 	  },
 	  "settings": {
 	    "import/resolver": {

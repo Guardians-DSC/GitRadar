@@ -5,6 +5,7 @@ import GetUserService from '../services/GetUserService';
 import GetProfileService from '../services/GetProfileService';
 import GetLanguagesService from '../services/GetLanguagesService';
 import CreateStudentService from '../services/CreateStudentService';
+import GetPeriodStudentDailyReportsService from '../services/GetPeriodStudentDailyReportsService';
 
 class StudentController {
   static async store(request: Request, response: Response): Promise<Response> {
@@ -36,6 +37,24 @@ class StudentController {
     });
 
     return response.json(student);
+  }
+
+  static async show(request: Request, response: Response): Promise<Response> {
+    const schema = yup.object().shape({
+      since: yup.string().required('Since date string is required.'),
+      until: yup.string(),
+    });
+    await schema.validate(request.query);
+
+    const { since, until } = request.query;
+
+    const getPeriodStudentDailyReport = new GetPeriodStudentDailyReportsService();
+    const studentDailyReport = await getPeriodStudentDailyReport.execute(
+      String(since),
+      String(until),
+    );
+
+    return response.json(studentDailyReport);
   }
 }
 
