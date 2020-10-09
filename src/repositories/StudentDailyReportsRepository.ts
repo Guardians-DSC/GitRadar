@@ -7,8 +7,8 @@ class StudentDailyReportsRepository extends Repository<StudentDailyReport> {
   public async findByPeriod(
     since: Date,
     until: Date,
-  ): Promise<StudentDailyReport | null> {
-    const findStudentDailyReport = await this.findOne({
+  ): Promise<StudentDailyReport[] | null> {
+    const findStudentDailyReport = await this.find({
       where: { created_at: Between(since, until) },
     });
 
