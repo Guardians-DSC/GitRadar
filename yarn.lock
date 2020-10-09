@@ -512,7 +512,7 @@ buffer@^5.1.0:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
 
-bull-board@^1.0.0-alpha.10:
+bull-board@alpha:
   version "1.0.0-alpha.10"
   resolved "https://registry.yarnpkg.com/bull-board/-/bull-board-1.0.0-alpha.10.tgz#ea16730633c8ccf11a08f984142f792766d3a7f5"
   integrity sha512-QCI8J5qawf7LlGUrL81sbQJtocDwzxTAm4q+oUzLbv/KGmw6IjGArj148EI/9HQvtnByyxStjIzMI8GUUPAX4g==
