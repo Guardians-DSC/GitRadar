@@ -35,6 +35,9 @@ class App {
   private initialization(): void {
     this.middlewares();
     this.routes();
+
+    this.express.use(errorHandlerMiddleware);
+
     this.workers();
     this.queues();
     this.defineCron();
@@ -43,7 +46,6 @@ class App {
   private middlewares(): void {
     this.express.use(express.json());
     this.express.use(cors());
-    this.express.use(errorHandlerMiddleware);
     this.express.use('/admin/queues', router);
   }
 
