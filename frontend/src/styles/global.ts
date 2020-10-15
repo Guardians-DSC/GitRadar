@@ -8,8 +8,8 @@ export default createGlobalStyle`
     outline: 0;
   }
   body {
-    background: #312E38;
-    color: #FFF;
+    background: white;
+    color: #3D3D4D;
   }
   body, input, button {
     font-family: 'Roboto Slab', serif;
