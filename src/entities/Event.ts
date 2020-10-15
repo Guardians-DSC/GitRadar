@@ -6,6 +6,7 @@ interface Commit {
 export default interface Event {
   type: string;
   repo: {
+    id: string;
     name: string;
     url: string;
   };

@@ -4,7 +4,7 @@ import AppError from '../errors/AppError';
 
 interface Request {
   username?: string;
-  github_id?: number;
+  github_id?: string;
 }
 
 interface Response {
