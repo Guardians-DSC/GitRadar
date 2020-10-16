@@ -4,6 +4,7 @@ import GetDailyEventsService from './GetDailyEventsService';
 
 interface Commit {
   repository: {
+    id: string;
     name: string;
     url: string;
   };

@@ -5,6 +5,7 @@ import AppError from '../errors/AppError';
 
 interface Commit {
   repository: {
+    id: string;
     name: string;
     url: string;
   };
