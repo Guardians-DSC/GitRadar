@@ -24,6 +24,7 @@ import api from '../../services/api';
 const SignUp: React.FC = () => {
   const history = useHistory();
 
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [github, setGithub] = useState('');
   const [password, setPassword] = useState('');
@@ -46,6 +47,8 @@ const SignUp: React.FC = () => {
     });
 
     try {
+      setLoading(true);
+
       await schema.validate({
         github,
         email,
@@ -58,9 +61,12 @@ const SignUp: React.FC = () => {
         password,
       });
 
-      toast('Sua conta foi cadastrada com sucesso!');
+      setLoading(false);
+      toast('Sua conta foi cadastrada com sucesso!', { type: 'success' });
       history.push('/login');
     } catch (error) {
+      setLoading(false);
+
       validationError(
         error,
         'Ocorreu um erro no cadastro, tente novamente mais tarde.',
@@ -112,7 +118,12 @@ const SignUp: React.FC = () => {
           />
 
           <ButtonWrapper>
-            <Button width="100%" label="Cadastrar" type="submit" />
+            <Button
+              loading={loading}
+              width="100%"
+              label="Cadastrar"
+              type="submit"
+            />
           </ButtonWrapper>
         </Form>
 
