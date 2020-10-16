@@ -6,13 +6,13 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     outline: 0;
+    font-family: 'Roboto', sans-serif;
   }
   body {
     background: white;
     color: #3D3D4D;
   }
   body, input, button {
-    font-family: 'Roboto Slab', serif;
     font-size: 16px;
   }
   h1, h2, h3, h4, h5, h6, strong {
