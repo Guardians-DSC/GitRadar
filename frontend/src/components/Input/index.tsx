@@ -7,13 +7,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   width?: string;
 }
 
-const Input: React.FC<InputProps> = ({ icon: Icon, width, ...props }) => {
-  return (
-    <Container width={width} containsIcon={!!Icon}>
-      {Icon && <Icon size={20} />}
-      <InputContainer {...props} />
-    </Container>
-  );
-};
+const Input: React.FC<InputProps> = ({ icon: Icon, width, ...props }) => (
+  <Container width={width} containsIcon={!!Icon}>
+    {Icon && <Icon size={20} />}
+    <InputContainer {...props} />
+  </Container>
+);
 
 export default Input;
