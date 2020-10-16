@@ -3,6 +3,7 @@ import styled from 'styled-components';
 interface ContainerProps {
   width?: string;
   containsIcon?: boolean;
+  margin?: string;
 }
 
 export const Container = styled.div`
@@ -16,6 +17,7 @@ export const Container = styled.div`
   height: 47px;
   padding-left: ${(props: ContainerProps) =>
     props.containsIcon ? '10px' : '0'};
+  margin: ${(props: ContainerProps) => props.margin || '0'};
 `;
 
 export const InputContainer = styled.input`
