@@ -16,8 +16,10 @@
     "react-icons": "^3.11.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-toastify": "^6.0.9",
     "styled-components": "^5.2.0",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "yup": "^0.29.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,6 +45,7 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.4",
+    "@types/yup": "^0.29.8",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
     "eslint-config-airbnb-base": "^14.2.0",

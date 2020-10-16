@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { BsArrowLeft } from 'react-icons/bs';
 
 export const PageContainer = styled.div`
@@ -37,7 +38,7 @@ export const ButtonWrapper = styled.div`
   width: 100%;
 `;
 
-export const BackButton = styled.button`
+export const BackButton = styled(Link)`
   border: none;
   background: none;
   width: 100%;
@@ -45,6 +46,8 @@ export const BackButton = styled.button`
   align-items: center;
   justify-content: center;
   margin: 30px 0;
+  text-decoration: none;
+  color: black;
 `;
 
 export const BackButtonIcon = styled(BsArrowLeft)`
