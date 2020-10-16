@@ -8,7 +8,7 @@ export const isAuthenticated = (): boolean =>
 
 export const getToken = (): string | null => localStorage.getItem(TOKEN_KEY);
 
-export const getUser = (): Teacher | null => {
+export const getTeacher = (): Teacher | null => {
   const teacherJSON = localStorage.getItem(TEACHER_KEY);
 
   if (teacherJSON) {
