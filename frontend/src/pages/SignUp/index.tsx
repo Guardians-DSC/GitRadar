@@ -71,7 +71,7 @@ const SignUp: React.FC = () => {
   return (
     <PageContainer>
       <Container>
-        <Logo src={logo} />
+        <Logo src={logo} alt="Git Radar" />
         <Title>Faça seu Cadastro</Title>
 
         <Form onSubmit={handleSubmit}>
