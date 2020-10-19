@@ -91,6 +91,14 @@ class StudentController {
 
     return response.json(studentDailyReport);
   }
+
+  static async index(request: Request, response: Response): Promise<Response> {
+    const studentsRepository = getRepository(Student);
+
+    const students = await studentsRepository.find();
+
+    return response.json(students);
+  }
 }
 
 export default StudentController;
