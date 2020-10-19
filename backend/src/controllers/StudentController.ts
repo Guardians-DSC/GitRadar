@@ -54,7 +54,7 @@ class StudentController {
     return response.json(student);
   }
 
-  static async index(request: Request, response: Response): Promise<Response> {
+  static async show(request: Request, response: Response): Promise<Response> {
     const schema = yup.object().shape({
       since: yup.string().required('Since date string is required.'),
       until: yup.string(),
