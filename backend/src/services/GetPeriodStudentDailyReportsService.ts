@@ -60,6 +60,7 @@ class GetPeriodStudentDailyReportsService {
       sinceDate,
       untilDate,
     );
+
     for (const report of reports) {
       finalPeriodReport.additions += report.additions;
       finalPeriodReport.deletions += report.deletions;

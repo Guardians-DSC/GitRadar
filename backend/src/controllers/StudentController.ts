@@ -61,35 +61,61 @@ class StudentController {
     });
     await schema.validate(request.query);
 
+    const getPeriodStudentDailyReport = new GetPeriodStudentDailyReportsService();
+    const studentsRepository = getRepository(Student);
     const { username } = request.params;
     const { since, until } = request.query;
 
-    if (!username) {
-      return response.status(400).json({
-        message: 'Student Github Login is required.',
+    if (username) {
+      const getUser = new GetUserService();
+      const { github_id } = await getUser.execute({
+        username,
       });
+
+      const student = await studentsRepository.findOne({
+        where: {
+          github_id,
+        },
+      });
+      const studentDailyReport = await getPeriodStudentDailyReport.execute(
+        student.id,
+        String(since),
+        String(until),
+      );
+
+      return response.json(studentDailyReport);
     }
 
-    const getUser = new GetUserService();
-    const { github_id } = await getUser.execute({
-      username,
-    });
+    const classInformation = {
+      all_new_interactions: 0,
+      all_new_commits: 0,
+      new_interactions_average: 0,
+      new_commits_average: 0,
+    };
 
-    const studentsRepository = getRepository(Student);
-    const student = await studentsRepository.findOne({
-      where: {
-        github_id,
-      },
-    });
+    const students = await studentsRepository.find();
+    if (students.length === 0) {
+      return response.json(classInformation);
+    }
 
-    const getPeriodStudentDailyReport = new GetPeriodStudentDailyReportsService();
-    const studentDailyReport = await getPeriodStudentDailyReport.execute(
-      student.id,
-      String(since),
-      String(until),
-    );
+    for (const student of students) {
+      const currentDailyReport = await getPeriodStudentDailyReport.execute(
+        student.id,
+        String(since),
+        String(until),
+      );
 
-    return response.json(studentDailyReport);
+      classInformation.all_new_commits += currentDailyReport.new_commits;
+      classInformation.all_new_interactions +=
+        currentDailyReport.new_interactions;
+    }
+
+    classInformation.new_commits_average =
+      classInformation.all_new_commits / students.length;
+    classInformation.new_interactions_average =
+      classInformation.all_new_interactions / students.length;
+
+    return response.json(classInformation);
   }
 
   static async index(request: Request, response: Response): Promise<Response> {
