@@ -4,4 +4,5 @@ export interface Teacher {
   email: string;
   avatar_url: string;
   github_id: string;
+  github_token: string | null;
 }
