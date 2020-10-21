@@ -1,6 +1,13 @@
 import React from 'react';
-import { getTeacher } from '../../services/auth';
+import Header from '../../components/Header';
+import { PageContainer, Container } from './styles';
 
-const Dashboard: React.FC = () => <h1>{getTeacher()?.name}</h1>;
+const Dashboard: React.FC = () => (
+  <PageContainer>
+    <Container>
+      <Header />
+    </Container>
+  </PageContainer>
+);
 
 export default Dashboard;
