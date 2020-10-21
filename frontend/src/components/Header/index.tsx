@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Teacher } from '../../entities';
-import { getTeacher, logout } from '../../services/auth';
+import { getTeacher, logout, verifyHasGithubToken } from '../../services/auth';
 import {
   Container,
   ButtonsArea,
@@ -27,6 +27,16 @@ const Header: React.FC = () => {
     history.push('/login');
   };
 
+  const handleSync = () => {
+    const clientId = process.env.REACT_APP_CLIENT_ID;
+
+    if (clientId) {
+      window.location.replace(
+        `https://github.com/login/oauth/authorize?client_id=${clientId}`,
+      );
+    }
+  };
+
   return (
     <Container>
       <MessageArea>
@@ -36,14 +46,15 @@ const Header: React.FC = () => {
             Bem-vindo, <Highlight>{teacher?.name}</Highlight>
           </Greetings>
         </GreetingsArea>
-
-        <SyncMessage>
-          Clique{' '}
-          <Sync>
-            <Highlight>aqui</Highlight>
-          </Sync>{' '}
-          para vincular sua conta do github
-        </SyncMessage>
+        {!verifyHasGithubToken() && (
+          <SyncMessage>
+            Clique{' '}
+            <Sync onClick={handleSync}>
+              <Highlight>aqui</Highlight>
+            </Sync>{' '}
+            para vincular sua conta do github
+          </SyncMessage>
+        )}
       </MessageArea>
 
       <ButtonsArea>
