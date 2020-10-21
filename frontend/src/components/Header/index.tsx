@@ -14,6 +14,7 @@ import {
   MessageArea,
   ProfileImage,
   SyncMessage,
+  Sync,
 } from './styles';
 import logo from '../../assets/logo.png';
 
@@ -37,7 +38,11 @@ const Header: React.FC = () => {
         </GreetingsArea>
 
         <SyncMessage>
-          Clique <Highlight>aqui</Highlight> para vincular sua conta do github
+          Clique{' '}
+          <Sync>
+            <Highlight>aqui</Highlight>
+          </Sync>{' '}
+          para vincular sua conta do github
         </SyncMessage>
       </MessageArea>
 

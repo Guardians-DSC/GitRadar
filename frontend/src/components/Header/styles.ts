@@ -47,6 +47,11 @@ export const Highlight = styled.span`
 
 export const SyncMessage = styled.p``;
 
+export const Sync = styled.button`
+  border: none;
+  background: none;
+`;
+
 export const ProfileImage = styled.img`
   height: 60%;
   border-radius: 50%;
