@@ -14,7 +14,7 @@ export const MessageArea = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 `;
 
@@ -36,20 +36,26 @@ export const ButtonsArea = styled.div`
 
 export const Logo = styled.img`
   height: 70%;
-  margin-right: 40px;
+  margin-right: 30px;
 `;
 
-export const Greetings = styled.h3``;
+export const Greetings = styled.h3`
+  font-size: 22px;
+`;
 
 export const Highlight = styled.span`
   color: #04d361;
 `;
 
-export const SyncMessage = styled.p``;
+export const SyncMessage = styled.p`
+  margin-left: 55px;
+  font-size: 20px;
+`;
 
 export const Sync = styled.button`
   border: none;
   background: none;
+  font-size: 20px;
 `;
 
 export const ProfileImage = styled.img`
