@@ -21,8 +21,10 @@ class SessionController {
     );
 
     delete teacher.password;
+    const hasGithubToken = !!teacher.github_token;
+    delete teacher.github_token;
 
-    return response.json({ teacher, token });
+    return response.json({ teacher, token, hasGithubToken });
   }
 }
 
