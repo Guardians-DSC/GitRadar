@@ -1,4 +1,5 @@
 import React from 'react';
+import { Student } from '../../../../entities';
 import {
   Arrow,
   Container,
@@ -10,12 +11,6 @@ import {
   Title,
   Username,
 } from './styles';
-
-interface Student {
-  name: string;
-  github_login: string;
-  avatar_url: string;
-}
 
 interface StudentsListProps {
   title: string;

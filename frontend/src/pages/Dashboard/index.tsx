@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import api from '../../services/api';
 import { confirmHasGithubToken } from '../../services/auth';
 import validationError from '../../utils/validationError';
+import { Student } from '../../entities';
 import StudentsList from './components/StudentsList';
 import {
   PageContainer,
@@ -27,6 +28,7 @@ const Dashboard: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
+  const [allStudents, setAllStudents] = useState<Student[]>([]);
   const [allNewInteractions, setAllNewInteractions] = useState(0);
   const [allNewCommits, setAllNewCommits] = useState(0);
   const [newInteractionsAverage, setNewInteractionsAverage] = useState(0);
@@ -78,11 +80,23 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
+  const getAllStudents = useCallback(async () => {
+    try {
+      const response = await api.get('/class');
+
+      setAllStudents(response.data);
+    } catch (error) {
+      validationError(error);
+    }
+  }, []);
+
   useEffect(() => {
     syncGithub();
 
     getClassInformation();
-  }, [syncGithub, getClassInformation]);
+
+    getAllStudents();
+  }, [syncGithub, getClassInformation, getAllStudents]);
 
   return (
     <PageContainer>
@@ -96,7 +110,7 @@ const Dashboard: React.FC = () => {
               <MonitorButton>Monitorar</MonitorButton>
             </MonitorWrapper>
 
-            <StudentsList title="Alunos Monitorados" students={[]} />
+            <StudentsList title="Alunos Monitorados" students={allStudents} />
           </LeftContainer>
 
           <RightContainer>
