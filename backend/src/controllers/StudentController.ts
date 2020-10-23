@@ -29,11 +29,14 @@ class StudentController {
     const { top_language } = await getLanguages.execute(github_login);
 
     const getUser = new GetUserService();
-    const { github_id } = await getUser.execute({ username: github_login });
+    const { github_id, name } = await getUser.execute({
+      username: github_login,
+    });
 
     const createStudentService = new CreateStudentService();
     const student = await createStudentService.execute({
       github_id,
+      name,
       github_login,
       avatar_url,
       teacher_id: teacher.id,
