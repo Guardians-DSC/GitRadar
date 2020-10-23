@@ -34,6 +34,9 @@ class Student {
   @Column('varchar')
   github_id: string;
 
+  @Column('varchar')
+  name: string;
+
   @CreateDateColumn()
   created_at: Date;
 
