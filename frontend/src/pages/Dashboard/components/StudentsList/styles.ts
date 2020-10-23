@@ -74,6 +74,10 @@ export const Arrow = styled.img`
   margin: 0 10px 0 5px;
 `;
 
+export const NotFound = styled.p`
+  margin-top: 20px;
+`;
+
 export const Loading = styled(ImSpinner2)`
   font-size: 40px;
   margin-top: 30px;

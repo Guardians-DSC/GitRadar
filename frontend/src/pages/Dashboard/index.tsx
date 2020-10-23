@@ -37,7 +37,10 @@ const Dashboard: React.FC = () => {
   const [newInteractionsAverage, setNewInteractionsAverage] = useState(0);
   const [newCommitsAverage, setNewCommitsAverage] = useState(0);
   const [monitored, setMonitored] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [loadingStudents, setLoadingStudents] = useState(false);
+  const [loadingBelow, setLoadingBelow] = useState(false);
 
   const syncGithub = useCallback(async () => {
     const query = new URLSearchParams(location.search);
@@ -86,16 +89,21 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const getAllStudents = useCallback(async () => {
+    setLoadingStudents(true);
+
     try {
       const response = await api.get('/class');
 
       setAllStudents(response.data);
+      setLoadingStudents(false);
     } catch (error) {
+      setLoadingStudents(false);
       validationError(error);
     }
   }, []);
 
   const getBelowAverage = useCallback(async () => {
+    setLoadingBelow(true);
     const since = new Date();
     since.setMonth(since.getMonth() - 1);
 
@@ -105,18 +113,20 @@ const Dashboard: React.FC = () => {
       );
 
       setBelowAverage(response.data);
+      setLoadingBelow(false);
     } catch (error) {
+      setLoadingBelow(false);
       validationError(error);
     }
   }, []);
 
   const handleSubmit = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setLoadingSubmit(true);
       await api.post('/student', {
         github_login: monitored,
       });
-      setIsLoading(false);
+      setLoadingSubmit(false);
 
       setMonitored('');
       setAllStudents([]);
@@ -125,7 +135,7 @@ const Dashboard: React.FC = () => {
       getAllStudents();
       getBelowAverage();
     } catch (error) {
-      setIsLoading(false);
+      setLoadingSubmit(false);
       validationError(error);
     }
   }, [monitored, getAllStudents, getBelowAverage]);
@@ -154,11 +164,12 @@ const Dashboard: React.FC = () => {
                 placeholder="Digite o usuário que deseja monitorar"
               />
               <MonitorButton onClick={handleSubmit}>
-                {isLoading ? <Loading /> : 'Monitorar'}
+                {loadingSubmit ? <Loading /> : 'Monitorar'}
               </MonitorButton>
             </MonitorWrapper>
 
             <StudentsList
+              isLoading={loadingStudents}
               listHeight={285}
               title="Alunos Monitorados"
               students={allStudents}
@@ -195,6 +206,7 @@ const Dashboard: React.FC = () => {
             </InformationContainer>
 
             <StudentsList
+              isLoading={loadingBelow}
               listHeight={385}
               title="Alunos com interações abaixo da média"
               students={belowAverage}
