@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ImSpinner2 } from 'react-icons/im';
 
 export const Container = styled.div`
   width: 100%;
@@ -71,4 +72,24 @@ export const Name = styled.p`
 
 export const Arrow = styled.img`
   margin: 0 10px 0 5px;
+`;
+
+export const Loading = styled(ImSpinner2)`
+  font-size: 40px;
+  margin-top: 30px;
+  color: #04d361;
+
+  animation-name: rotating;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @keyframes rotating {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
