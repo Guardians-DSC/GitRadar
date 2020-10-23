@@ -29,6 +29,7 @@ const Dashboard: React.FC = () => {
   const history = useHistory();
 
   const [allStudents, setAllStudents] = useState<Student[]>([]);
+  const [belowAverage, setBelowAverage] = useState<Student[]>([]);
   const [allNewInteractions, setAllNewInteractions] = useState(0);
   const [allNewCommits, setAllNewCommits] = useState(0);
   const [newInteractionsAverage, setNewInteractionsAverage] = useState(0);
@@ -90,13 +91,30 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
+  const getBelowAverage = useCallback(async () => {
+    const since = new Date();
+    since.setMonth(since.getMonth() - 1);
+
+    try {
+      const response = await api.get(
+        `/class/below_average?since=${since.toISOString()}`,
+      );
+
+      setBelowAverage(response.data);
+    } catch (error) {
+      validationError(error);
+    }
+  }, []);
+
   useEffect(() => {
     syncGithub();
 
     getClassInformation();
 
     getAllStudents();
-  }, [syncGithub, getClassInformation, getAllStudents]);
+
+    getBelowAverage();
+  }, [syncGithub, getClassInformation, getAllStudents, getBelowAverage]);
 
   return (
     <PageContainer>
@@ -142,7 +160,7 @@ const Dashboard: React.FC = () => {
 
             <StudentsList
               title="Alunos com interações abaixo da média"
-              students={[]}
+              students={belowAverage}
             />
           </RightContainer>
         </Content>
