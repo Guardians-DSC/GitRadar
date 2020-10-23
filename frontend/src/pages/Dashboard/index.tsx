@@ -8,6 +8,7 @@ import StudentsList from './components/StudentsList';
 import {
   PageContainer,
   Container,
+  Content,
   Information,
   InformationContainer,
   InformationGrid,
@@ -55,47 +56,49 @@ const Dashboard: React.FC = () => {
       <Container>
         <Header />
 
-        <LeftContainer>
-          <MonitorWrapper>
-            <MonitorInput placeholder="Digite o usuário que deseja monitorar" />
-            <MonitorButton>Monitorar</MonitorButton>
-          </MonitorWrapper>
+        <Content>
+          <LeftContainer>
+            <MonitorWrapper>
+              <MonitorInput placeholder="Digite o usuário que deseja monitorar" />
+              <MonitorButton>Monitorar</MonitorButton>
+            </MonitorWrapper>
 
-          <StudentsList title="Alunos Monitorados" students={[]} />
-        </LeftContainer>
+            <StudentsList title="Alunos Monitorados" students={[]} />
+          </LeftContainer>
 
-        <RightContainer>
-          <InformationContainer>
-            <InformationTitle>Informações da Turma</InformationTitle>
+          <RightContainer>
+            <InformationContainer>
+              <InformationTitle>Informações da Turma</InformationTitle>
 
-            <InformationGrid>
-              <Information>
-                <Number>0</Number>
-                <Label>Total de novas interações</Label>
-              </Information>
+              <InformationGrid>
+                <Information>
+                  <Number>0</Number>
+                  <Label>Total de novas interações</Label>
+                </Information>
 
-              <Information>
-                <Number>0</Number>
-                <Label>Média de novas interações</Label>
-              </Information>
+                <Information>
+                  <Number>0</Number>
+                  <Label>Média de novas interações</Label>
+                </Information>
 
-              <Information>
-                <Number>0</Number>
-                <Label>Total de novos commits</Label>
-              </Information>
+                <Information>
+                  <Number>0</Number>
+                  <Label>Total de novos commits</Label>
+                </Information>
 
-              <Information>
-                <Number>0</Number>
-                <Label>Média de novos commits</Label>
-              </Information>
-            </InformationGrid>
-          </InformationContainer>
+                <Information>
+                  <Number>0</Number>
+                  <Label>Média de novos commits</Label>
+                </Information>
+              </InformationGrid>
+            </InformationContainer>
 
-          <StudentsList
-            title="Alunos com interações abaixo da média"
-            students={[]}
-          />
-        </RightContainer>
+            <StudentsList
+              title="Alunos com interações abaixo da média"
+              students={[]}
+            />
+          </RightContainer>
+        </Content>
       </Container>
     </PageContainer>
   );
