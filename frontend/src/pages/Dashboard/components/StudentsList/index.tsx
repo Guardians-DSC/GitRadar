@@ -15,16 +15,21 @@ import {
 interface StudentsListProps {
   title: string;
   students: Student[];
+  listHeight?: number;
 }
 
-const StudentsList: React.FC<StudentsListProps> = ({ title, students }) => (
+const StudentsList: React.FC<StudentsListProps> = ({
+  title,
+  students,
+  listHeight,
+}) => (
   <Container>
     <Title>{title}</Title>
 
-    <List>
+    <List height={listHeight}>
       {students.map(student => (
         <Person key={Math.random()}>
-          <Photo />
+          <Photo src={student.avatar_url} />
 
           <InfoContainer>
             <Username>{student.github_login}</Username>

@@ -128,7 +128,11 @@ const Dashboard: React.FC = () => {
               <MonitorButton>Monitorar</MonitorButton>
             </MonitorWrapper>
 
-            <StudentsList title="Alunos Monitorados" students={allStudents} />
+            <StudentsList
+              listHeight={290}
+              title="Alunos Monitorados"
+              students={allStudents}
+            />
           </LeftContainer>
 
           <RightContainer>
@@ -159,6 +163,7 @@ const Dashboard: React.FC = () => {
             </InformationContainer>
 
             <StudentsList
+              listHeight={400}
               title="Alunos com interações abaixo da média"
               students={belowAverage}
             />
