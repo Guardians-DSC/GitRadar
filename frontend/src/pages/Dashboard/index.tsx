@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../../components/Header';
 import api from '../../services/api';
 import { confirmHasGithubToken } from '../../services/auth';
+import validationError from '../../utils/validationError';
 import StudentsList from './components/StudentsList';
 import {
   PageContainer,
@@ -26,6 +27,11 @@ const Dashboard: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
+  const [allNewInteractions, setAllNewInteractions] = useState(0);
+  const [allNewCommits, setAllNewCommits] = useState(0);
+  const [newInteractionsAverage, setNewInteractionsAverage] = useState(0);
+  const [newCommitsAverage, setNewCommitsAverage] = useState(0);
+
   const syncGithub = useCallback(async () => {
     const query = new URLSearchParams(location.search);
 
@@ -47,9 +53,36 @@ const Dashboard: React.FC = () => {
     }
   }, [location.search, history]);
 
+  const getClassInformation = useCallback(async () => {
+    const since = new Date();
+    since.setMonth(since.getMonth() - 1);
+
+    try {
+      const response = await api.get(
+        `/class/report?since=${since.toISOString()}`,
+      );
+
+      const {
+        all_new_interactions,
+        all_new_commits,
+        new_interactions_average,
+        new_commits_average,
+      } = response.data;
+
+      setAllNewInteractions(all_new_interactions);
+      setAllNewCommits(all_new_commits);
+      setNewInteractionsAverage(new_interactions_average);
+      setNewCommitsAverage(new_commits_average);
+    } catch (error) {
+      validationError(error);
+    }
+  }, []);
+
   useEffect(() => {
     syncGithub();
-  }, [syncGithub]);
+
+    getClassInformation();
+  }, [syncGithub, getClassInformation]);
 
   return (
     <PageContainer>
@@ -72,22 +105,22 @@ const Dashboard: React.FC = () => {
 
               <InformationGrid>
                 <Information>
-                  <Number>0</Number>
+                  <Number>{allNewInteractions}</Number>
                   <Label>Total de novas interações</Label>
                 </Information>
 
                 <Information>
-                  <Number>0</Number>
+                  <Number>{newInteractionsAverage}</Number>
                   <Label>Média de novas interações</Label>
                 </Information>
 
                 <Information>
-                  <Number>0</Number>
+                  <Number>{allNewCommits}</Number>
                   <Label>Total de novos commits</Label>
                 </Information>
 
                 <Information>
-                  <Number>0</Number>
+                  <Number>{newCommitsAverage}</Number>
                   <Label>Média de novos commits</Label>
                 </Information>
               </InformationGrid>
