@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import api from '../../services/api';
 import { confirmHasGithubToken } from '../../services/auth';
 import validationError from '../../utils/validationError';
+import { normalizeInformation } from '../../utils/normalizeStrings';
 import { Student } from '../../entities';
 import StudentsList from './components/StudentsList';
 import {
@@ -170,22 +171,24 @@ const Dashboard: React.FC = () => {
 
               <InformationGrid>
                 <Information>
-                  <Number>{allNewInteractions}</Number>
+                  <Number>{normalizeInformation(allNewInteractions)}</Number>
                   <Label>Total de novas interações</Label>
                 </Information>
 
                 <Information>
-                  <Number>{newInteractionsAverage}</Number>
+                  <Number>
+                    {normalizeInformation(newInteractionsAverage)}
+                  </Number>
                   <Label>Média de novas interações</Label>
                 </Information>
 
                 <Information>
-                  <Number>{allNewCommits}</Number>
+                  <Number>{normalizeInformation(allNewCommits)}</Number>
                   <Label>Total de novos commits</Label>
                 </Information>
 
                 <Information>
-                  <Number>{newCommitsAverage}</Number>
+                  <Number>{normalizeInformation(newCommitsAverage)}</Number>
                   <Label>Média de novos commits</Label>
                 </Information>
               </InformationGrid>

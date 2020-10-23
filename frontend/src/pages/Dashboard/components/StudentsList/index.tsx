@@ -13,7 +13,7 @@ import {
   Loading,
 } from './styles';
 import arrow from '../../../../assets/arrow.svg';
-import normalizeName from '../../../../utils/normalizeName';
+import { normalizeName } from '../../../../utils/normalizeStrings';
 
 interface StudentsListProps {
   title: string;
