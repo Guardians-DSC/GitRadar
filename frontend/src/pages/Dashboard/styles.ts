@@ -1,3 +1,4 @@
+import { ImSpinner2 } from 'react-icons/im';
 import styled from 'styled-components';
 
 export const PageContainer = styled.div`
@@ -99,4 +100,23 @@ export const Number = styled.h1`
 
 export const Label = styled.p`
   color: #6c6c80;
+`;
+
+export const Loading = styled(ImSpinner2)`
+  font-size: 20px;
+  color: white;
+
+  animation-name: rotating;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @keyframes rotating {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;

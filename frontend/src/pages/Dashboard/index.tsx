@@ -22,6 +22,7 @@ import {
   MonitorWrapper,
   Number,
   RightContainer,
+  Loading,
 } from './styles';
 
 const Dashboard: React.FC = () => {
@@ -35,6 +36,7 @@ const Dashboard: React.FC = () => {
   const [newInteractionsAverage, setNewInteractionsAverage] = useState(0);
   const [newCommitsAverage, setNewCommitsAverage] = useState(0);
   const [monitored, setMonitored] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const syncGithub = useCallback(async () => {
     const query = new URLSearchParams(location.search);
@@ -109,9 +111,11 @@ const Dashboard: React.FC = () => {
 
   const handleSubmit = useCallback(async () => {
     try {
+      setIsLoading(true);
       await api.post('/student', {
         github_login: monitored,
       });
+      setIsLoading(false);
 
       setMonitored('');
       setAllStudents([]);
@@ -147,7 +151,9 @@ const Dashboard: React.FC = () => {
                 onChange={e => setMonitored(e.target.value)}
                 placeholder="Digite o usuário que deseja monitorar"
               />
-              <MonitorButton onClick={handleSubmit}>Monitorar</MonitorButton>
+              <MonitorButton onClick={handleSubmit}>
+                {isLoading ? <Loading /> : 'Monitorar'}
+              </MonitorButton>
             </MonitorWrapper>
 
             <StudentsList
