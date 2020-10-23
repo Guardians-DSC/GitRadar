@@ -124,6 +124,7 @@ const Dashboard: React.FC = () => {
       getAllStudents();
       getBelowAverage();
     } catch (error) {
+      setIsLoading(false);
       validationError(error);
     }
   }, [monitored, getAllStudents, getBelowAverage]);
