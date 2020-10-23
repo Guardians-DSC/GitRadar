@@ -85,7 +85,7 @@ const Dashboard: React.FC = () => {
     try {
       const response = await api.get('/class');
 
-      setAllStudents(response.data);
+      setAllStudents([...response.data, ...response.data]);
     } catch (error) {
       validationError(error);
     }
@@ -100,7 +100,7 @@ const Dashboard: React.FC = () => {
         `/class/below_average?since=${since.toISOString()}`,
       );
 
-      setBelowAverage(response.data);
+      setBelowAverage([...response.data, ...response.data]);
     } catch (error) {
       validationError(error);
     }
@@ -129,7 +129,7 @@ const Dashboard: React.FC = () => {
             </MonitorWrapper>
 
             <StudentsList
-              listHeight={300}
+              listHeight={285}
               title="Alunos Monitorados"
               students={allStudents}
             />
@@ -163,7 +163,7 @@ const Dashboard: React.FC = () => {
             </InformationContainer>
 
             <StudentsList
-              listHeight={420}
+              listHeight={385}
               title="Alunos com interações abaixo da média"
               students={belowAverage}
             />

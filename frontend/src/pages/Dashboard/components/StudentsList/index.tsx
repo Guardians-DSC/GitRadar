@@ -11,6 +11,8 @@ import {
   Title,
   Username,
 } from './styles';
+import arrow from '../../../../assets/arrow.svg';
+import normalizeName from '../../../../utils/normalizeName';
 
 interface StudentsListProps {
   title: string;
@@ -33,10 +35,10 @@ const StudentsList: React.FC<StudentsListProps> = ({
 
           <InfoContainer>
             <Username>{student.github_login}</Username>
-            <Name>{student.name}</Name>
+            <Name>{normalizeName(student.name, 34)}</Name>
           </InfoContainer>
 
-          <Arrow />
+          <Arrow src={arrow} />
         </Person>
       ))}
     </List>

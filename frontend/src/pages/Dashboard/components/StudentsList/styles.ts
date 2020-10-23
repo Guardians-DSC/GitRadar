@@ -9,7 +9,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h3`
-  margin-bottom: 2vh;
+  margin-bottom: 10px;
 `;
 
 interface ListProps {
@@ -18,6 +18,7 @@ interface ListProps {
 
 export const List = styled.div`
   overflow-y: scroll;
+  overflow-x: hidden;
   width: 100%;
   max-height: ${(props: ListProps) =>
     props.height ? `calc(100vh - ${props.height}px)` : '100%'};
@@ -36,6 +37,12 @@ export const Person = styled.button`
   align-items: center;
   justify-content: space-between;
   margin: 10px 0;
+  transition: 0.2s;
+  padding: 0 10px;
+
+  &:hover {
+    transform: scale(1.01);
+  }
 `;
 
 export const Photo = styled.img`
@@ -62,4 +69,6 @@ export const Name = styled.p`
   color: #a8a8b3;
 `;
 
-export const Arrow = styled.div``;
+export const Arrow = styled.img`
+  margin: 0 10px 0 5px;
+`;

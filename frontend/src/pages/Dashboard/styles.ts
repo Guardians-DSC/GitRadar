@@ -23,7 +23,7 @@ export const Content = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
-  padding-top: 7vh;
+  padding-top: 40px;
 `;
 
 export const LeftContainer = styled.div`
@@ -76,11 +76,11 @@ export const InformationContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-bottom: 3vh;
+  margin-bottom: 15px;
 `;
 
 export const InformationTitle = styled.h3`
-  margin-bottom: 2vh;
+  margin-bottom: 10px;
 `;
 
 export const InformationGrid = styled.div`
