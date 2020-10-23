@@ -182,7 +182,7 @@ const Dashboard: React.FC = () => {
 
               <InformationGrid>
                 <Information>
-                  <Number>{normalizeInformation(allNewInteractions)}</Number>
+                  <Number>{allNewInteractions}</Number>
                   <Label>Total de novas interações</Label>
                 </Information>
 
@@ -194,7 +194,7 @@ const Dashboard: React.FC = () => {
                 </Information>
 
                 <Information>
-                  <Number>{normalizeInformation(allNewCommits)}</Number>
+                  <Number>{allNewCommits}</Number>
                   <Label>Total de novos commits</Label>
                 </Information>
 
