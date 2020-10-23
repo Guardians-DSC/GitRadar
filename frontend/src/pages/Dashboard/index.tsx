@@ -34,6 +34,7 @@ const Dashboard: React.FC = () => {
   const [allNewCommits, setAllNewCommits] = useState(0);
   const [newInteractionsAverage, setNewInteractionsAverage] = useState(0);
   const [newCommitsAverage, setNewCommitsAverage] = useState(0);
+  const [monitored, setMonitored] = useState('');
 
   const syncGithub = useCallback(async () => {
     const query = new URLSearchParams(location.search);
@@ -85,7 +86,7 @@ const Dashboard: React.FC = () => {
     try {
       const response = await api.get('/class');
 
-      setAllStudents([...response.data, ...response.data]);
+      setAllStudents(response.data);
     } catch (error) {
       validationError(error);
     }
@@ -100,11 +101,28 @@ const Dashboard: React.FC = () => {
         `/class/below_average?since=${since.toISOString()}`,
       );
 
-      setBelowAverage([...response.data, ...response.data]);
+      setBelowAverage(response.data);
     } catch (error) {
       validationError(error);
     }
   }, []);
+
+  const handleSubmit = useCallback(async () => {
+    try {
+      await api.post('/student', {
+        github_login: monitored,
+      });
+
+      setMonitored('');
+      setAllStudents([]);
+      setBelowAverage([]);
+
+      getAllStudents();
+      getBelowAverage();
+    } catch (error) {
+      validationError(error);
+    }
+  }, [monitored, getAllStudents, getBelowAverage]);
 
   useEffect(() => {
     syncGithub();
@@ -124,8 +142,12 @@ const Dashboard: React.FC = () => {
         <Content>
           <LeftContainer>
             <MonitorWrapper>
-              <MonitorInput placeholder="Digite o usuário que deseja monitorar" />
-              <MonitorButton>Monitorar</MonitorButton>
+              <MonitorInput
+                value={monitored}
+                onChange={e => setMonitored(e.target.value)}
+                placeholder="Digite o usuário que deseja monitorar"
+              />
+              <MonitorButton onClick={handleSubmit}>Monitorar</MonitorButton>
             </MonitorWrapper>
 
             <StudentsList
