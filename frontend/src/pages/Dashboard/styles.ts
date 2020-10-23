@@ -17,3 +17,27 @@ export const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
 `;
+
+export const Content = styled.div``;
+
+export const LeftContainer = styled.div``;
+
+export const RightContainer = styled.div``;
+
+export const MonitorWrapper = styled.div``;
+
+export const MonitorInput = styled.input``;
+
+export const MonitorButton = styled.button``;
+
+export const InformationContainer = styled.div``;
+
+export const InformationTitle = styled.h3``;
+
+export const InformationGrid = styled.div``;
+
+export const Information = styled.div``;
+
+export const Number = styled.p``;
+
+export const Label = styled.p``;

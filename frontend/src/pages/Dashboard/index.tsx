@@ -4,7 +4,22 @@ import { toast } from 'react-toastify';
 import Header from '../../components/Header';
 import api from '../../services/api';
 import { confirmHasGithubToken } from '../../services/auth';
-import { PageContainer, Container } from './styles';
+import StudentsList from './components/StudentsList';
+import {
+  PageContainer,
+  Container,
+  Information,
+  InformationContainer,
+  InformationGrid,
+  InformationTitle,
+  Label,
+  LeftContainer,
+  MonitorButton,
+  MonitorInput,
+  MonitorWrapper,
+  Number,
+  RightContainer,
+} from './styles';
 
 const Dashboard: React.FC = () => {
   const location = useLocation();
@@ -39,6 +54,48 @@ const Dashboard: React.FC = () => {
     <PageContainer>
       <Container>
         <Header />
+
+        <LeftContainer>
+          <MonitorWrapper>
+            <MonitorInput placeholder="Digite o usuário que deseja monitorar" />
+            <MonitorButton>Monitorar</MonitorButton>
+          </MonitorWrapper>
+
+          <StudentsList title="Alunos Monitorados" students={[]} />
+        </LeftContainer>
+
+        <RightContainer>
+          <InformationContainer>
+            <InformationTitle>Informações da Turma</InformationTitle>
+
+            <InformationGrid>
+              <Information>
+                <Number>0</Number>
+                <Label>Total de novas interações</Label>
+              </Information>
+
+              <Information>
+                <Number>0</Number>
+                <Label>Média de novas interações</Label>
+              </Information>
+
+              <Information>
+                <Number>0</Number>
+                <Label>Total de novos commits</Label>
+              </Information>
+
+              <Information>
+                <Number>0</Number>
+                <Label>Média de novos commits</Label>
+              </Information>
+            </InformationGrid>
+          </InformationContainer>
+
+          <StudentsList
+            title="Alunos com interações abaixo da média"
+            students={[]}
+          />
+        </RightContainer>
       </Container>
     </PageContainer>
   );
