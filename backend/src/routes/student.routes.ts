@@ -5,6 +5,6 @@ import StudentController from '../controllers/StudentController';
 const studentRouter = Router();
 
 studentRouter.post('/', StudentController.store);
-studentRouter.get('/:username/reports', StudentController.index);
+studentRouter.get('/report/:username', StudentController.show);
 
 export default studentRouter;

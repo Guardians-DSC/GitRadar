@@ -34,7 +34,7 @@ class GetPeriodStudentDailyReportsService {
     until: string,
   ): Promise<Response> {
     const sinceDate = new Date(since);
-    const untilDate = until !== 'undefined' ? new Date(until) : new Date();
+    const untilDate = new Date(until);
 
     const reportsRepository = getCustomRepository(
       StudentDailyReportsRepository,
@@ -60,6 +60,7 @@ class GetPeriodStudentDailyReportsService {
       sinceDate,
       untilDate,
     );
+
     for (const report of reports) {
       finalPeriodReport.additions += report.additions;
       finalPeriodReport.deletions += report.deletions;
