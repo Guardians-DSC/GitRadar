@@ -50,7 +50,7 @@ class App {
   }
 
   private defineCron(): void {
-    cron.schedule('43 23 * * *', async () =>
+    cron.schedule('00 23 * * *', async () =>
       this.queueProvider.add({
         jobName: 'request students process',
         queueName: 'students-process-requester',
