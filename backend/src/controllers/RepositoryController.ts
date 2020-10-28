@@ -24,6 +24,7 @@ class RepositoryController {
 
     const studentRepositories = await repositoriesRepository.find({
       where: { student_id: student.id },
+      loadEagerRelations: false,
     });
 
     return response.json(studentRepositories);
