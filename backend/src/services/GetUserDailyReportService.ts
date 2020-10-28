@@ -70,7 +70,7 @@ class GetUserDaily {
       },
       payload: {
         new_forks,
-        new_interactions,
+        new_interactions: new_interactions + new_commits,
         new_issues,
         new_prs,
         new_repositories,

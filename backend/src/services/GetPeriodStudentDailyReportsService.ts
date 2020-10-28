@@ -3,7 +3,7 @@ import StudentDailyReportsRepository from '../repositories/StudentDailyReportsRe
 import Commit from '../models/Commit';
 
 interface CommitResponse {
-  repository: {
+  repository?: {
     name: string;
     url: string;
   };
@@ -76,16 +76,23 @@ class GetPeriodStudentDailyReportsService {
         student_daily_report_id: report.id,
       });
 
-      const commitsResponse: CommitResponse[] = commits.map(commit => ({
-        sha: commit.sha,
-        additions: commit.additions,
-        deletions: commit.deletions,
-        message: commit.message,
-        repository: {
-          name: commit.repository.name,
-          url: commit.repository.html_url,
-        },
-      }));
+      const commitsResponse: CommitResponse[] = commits.map(commit => {
+        const response: CommitResponse = {
+          sha: commit.sha,
+          additions: commit.additions,
+          deletions: commit.deletions,
+          message: commit.message,
+        };
+
+        if (commit.repository) {
+          response.repository = {
+            name: commit.repository.name,
+            url: commit.repository.html_url,
+          };
+        }
+
+        return response;
+      });
 
       finalPeriodReport.commits = [
         ...finalPeriodReport.commits,

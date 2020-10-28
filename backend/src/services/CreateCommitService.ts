@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import Commit from '../models/Commit';
 
 interface Request {
-  repository_id: string;
+  repository_id: string | null;
   student_id: string;
   student_daily_report_id: string;
   message: string;

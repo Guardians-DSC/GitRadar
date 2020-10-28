@@ -53,10 +53,23 @@ const processStudentProcessor = async (
   });
 
   const createCommit = new CreateCommitService();
+  console.log(
+    'processando',
+    github_id,
+    commits,
+    'daily',
+    studentDailyReport,
+    '\n\n',
+  );
   for (const commit of commits) {
-    const { id: repository_id } = await repositoriesRepository.findOne({
+    const repository = await repositoriesRepository.findOne({
       github_id: commit.repository.id,
     });
+
+    let repository_id = null;
+    if (repository) {
+      repository_id = repository.id;
+    }
 
     await createCommit.execute({
       additions: commit.additions,
