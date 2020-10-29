@@ -9,14 +9,17 @@ class StudentDailyReportsRepository extends Repository<StudentDailyReport> {
     since: Date,
     until: Date,
   ): Promise<StudentDailyReport[] | null> {
-    const findStudentDailyReport = await this.find({
+    since.setDate(since.getDate() - 1);
+    until.setDate(until.getDate() + 1);
+
+    const foundStudentDailyReports = await this.find({
       where: {
         created_at: Between(since, until),
         student_id,
       },
     });
 
-    return findStudentDailyReport || null;
+    return foundStudentDailyReports || null;
   }
 }
 

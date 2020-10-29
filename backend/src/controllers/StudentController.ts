@@ -9,6 +9,7 @@ import CreateStudentService from '../services/CreateStudentService';
 import CreateRepositoryService from '../services/CreateRepositoryService';
 import GetPeriodStudentDailyReportsService from '../services/GetPeriodStudentDailyReportsService';
 import Student from '../models/Student';
+import AppError from '../errors/AppError';
 
 class StudentController {
   static async store(request: Request, response: Response): Promise<Response> {
@@ -28,11 +29,14 @@ class StudentController {
     const { top_language } = await getLanguages.execute(github_login);
 
     const getUser = new GetUserService();
-    const { github_id } = await getUser.execute({ username: github_login });
+    const { github_id, name } = await getUser.execute({
+      username: github_login,
+    });
 
     const createStudentService = new CreateStudentService();
     const student = await createStudentService.execute({
       github_id,
+      name,
       github_login,
       avatar_url,
       teacher_id: teacher.id,
@@ -54,7 +58,7 @@ class StudentController {
     return response.json(student);
   }
 
-  static async index(request: Request, response: Response): Promise<Response> {
+  static async show(request: Request, response: Response): Promise<Response> {
     const schema = yup.object().shape({
       since: yup.string().required('Since date string is required.'),
       until: yup.string(),
@@ -62,12 +66,12 @@ class StudentController {
     await schema.validate(request.query);
 
     const { username } = request.params;
-    const { since, until } = request.query;
+    let { until } = request.query;
+    until = until || new Date().toISOString();
+    const { since } = request.query;
 
     if (!username) {
-      return response.status(400).json({
-        message: 'Student Github Login is required.',
-      });
+      throw new AppError('Github username in params is required.', 400);
     }
 
     const getUser = new GetUserService();

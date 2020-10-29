@@ -51,8 +51,8 @@ const Login: React.FC = () => {
         password,
       });
 
-      const { teacher, token } = response.data;
-      login(token, teacher);
+      const { teacher, token, hasGithubToken } = response.data;
+      login(token, teacher, hasGithubToken);
 
       setLoading(false);
       toast('Login realizado com sucesso!', { type: 'success' });
