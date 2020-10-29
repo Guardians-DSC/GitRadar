@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../../components/Header';
@@ -120,25 +120,30 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
-  const handleSubmit = useCallback(async () => {
-    try {
-      setLoadingSubmit(true);
-      await api.post('/student', {
-        github_login: monitored,
-      });
-      setLoadingSubmit(false);
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
 
-      setMonitored('');
-      setAllStudents([]);
-      setBelowAverage([]);
+      try {
+        setLoadingSubmit(true);
+        await api.post('/student', {
+          github_login: monitored,
+        });
+        setLoadingSubmit(false);
 
-      getAllStudents();
-      getBelowAverage();
-    } catch (error) {
-      setLoadingSubmit(false);
-      validationError(error);
-    }
-  }, [monitored, getAllStudents, getBelowAverage]);
+        setMonitored('');
+        setAllStudents([]);
+        setBelowAverage([]);
+
+        getAllStudents();
+        getBelowAverage();
+      } catch (error) {
+        setLoadingSubmit(false);
+        validationError(error);
+      }
+    },
+    [monitored, getAllStudents, getBelowAverage],
+  );
 
   useEffect(() => {
     syncGithub();
@@ -157,13 +162,13 @@ const Dashboard: React.FC = () => {
 
         <Content>
           <LeftContainer>
-            <MonitorWrapper>
+            <MonitorWrapper onSubmit={handleSubmit}>
               <MonitorInput
                 value={monitored}
                 onChange={e => setMonitored(e.target.value)}
                 placeholder="Digite o usuário que deseja monitorar"
               />
-              <MonitorButton onClick={handleSubmit}>
+              <MonitorButton type="submit">
                 {loadingSubmit ? <Loading /> : 'Monitorar'}
               </MonitorButton>
             </MonitorWrapper>

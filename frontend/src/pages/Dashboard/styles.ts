@@ -44,7 +44,7 @@ export const RightContainer = styled.div`
   padding-left: 50px;
 `;
 
-export const MonitorWrapper = styled.div`
+export const MonitorWrapper = styled.form`
   width: 425px;
   height: 48px;
   display: flex;
