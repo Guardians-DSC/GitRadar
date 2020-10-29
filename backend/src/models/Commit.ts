@@ -20,21 +20,21 @@ class Commit {
   @Column('uuid')
   repository_id: string;
 
-  @ManyToOne(() => Repository)
+  @ManyToOne(() => Repository, { eager: true })
   @JoinColumn({ name: 'repository_id' })
   repository: Repository;
 
   @Column('uuid')
   student_id: string;
 
-  @ManyToOne(() => Student)
+  @ManyToOne(() => Student, { eager: true })
   @JoinColumn({ name: 'student_id' })
   student: Student;
 
   @Column('uuid')
   student_daily_report_id: string;
 
-  @ManyToOne(() => StudentDailyReport)
+  @ManyToOne(() => StudentDailyReport, { eager: true })
   @JoinColumn({ name: 'student_daily_report_id' })
   studentDailyReport: StudentDailyReport;
 

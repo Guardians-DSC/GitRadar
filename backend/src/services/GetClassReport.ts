@@ -34,10 +34,12 @@ class GetClassReport {
         currentDailyReport.new_interactions;
     }
 
-    classInformation.new_commits_average =
-      classInformation.all_new_commits / students.length;
-    classInformation.new_interactions_average =
-      classInformation.all_new_interactions / students.length;
+    if (students.length !== 0) {
+      classInformation.new_commits_average =
+        classInformation.all_new_commits / students.length;
+      classInformation.new_interactions_average =
+        classInformation.all_new_interactions / students.length;
+    }
 
     return classInformation;
   }

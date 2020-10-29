@@ -18,7 +18,7 @@ class Student {
   @Column('uuid')
   teacher_id: string;
 
-  @ManyToOne(() => Teacher)
+  @ManyToOne(() => Teacher, { eager: true })
   @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
 

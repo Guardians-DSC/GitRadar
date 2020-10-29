@@ -18,7 +18,7 @@ class Repository {
   @Column('uuid')
   student_id: string;
 
-  @ManyToOne(() => Student)
+  @ManyToOne(() => Student, { eager: true })
   @JoinColumn({ name: 'student_id' })
   student: Student;
 
