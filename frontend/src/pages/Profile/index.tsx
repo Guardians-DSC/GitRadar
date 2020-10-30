@@ -4,11 +4,36 @@ import Header from '../../components/Header';
 import api from '../../services/api';
 import validationError from '../../utils/validationError';
 import { Commit, Repository } from '../../entities';
-import { PageContainer, Container } from './styles';
+import {
+  PageContainer,
+  Container,
+  Information,
+  Label,
+  Name,
+  Number,
+  Photo,
+  ProfileContainer,
+  ReportInfo,
+  UserContainer,
+  UserInfo,
+  Username,
+} from './styles';
 
 interface ProfileParams {
   username: string;
 }
+
+interface ShowInformationProps {
+  number: number;
+  label: string;
+}
+
+const ShowInformation: React.FC<ShowInformationProps> = ({ number, label }) => (
+  <Information>
+    <Number>{number}</Number>
+    <Label>{label}</Label>
+  </Information>
+);
 
 const Profile: React.FC = () => {
   const { username } = useParams<ProfileParams>();
@@ -59,11 +84,42 @@ const Profile: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    getStudentReport();
+
+    getRepositories();
+  }, [getStudentReport, getRepositories]);
+
   return (
     <PageContainer>
       <Container>
         <Header />
-        {username}
+
+        <ProfileContainer>
+          <UserContainer>
+            <Photo />
+
+            <UserInfo>
+              <Username>davigsousa</Username>
+              <Name>Davi Sousa</Name>
+            </UserInfo>
+          </UserContainer>
+
+          <ReportInfo>
+            <ShowInformation number={newCommits} label="Novos Commits" />
+            <ShowInformation
+              number={newInteractions}
+              label="Novas Interações"
+            />
+            <ShowInformation number={additions} label="Novas Linhas" />
+            <ShowInformation number={deletions} label="Linhas Removidas" />
+            <ShowInformation number={newForks} label="Novos Forks" />
+            <ShowInformation number={newIssues} label="Novas Issues" />
+            <ShowInformation number={newPrs} label="Novas PR's" />
+            <ShowInformation number={newRepos} label="Novas Repositórios" />
+            <ShowInformation number={newStars} label="Novas Stars" />
+          </ReportInfo>
+        </ProfileContainer>
       </Container>
     </PageContainer>
   );
