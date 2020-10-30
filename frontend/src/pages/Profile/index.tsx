@@ -38,6 +38,8 @@ const ShowInformation: React.FC<ShowInformationProps> = ({ number, label }) => (
 const Profile: React.FC = () => {
   const { username } = useParams<ProfileParams>();
 
+  const [photo, setPhoto] = useState('');
+  const [name, setName] = useState('');
   const [newCommits, setNewCommits] = useState(0);
   const [newInteractions, setNewInteractions] = useState(0);
   const [additions, setAdditions] = useState(0);
@@ -75,10 +77,14 @@ const Profile: React.FC = () => {
     }
   }, []);
 
-  const getRepositories = useCallback(async () => {
+  const getStudentInfo = useCallback(async () => {
     try {
-      const response = await api.get(`/student/${username}/repositories`);
-      setRepositories(response.data);
+      const response = await api.get(`/student/${username}`);
+      const { student, repositories: repositoriesResponse } = response.data;
+
+      setName(student.name);
+      setPhoto(student.avatar_url);
+      setRepositories(repositoriesResponse);
     } catch (error) {
       validationError(error);
     }
@@ -87,8 +93,8 @@ const Profile: React.FC = () => {
   useEffect(() => {
     getStudentReport();
 
-    getRepositories();
-  }, [getStudentReport, getRepositories]);
+    getStudentInfo();
+  }, [getStudentReport, getStudentInfo]);
 
   return (
     <PageContainer>
@@ -97,11 +103,11 @@ const Profile: React.FC = () => {
 
         <ProfileContainer>
           <UserContainer>
-            <Photo />
+            <Photo src={photo} alt={name} />
 
             <UserInfo>
-              <Username>davigsousa</Username>
-              <Name>Davi Sousa</Name>
+              <Username>{username}</Username>
+              <Name>{name}</Name>
             </UserInfo>
           </UserContainer>
 
