@@ -18,19 +18,44 @@ export const Container = styled.div`
   justify-content: flex-start;
 `;
 
-export const ProfileContainer = styled.div``;
+export const ProfileContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-export const UserContainer = styled.div``;
+export const UserContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
-export const Photo = styled.img``;
+export const Photo = styled.img`
+  width: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+`;
 
-export const UserInfo = styled.div``;
+export const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+`;
 
 export const Username = styled.h1``;
 
 export const Name = styled.p``;
 
-export const ReportInfo = styled.div``;
+export const ReportInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 68%;
+`;
 
 export const Information = styled.div`
   padding: 10px;
