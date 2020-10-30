@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import api from '../../services/api';
 import validationError from '../../utils/validationError';
-import { Commit } from '../../entities';
+import { Commit, Repository } from '../../entities';
 import { PageContainer, Container } from './styles';
 
 interface ProfileParams {
@@ -23,6 +23,7 @@ const Profile: React.FC = () => {
   const [newRepos, setNewRepos] = useState(0);
   const [newStars, setNewStars] = useState(0);
   const [commits, setCommits] = useState<Commit[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>([]);
 
   const getStudentReport = useCallback(async () => {
     const since = new Date();
@@ -44,6 +45,15 @@ const Profile: React.FC = () => {
       setNewRepos(report.new_repositories);
       setNewStars(report.new_stars);
       setCommits(report.commits);
+    } catch (error) {
+      validationError(error);
+    }
+  }, []);
+
+  const getRepositories = useCallback(async () => {
+    try {
+      const response = await api.get(`/student/${username}/repositories`);
+      setRepositories(response.data);
     } catch (error) {
       validationError(error);
     }
