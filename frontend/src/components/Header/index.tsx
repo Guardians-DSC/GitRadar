@@ -9,6 +9,7 @@ import {
   GreetingsArea,
   Highlight,
   Logo,
+  LogoLink,
   LogoutButton,
   LogoutIcon,
   MessageArea,
@@ -41,7 +42,9 @@ const Header: React.FC = () => {
     <Container>
       <MessageArea>
         <GreetingsArea>
-          <Logo src={logo} />
+          <LogoLink to="/dashboard">
+            <Logo src={logo} />
+          </LogoLink>
           <Greetings>
             Bem-vindo, <Highlight>{teacher?.name}</Highlight>
           </Greetings>
