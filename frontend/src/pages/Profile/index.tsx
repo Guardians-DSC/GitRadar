@@ -30,17 +30,25 @@ interface ProfileParams {
 interface ShowInformationProps {
   number: number;
   label: string;
+  type?: 'additions' | 'deletions' | 'regular';
 }
 
-const ShowInformation: React.FC<ShowInformationProps> = ({ number, label }) => (
+const ShowInformation: React.FC<ShowInformationProps> = ({
+  number,
+  label,
+  type = 'regular',
+}) => (
   <Information>
-    <Number>{number}</Number>
+    <Number type={type}>{number}</Number>
     <Label>{label}</Label>
   </Information>
 );
 
 const Profile: React.FC = () => {
   const { username } = useParams<ProfileParams>();
+
+  const [loadingRepos, setLoadingRepos] = useState(false);
+  const [loadingCommits, setLoadingCommits] = useState(false);
 
   const [photo, setPhoto] = useState('');
   const [name, setName] = useState('');
@@ -59,12 +67,14 @@ const Profile: React.FC = () => {
   const getStudentReport = useCallback(async () => {
     const since = new Date();
     since.setMonth(since.getMonth() - 1);
+    setLoadingCommits(true);
 
     try {
       const response = await api.get(
         `/student/${username}/report?since=${since.toISOString()}`,
       );
       const report = response.data;
+      setLoadingCommits(false);
 
       setNewCommits(report.new_commits);
       setNewInteractions(report.new_interactions);
@@ -77,22 +87,26 @@ const Profile: React.FC = () => {
       setNewStars(report.new_stars);
       setCommits(report.commits);
     } catch (error) {
+      setLoadingCommits(false);
       validationError(error);
     }
-  }, []);
+  }, [username]);
 
   const getStudentInfo = useCallback(async () => {
+    setLoadingRepos(true);
     try {
       const response = await api.get(`/student/${username}`);
       const { student, repositories: repositoriesResponse } = response.data;
+      setLoadingRepos(false);
 
       setName(student.name);
       setPhoto(student.avatar_url);
       setRepositories(repositoriesResponse);
     } catch (error) {
+      setLoadingRepos(false);
       validationError(error);
     }
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     getStudentReport();
@@ -121,12 +135,20 @@ const Profile: React.FC = () => {
               number={newInteractions}
               label="Novas Interações"
             />
-            <ShowInformation number={additions} label="Novas Linhas" />
-            <ShowInformation number={deletions} label="Linhas Removidas" />
+            <ShowInformation
+              type="additions"
+              number={additions}
+              label="Novas Linhas"
+            />
+            <ShowInformation
+              type="deletions"
+              number={deletions}
+              label="Linhas Removidas"
+            />
             <ShowInformation number={newForks} label="Novos Forks" />
             <ShowInformation number={newIssues} label="Novas Issues" />
             <ShowInformation number={newPrs} label="Novas PR's" />
-            <ShowInformation number={newRepos} label="Novas Repositórios" />
+            <ShowInformation number={newRepos} label="Novos Repositórios" />
             <ShowInformation number={newStars} label="Novas Stars" />
           </ReportInfo>
         </ProfileContainer>
@@ -136,7 +158,7 @@ const Profile: React.FC = () => {
             <ListWrapper>
               <ListContainer
                 listHeight={350}
-                isLoading={false}
+                isLoading={loadingRepos}
                 items={repositories}
                 mapItem={item => ({
                   label: item.full_name,
@@ -151,7 +173,7 @@ const Profile: React.FC = () => {
             <ListWrapper>
               <ListContainer
                 listHeight={280}
-                isLoading={false}
+                isLoading={loadingCommits}
                 items={commits}
                 mapItem={item => {
                   const repositoryName = item.repository

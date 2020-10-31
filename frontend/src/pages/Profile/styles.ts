@@ -61,8 +61,19 @@ export const Information = styled.div`
   padding: 10px;
 `;
 
+interface NumberProps {
+  type: 'additions' | 'deletions' | 'regular';
+}
+
+const colorTypes = {
+  additions: '#04D361',
+  deletions: '#F34444',
+  regular: '#3D3D4D',
+};
+
 export const Number = styled.h1`
   font-size: 28px;
+  color: ${(props: NumberProps) => colorTypes[props.type]};
 `;
 
 export const Label = styled.p`
@@ -70,6 +81,7 @@ export const Label = styled.p`
 `;
 
 export const ListsWrapper = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: row;
   padding-top: 20px;
