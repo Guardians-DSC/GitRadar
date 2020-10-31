@@ -7,7 +7,7 @@ import { confirmHasGithubToken } from '../../services/auth';
 import validationError from '../../utils/validationError';
 import { normalizeInformation } from '../../utils/normalizeStrings';
 import { Student } from '../../entities';
-import StudentsList from './components/StudentsList';
+import ListContainer from '../../components/ListContainer';
 import {
   PageContainer,
   Container,
@@ -173,11 +173,16 @@ const Dashboard: React.FC = () => {
               </MonitorButton>
             </MonitorWrapper>
 
-            <StudentsList
+            <ListContainer
               isLoading={loadingStudents}
               listHeight={285}
               title="Alunos Monitorados"
-              students={allStudents}
+              items={allStudents}
+              mapItem={item => ({
+                label: item.github_login,
+                subLabel: item.name,
+                photo: item.avatar_url,
+              })}
             />
           </LeftContainer>
 
@@ -210,11 +215,16 @@ const Dashboard: React.FC = () => {
               </InformationGrid>
             </InformationContainer>
 
-            <StudentsList
+            <ListContainer
               isLoading={loadingBelow}
               listHeight={385}
               title="Alunos com interações abaixo da média"
-              students={belowAverage}
+              items={belowAverage}
+              mapItem={item => ({
+                label: item.github_login,
+                subLabel: item.name,
+                photo: item.avatar_url,
+              })}
             />
           </RightContainer>
         </Content>
