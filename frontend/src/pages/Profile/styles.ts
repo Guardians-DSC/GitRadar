@@ -18,7 +18,7 @@ export const Container = styled.div`
   justify-content: flex-start;
 `;
 
-export const ProfileContainer = styled.div`
+export const ProfileContainer = styled.section`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -67,4 +67,23 @@ export const Number = styled.h1`
 
 export const Label = styled.p`
   color: #6c6c80;
+`;
+
+export const ListsWrapper = styled.section`
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+`;
+
+export const SideContainer = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 40px;
+`;
+
+export const ListWrapper = styled.div`
+  width: 100%;
 `;

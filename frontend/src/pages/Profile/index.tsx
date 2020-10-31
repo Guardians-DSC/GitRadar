@@ -17,7 +17,11 @@ import {
   UserContainer,
   UserInfo,
   Username,
+  ListsWrapper,
+  SideContainer,
+  ListWrapper,
 } from './styles';
+import ListContainer from '../../components/ListContainer';
 
 interface ProfileParams {
   username: string;
@@ -126,6 +130,44 @@ const Profile: React.FC = () => {
             <ShowInformation number={newStars} label="Novas Stars" />
           </ReportInfo>
         </ProfileContainer>
+
+        <ListsWrapper>
+          <SideContainer>
+            <ListWrapper>
+              <ListContainer
+                listHeight={350}
+                isLoading={false}
+                items={repositories}
+                mapItem={item => ({
+                  label: item.full_name,
+                  subLabel: item.description || 'Sem descrição.',
+                })}
+                title="Repositórios"
+              />
+            </ListWrapper>
+          </SideContainer>
+
+          <SideContainer>
+            <ListWrapper>
+              <ListContainer
+                listHeight={280}
+                isLoading={false}
+                items={commits}
+                mapItem={item => {
+                  const repositoryName = item.repository
+                    ? item.repository.name
+                    : 'Repositório indisponível';
+
+                  return {
+                    label: repositoryName,
+                    subLabel: item.message,
+                  };
+                }}
+                title="Commits"
+              />
+            </ListWrapper>
+          </SideContainer>
+        </ListsWrapper>
       </Container>
     </PageContainer>
   );

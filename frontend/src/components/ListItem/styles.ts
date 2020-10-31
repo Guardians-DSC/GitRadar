@@ -29,6 +29,7 @@ export const InfoContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  text-align: start;
 `;
 
 export const Label = styled.p`
