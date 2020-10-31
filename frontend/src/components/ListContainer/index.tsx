@@ -8,12 +8,15 @@ interface ShowListProps {
   notFoundMessage?: string;
   items: any[];
   mapItem: (item: any) => Item;
+  isExternal?: boolean;
 }
 
 interface Item {
   photo?: string;
   label: string;
   subLabel: string;
+  link?: string;
+  isExternal?: boolean;
 }
 
 const ShowList: React.FC<ShowListProps> = ({
@@ -21,9 +24,10 @@ const ShowList: React.FC<ShowListProps> = ({
   items,
   mapItem,
   notFoundMessage,
+  isExternal,
 }) => {
   if (items.length === 0) {
-    return <NotFound>{notFoundMessage || 'Nenhum aluno encontrado.'}</NotFound>;
+    return <NotFound>{notFoundMessage || 'Nenhum item encontrado.'}</NotFound>;
   }
 
   return (
@@ -33,9 +37,12 @@ const ShowList: React.FC<ShowListProps> = ({
 
         return (
           <ListItem
+            key={Math.random()}
             photo={mappedItem.photo}
             label={mappedItem.label}
             subLabel={mappedItem.subLabel}
+            link={mappedItem.link}
+            isExternal={isExternal}
           />
         );
       })}
@@ -54,6 +61,7 @@ const ListContainer: React.FC<ListContainerProps> = ({
   items,
   mapItem,
   listHeight,
+  isExternal,
 }) => (
   <Container>
     <Title>{title}</Title>
@@ -61,7 +69,12 @@ const ListContainer: React.FC<ListContainerProps> = ({
     {isLoading ? (
       <Loading />
     ) : (
-      <ShowList listHeight={listHeight} items={items} mapItem={mapItem} />
+      <ShowList
+        listHeight={listHeight}
+        items={items}
+        mapItem={mapItem}
+        isExternal={isExternal}
+      />
     )}
   </Container>
 );

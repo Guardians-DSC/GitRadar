@@ -14,10 +14,18 @@ interface ListItemProps {
   photo?: string;
   label: string;
   subLabel: string;
+  link?: string;
+  isExternal?: boolean;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ photo, label, subLabel }) => (
-  <Container key={Math.random()}>
+const ListItem: React.FC<ListItemProps> = ({
+  photo,
+  label,
+  subLabel,
+  link,
+  isExternal,
+}) => (
+  <Container href={link} target={isExternal ? '_blank' : undefined}>
     {photo && <Photo src={photo} />}
 
     <InfoContainer>

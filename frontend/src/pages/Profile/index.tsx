@@ -163,8 +163,10 @@ const Profile: React.FC = () => {
                 mapItem={item => ({
                   label: item.full_name,
                   subLabel: item.description || 'Sem descrição.',
+                  link: item.html_url,
                 })}
                 title="Repositórios"
+                isExternal
               />
             </ListWrapper>
           </SideContainer>
@@ -179,13 +181,18 @@ const Profile: React.FC = () => {
                   const repositoryName = item.repository
                     ? item.repository.name
                     : 'Repositório indisponível';
+                  const repositoryLink = item.repository
+                    ? `https://github.com/${username}/${repositoryName}`
+                    : '';
 
                   return {
                     label: repositoryName,
                     subLabel: item.message,
+                    link: repositoryLink,
                   };
                 }}
                 title="Commits"
+                isExternal
               />
             </ListWrapper>
           </SideContainer>

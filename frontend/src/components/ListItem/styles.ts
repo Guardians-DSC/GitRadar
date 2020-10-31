@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.button`
+export const Container = styled.a`
   border: none;
   background: none;
   width: 100%;
@@ -11,8 +11,10 @@ export const Container = styled.button`
   margin: 10px 0;
   transition: 0.2s;
   padding: 0 10px;
+  text-decoration: none;
 
   &:hover {
+    cursor: pointer;
     transform: scale(1.01);
   }
 `;

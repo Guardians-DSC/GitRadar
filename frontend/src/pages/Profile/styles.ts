@@ -91,7 +91,7 @@ export const SideContainer = styled.div`
   width: 50%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   margin: 0 40px;
 `;
