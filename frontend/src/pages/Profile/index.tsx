@@ -20,6 +20,7 @@ import {
   ListsWrapper,
   SideContainer,
   ListWrapper,
+  PhotoLink,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
 
@@ -121,7 +122,14 @@ const Profile: React.FC = () => {
 
         <ProfileContainer>
           <UserContainer>
-            <Photo src={photo} alt={username} />
+            {photo && (
+              <PhotoLink
+                href={`https://github.com/${username}`}
+                target="_blank"
+              >
+                <Photo src={photo} alt={username} />
+              </PhotoLink>
+            )}
 
             <UserInfo>
               <Username>{username}</Username>

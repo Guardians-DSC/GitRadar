@@ -32,10 +32,15 @@ export const UserContainer = styled.div`
   width: 32%;
 `;
 
-export const Photo = styled.img`
+export const PhotoLink = styled.a`
   width: 80px;
-  border-radius: 50%;
   margin-right: 20px;
+  border-radius: 50%;
+`;
+
+export const Photo = styled.img`
+  border-radius: 50%;
+  width: 100%;
 `;
 
 export const UserInfo = styled.div`
