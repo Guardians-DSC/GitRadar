@@ -7,9 +7,9 @@ import GetProfileService from '../services/GetProfileService';
 import GetLanguagesService from '../services/GetLanguagesService';
 import CreateStudentService from '../services/CreateStudentService';
 import CreateRepositoryService from '../services/CreateRepositoryService';
-import GetPeriodStudentDailyReportsService from '../services/GetPeriodStudentDailyReportsService';
 import Student from '../models/Student';
 import AppError from '../errors/AppError';
+import Repository from '../models/Repository';
 
 class StudentController {
   static async store(request: Request, response: Response): Promise<Response> {
@@ -59,41 +59,33 @@ class StudentController {
   }
 
   static async show(request: Request, response: Response): Promise<Response> {
-    const schema = yup.object().shape({
-      since: yup.string().required('Since date string is required.'),
-      until: yup.string(),
-    });
-    await schema.validate(request.query);
+    const studentRepository = getRepository(Student);
+    const repositoriesRepository = getRepository(Repository);
 
     const { username } = request.params;
-    let { until } = request.query;
-    until = until || new Date().toISOString();
-    const { since } = request.query;
-
     if (!username) {
       throw new AppError('Github username in params is required.', 400);
     }
 
     const getUser = new GetUserService();
-    const { github_id } = await getUser.execute({
+    const user = await getUser.execute({
       username,
     });
 
-    const studentsRepository = getRepository(Student);
-    const student = await studentsRepository.findOne({
-      where: {
-        github_id,
-      },
+    const student = await studentRepository.findOne({
+      where: { github_id: user.github_id },
+      loadEagerRelations: false,
     });
 
-    const getPeriodStudentDailyReport = new GetPeriodStudentDailyReportsService();
-    const studentDailyReport = await getPeriodStudentDailyReport.execute(
-      student.id,
-      String(since),
-      String(until),
-    );
+    const repositories = await repositoriesRepository.find({
+      where: { student_id: student.id },
+      loadEagerRelations: false,
+    });
 
-    return response.json(studentDailyReport);
+    return response.json({
+      student,
+      repositories,
+    });
   }
 }
 

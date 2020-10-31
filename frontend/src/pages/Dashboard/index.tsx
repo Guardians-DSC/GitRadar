@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../../components/Header';
@@ -7,7 +7,7 @@ import { confirmHasGithubToken } from '../../services/auth';
 import validationError from '../../utils/validationError';
 import { normalizeInformation } from '../../utils/normalizeStrings';
 import { Student } from '../../entities';
-import StudentsList from './components/StudentsList';
+import ListContainer from '../../components/ListContainer';
 import {
   PageContainer,
   Container,
@@ -120,25 +120,30 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
-  const handleSubmit = useCallback(async () => {
-    try {
-      setLoadingSubmit(true);
-      await api.post('/student', {
-        github_login: monitored,
-      });
-      setLoadingSubmit(false);
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
 
-      setMonitored('');
-      setAllStudents([]);
-      setBelowAverage([]);
+      try {
+        setLoadingSubmit(true);
+        await api.post('/student', {
+          github_login: monitored,
+        });
+        setLoadingSubmit(false);
 
-      getAllStudents();
-      getBelowAverage();
-    } catch (error) {
-      setLoadingSubmit(false);
-      validationError(error);
-    }
-  }, [monitored, getAllStudents, getBelowAverage]);
+        setMonitored('');
+        setAllStudents([]);
+        setBelowAverage([]);
+
+        getAllStudents();
+        getBelowAverage();
+      } catch (error) {
+        setLoadingSubmit(false);
+        validationError(error);
+      }
+    },
+    [monitored, getAllStudents, getBelowAverage],
+  );
 
   useEffect(() => {
     syncGithub();
@@ -157,22 +162,28 @@ const Dashboard: React.FC = () => {
 
         <Content>
           <LeftContainer>
-            <MonitorWrapper>
+            <MonitorWrapper onSubmit={handleSubmit}>
               <MonitorInput
                 value={monitored}
                 onChange={e => setMonitored(e.target.value)}
                 placeholder="Digite o usuário que deseja monitorar"
               />
-              <MonitorButton onClick={handleSubmit}>
+              <MonitorButton type="submit">
                 {loadingSubmit ? <Loading /> : 'Monitorar'}
               </MonitorButton>
             </MonitorWrapper>
 
-            <StudentsList
+            <ListContainer
               isLoading={loadingStudents}
               listHeight={285}
               title="Alunos Monitorados"
-              students={allStudents}
+              items={allStudents}
+              mapItem={item => ({
+                label: item.github_login,
+                subLabel: item.name,
+                photo: item.avatar_url,
+                link: `/dashboard/${item.github_login}`,
+              })}
             />
           </LeftContainer>
 
@@ -205,11 +216,17 @@ const Dashboard: React.FC = () => {
               </InformationGrid>
             </InformationContainer>
 
-            <StudentsList
+            <ListContainer
               isLoading={loadingBelow}
               listHeight={385}
               title="Alunos com interações abaixo da média"
-              students={belowAverage}
+              items={belowAverage}
+              mapItem={item => ({
+                label: item.github_login,
+                subLabel: item.name,
+                photo: item.avatar_url,
+                link: `/dashboard/${item.github_login}`,
+              })}
             />
           </RightContainer>
         </Content>
