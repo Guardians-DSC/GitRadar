@@ -43,7 +43,7 @@ const Header: React.FC = () => {
       <MessageArea>
         <GreetingsArea>
           <LogoLink to="/dashboard">
-            <Logo src={logo} />
+            <Logo src={logo} alt="GitRadar" />
           </LogoLink>
           <Greetings>
             Bem-vindo, <Highlight>{teacher?.name}</Highlight>

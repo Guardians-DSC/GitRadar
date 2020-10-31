@@ -121,7 +121,7 @@ const Profile: React.FC = () => {
 
         <ProfileContainer>
           <UserContainer>
-            <Photo src={photo} alt={name} />
+            <Photo src={photo} alt={username} />
 
             <UserInfo>
               <Username>{username}</Username>

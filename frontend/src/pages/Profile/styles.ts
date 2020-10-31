@@ -29,6 +29,7 @@ export const ProfileContainer = styled.section`
 export const UserContainer = styled.div`
   display: flex;
   flex-direction: row;
+  width: 32%;
 `;
 
 export const Photo = styled.img`
