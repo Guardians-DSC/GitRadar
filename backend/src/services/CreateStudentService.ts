@@ -22,7 +22,7 @@ class CreateStudentService {
   }: Request): Promise<Student> {
     const studentsRepository = getRepository(Student);
 
-    const searchedStudent = studentsRepository.findOne({
+    const searchedStudent = await studentsRepository.findOne({
       where: {
         github_id,
       },
