@@ -21,6 +21,7 @@ import {
   SideContainer,
   ListWrapper,
   PhotoLink,
+  GraphicContainer,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
 
@@ -160,6 +161,8 @@ const Profile: React.FC = () => {
             <ShowInformation number={newStars} label="Novas Stars" />
           </ReportInfo>
         </ProfileContainer>
+
+        <GraphicContainer></GraphicContainer>
 
         <ListsWrapper>
           <SideContainer>
