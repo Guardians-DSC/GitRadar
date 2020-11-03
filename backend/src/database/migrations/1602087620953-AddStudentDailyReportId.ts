@@ -31,7 +31,7 @@ export default class AddStudentDailyReportId1602087620953
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('commits', 'student_daily_report_id');
+    await queryRunner.dropForeignKey('commits', 'commitReport');
     await queryRunner.dropColumn('commits', 'student_daily_report_id');
   }
 }
