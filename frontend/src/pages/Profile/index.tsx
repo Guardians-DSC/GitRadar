@@ -22,7 +22,6 @@ import {
   SideContainer,
   ListWrapper,
   PhotoLink,
-  GraphicContainer,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
 import SingleLineGraphic from '../../components/SingleLineGraphic/index';
