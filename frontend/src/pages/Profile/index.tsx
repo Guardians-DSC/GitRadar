@@ -73,7 +73,9 @@ const Profile: React.FC = () => {
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
-  const [interactionsChartInfo, setTnteractionsChartInfo] = useState<ChartInfo[]>([]);
+  const [interactionsChartInfo, setTnteractionsChartInfo] = useState<
+    ChartInfo[]
+  >([]);
 
   const getStudentReport = useCallback(async () => {
     const since = new Date();
@@ -200,7 +202,11 @@ const Profile: React.FC = () => {
         </ProfileContainer>
 
         <SingleGraph>
-          <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={interactionsChartInfo} />
+          <SingleLineGraphic
+            name="Interações"
+            title="Crescimento de Interações"
+            data={interactionsChartInfo}
+          />
         </SingleGraph>
 
         <ListsWrapper>

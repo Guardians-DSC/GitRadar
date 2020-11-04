@@ -112,5 +112,3 @@ export const SingleGraph = styled.div`
   margin-bottom: 100px;
   margin-top: 100px;
 `;
-
-
