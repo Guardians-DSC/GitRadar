@@ -25,7 +25,7 @@ import {
   SingleGraph,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
-import SimpleLineChart from '../../components/LineChart/index';
+import SimpleLineChart from '../../components/SimpleLineChart/index';
 
 interface ProfileParams {
   username: string;
