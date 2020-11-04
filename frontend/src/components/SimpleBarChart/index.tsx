@@ -14,7 +14,7 @@ interface BarProps {
     name: string
     dataKey: string
     fill: string
-    stackId: string
+    stackId?: string
   }
   
 

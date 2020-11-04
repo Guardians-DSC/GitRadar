@@ -176,7 +176,7 @@ const Profile: React.FC = () => {
 
             return {
               gains: info.gains,
-              loss: info.loss,
+              loss: (info.loss * -1),
               date: infoName,
             };
           },
@@ -267,13 +267,11 @@ const Profile: React.FC = () => {
                   dataKey: 'gains',
                   name: 'Linhas Adicionadas',
                   fill: '#04D361',
-                  stackId: 'A'
                 },
                 {
                   dataKey: 'loss',
                   name: 'Linhas Removidas',
                   fill: '#F34444',
-                  stackId: 'A'
                 }
               ]
             }
