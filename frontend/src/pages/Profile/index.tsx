@@ -81,12 +81,12 @@ const Profile: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
   const [interactionsChartInfo, setInteractionsChartInfo] = useState<
-  SimpleLineChartInfo[]
+    SimpleLineChartInfo[]
   >([]);
 
   const [linesGrowthChartInfo, setLinesGrowthChartInfo] = useState<
-  LinesGrowthChartInfo[]
->([]);
+    LinesGrowthChartInfo[]
+  >([]);
 
   const getStudentReport = useCallback(async () => {
     const since = new Date();
@@ -170,13 +170,17 @@ const Profile: React.FC = () => {
 
       setLinesGrowthChartInfo(
         response.data.map(
-          (info: { gains: number; loss: number; date: string }): LinesGrowthChartInfo => {
+          (info: {
+            gains: number;
+            loss: number;
+            date: string;
+          }): LinesGrowthChartInfo => {
             const infoDate = new Date(info.date);
             const infoName = normalizeDateLabel(infoDate);
 
             return {
               gains: info.gains,
-              loss: (info.loss * -1),
+              loss: info.loss * -1,
               date: infoName,
             };
           },
@@ -195,7 +199,12 @@ const Profile: React.FC = () => {
     getInteractionsVolume();
 
     getLinesGrowhtVolume();
-  }, [getStudentReport, getStudentInfo, getInteractionsVolume, getLinesGrowhtVolume]);
+  }, [
+    getStudentReport,
+    getStudentInfo,
+    getInteractionsVolume,
+    getLinesGrowhtVolume,
+  ]);
 
   return (
     <PageContainer>
@@ -244,15 +253,13 @@ const Profile: React.FC = () => {
 
         <SingleGraph>
           <SimpleLineChart
-            lines={
-              [
-                {
-                  dataKey: 'value',
-                  name: 'Interações',
-                  stroke: '#04D361'
-                }
-              ]
-            }
+            lines={[
+              {
+                dataKey: 'value',
+                name: 'Interações',
+                stroke: '#04D361',
+              },
+            ]}
             title="Crescimento de Interações"
             data={interactionsChartInfo}
             xAxisName="date"
@@ -261,26 +268,23 @@ const Profile: React.FC = () => {
 
         <SingleGraph>
           <SimpleBarChart
-            bars={
-              [
-                {
-                  dataKey: 'gains',
-                  name: 'Linhas Adicionadas',
-                  fill: '#04D361',
-                },
-                {
-                  dataKey: 'loss',
-                  name: 'Linhas Removidas',
-                  fill: '#F34444',
-                }
-              ]
-            }
+            bars={[
+              {
+                dataKey: 'gains',
+                name: 'Linhas Adicionadas',
+                fill: '#04D361',
+              },
+              {
+                dataKey: 'loss',
+                name: 'Linhas Removidas',
+                fill: '#F34444',
+              },
+            ]}
             title="Linhas Adicionadas e Removidas"
             data={linesGrowthChartInfo}
             xAxisName="date"
           />
         </SingleGraph>
-
 
         <ListsWrapper>
           <SideContainer>

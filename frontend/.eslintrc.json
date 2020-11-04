@@ -29,16 +29,10 @@
             }
         ],
         "camelcase":"off",
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "ts": "never"
-            }
-            ],
+        "import/extensions": "off",
         "no-param-reassign": "off",
         "no-use-before-define": "off",
-        "import/extensions": "off"
+        "@typescript-eslint/no-explicit-any": "off"
 	  },
 	  "settings": {
 	    "import/resolver": {

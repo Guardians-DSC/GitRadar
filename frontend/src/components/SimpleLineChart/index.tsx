@@ -13,21 +13,21 @@ import { Container, Title } from './styles';
 
 interface SimpleLineChartProps {
   title: string;
-  data: object[];
-  lines: LinesProps[]
-  xAxisName: string
+  data: any[];
+  lines: LinesProps[];
+  xAxisName: string;
 }
 interface LinesProps {
-  name: string
-  dataKey: string
-  stroke: string
+  name: string;
+  dataKey: string;
+  stroke: string;
 }
 
 const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
   title,
   data,
   lines,
-  xAxisName
+  xAxisName,
 }: SimpleLineChartProps) => (
   <>
     <Container>
@@ -39,16 +39,15 @@ const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
           <YAxis />
           <Tooltip />
           <Legend />
-          {
-            lines.map((line) => (
-              <Line key={line.name}
-                name={line.name}
-                type="monotone"
-                dataKey={line.dataKey}
-                stroke={line.stroke}
-              />
-            ))
-          }
+          {lines.map(line => (
+            <Line
+              key={line.name}
+              name={line.name}
+              type="monotone"
+              dataKey={line.dataKey}
+              stroke={line.stroke}
+            />
+          ))}
         </LineChart>
       </ResponsiveContainer>
     </Container>
