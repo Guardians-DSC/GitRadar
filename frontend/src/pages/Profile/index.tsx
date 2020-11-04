@@ -199,7 +199,7 @@ const Profile: React.FC = () => {
           </ReportInfo>
         </ProfileContainer>
 
-        <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={interactionsChartInfo}></SingleLineGraphic>
+        <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={interactionsChartInfo} />
 
         <ListsWrapper>
           <SideContainer>
