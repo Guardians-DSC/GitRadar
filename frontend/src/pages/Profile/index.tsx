@@ -12,6 +12,7 @@ import {
 import Header from '../../components/Header';
 import api from '../../services/api';
 import validationError from '../../utils/validationError';
+import { normalizeDateLabel } from '../../utils/normalizeStrings';
 import { Commit, Repository } from '../../entities';
 import {
   PageContainer,
@@ -127,16 +128,19 @@ const Profile: React.FC = () => {
   }, [username]);
 
   const getInteractionsVolume = useCallback(async () => {
+    const since = new Date();
+    since.setMonth(since.getMonth() - 1);
+
     try {
       const response = await api.get(
-        `/student/${username}/interactions/volume`,
+        `/student/${username}/interactions/volume?since=${since.toISOString()}`,
       );
 
       setChartInfos(
         response.data.map(
           (info: { value: number; date: string }): ChartInfo => {
             const infoDate = new Date(info.date);
-            const infoName = `${infoDate.getDate()}/${infoDate.getMonth() + 1}`;
+            const infoName = normalizeDateLabel(infoDate);
 
             return {
               interactions: info.value,
@@ -148,7 +152,7 @@ const Profile: React.FC = () => {
     } catch (error) {
       validationError(error);
     }
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     getStudentReport();
@@ -156,7 +160,7 @@ const Profile: React.FC = () => {
     getStudentInfo();
 
     getInteractionsVolume();
-  }, [getStudentReport, getStudentInfo, getInteractionsVolume()]);
+  }, [getStudentReport, getStudentInfo, getInteractionsVolume]);
 
   return (
     <PageContainer>
@@ -207,11 +211,16 @@ const Profile: React.FC = () => {
         <GraphicContainer>
           <LineChart width={500} height={300} data={chartInfos}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis />
+            <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="Interações" stroke="#04D361" />
+            <Line
+              name="Interações"
+              type="monotone"
+              dataKey="interactions"
+              stroke="#04D361"
+            />
           </LineChart>
         </GraphicContainer>
 
