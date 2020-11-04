@@ -25,7 +25,7 @@ import {
   SingleGraph,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
-import SingleLineGraphic from '../../components/SingleLineGraphic/index';
+import LineGraphic from '../../components/LineGraphic/index';
 
 interface ProfileParams {
   username: string;
@@ -202,8 +202,16 @@ const Profile: React.FC = () => {
         </ProfileContainer>
 
         <SingleGraph>
-          <SingleLineGraphic
-            name="Interações"
+          <LineGraphic
+            lines={
+              [
+                {
+                  dataKey: 'value',
+                  name: 'Interações',
+                  stroke: '#04D361'
+                }
+              ]
+            }
             title="Crescimento de Interações"
             data={interactionsChartInfo}
           />

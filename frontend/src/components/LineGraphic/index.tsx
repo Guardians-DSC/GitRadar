@@ -11,11 +11,10 @@ import {
 } from 'recharts';
 import { Container, Title } from './styles';
 
-interface SingleLineGraphicProps {
+interface LineGraphicProps {
   title: string;
   data: ChartInfo[];
-  name: string;
-  strokeColor?: string;
+  lines: LinesProps[]
 }
 
 interface ChartInfo {
@@ -23,12 +22,17 @@ interface ChartInfo {
   value: number;
 }
 
-const SingleLineGraphic: React.FC<SingleLineGraphicProps> = ({
+interface LinesProps {
+  name: string
+  dataKey: string
+  stroke: string
+}
+
+const LineGraphic: React.FC<LineGraphicProps> = ({
   title,
   data,
-  name,
-  strokeColor = '#04D361',
-}: SingleLineGraphicProps) => (
+  lines
+}: LineGraphicProps) => (
   <>
     <Container>
       <Title>{title}</Title>
@@ -39,17 +43,20 @@ const SingleLineGraphic: React.FC<SingleLineGraphicProps> = ({
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line
-            isAnimationActive={true}
-            name={name}
-            type="monotone"
-            dataKey="value"
-            stroke={strokeColor}
-          />
+          {
+            lines.map((line) => (
+              <Line key={line.name}
+                name={line.name}
+                type="monotone"
+                dataKey={line.dataKey}
+                stroke={line.stroke}
+              />
+            ))
+          }
         </LineChart>
       </ResponsiveContainer>
     </Container>
   </>
 );
 
-export default SingleLineGraphic;
+export default LineGraphic;
