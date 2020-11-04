@@ -38,8 +38,8 @@ const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ title, data, bars, xAxi
                     dataKey={bar.dataKey}
                     fill={bar.fill}
                     stackId={bar.stackId}
-                    >
-                    </Bar>
+                    />
+                    
             ))
           }
             </BarChart>
