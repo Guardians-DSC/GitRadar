@@ -13,15 +13,10 @@ import { Container, Title } from './styles';
 
 interface SimpleLineChartProps {
   title: string;
-  data: ChartInfo[];
+  data: object[];
   lines: LinesProps[]
+  xAxisName: string
 }
-
-interface ChartInfo {
-  name: string;
-  value: number;
-}
-
 interface LinesProps {
   name: string
   dataKey: string
@@ -31,7 +26,8 @@ interface LinesProps {
 const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
   title,
   data,
-  lines
+  lines,
+  xAxisName
 }: SimpleLineChartProps) => (
   <>
     <Container>
@@ -39,7 +35,7 @@ const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
       <ResponsiveContainer height="100%" width="100%">
         <LineChart data={data}>
           <CartesianGrid stroke="eee" strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey={xAxisName} />
           <YAxis />
           <Tooltip />
           <Legend />

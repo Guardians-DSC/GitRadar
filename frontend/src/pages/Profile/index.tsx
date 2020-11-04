@@ -38,7 +38,7 @@ interface ShowInformationProps {
 }
 
 interface ChartInfo {
-  name: string;
+  date: string;
   value: number;
 }
 
@@ -138,7 +138,7 @@ const Profile: React.FC = () => {
 
             return {
               value: info.value,
-              name: infoName,
+              date: infoName,
             };
           },
         ),
@@ -214,6 +214,7 @@ const Profile: React.FC = () => {
             }
             title="Crescimento de Interações"
             data={interactionsChartInfo}
+            xAxisName="date"
           />
         </SingleGraph>
 
