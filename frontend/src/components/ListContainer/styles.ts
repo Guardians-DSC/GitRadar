@@ -28,11 +28,6 @@ export const List = styled.div`
   align-items: center;
   justify-content: flex-start;
   scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &:-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const NotFound = styled.p`
