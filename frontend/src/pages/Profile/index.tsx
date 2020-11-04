@@ -26,6 +26,7 @@ import {
 } from './styles';
 import ListContainer from '../../components/ListContainer';
 import SimpleLineChart from '../../components/SimpleLineChart/index';
+import SimpleBarChart from '../../components/SimpleBarChart/index';
 
 interface ProfileParams {
   username: string;
@@ -37,9 +38,15 @@ interface ShowInformationProps {
   type?: 'additions' | 'deletions' | 'regular';
 }
 
-interface ChartInfo {
+interface SimpleLineChartInfo {
   date: string;
   value: number;
+}
+
+interface LinesGrowthChartInfo {
+  date: string;
+  gains: number;
+  loss: number;
 }
 
 const ShowInformation: React.FC<ShowInformationProps> = ({
@@ -73,9 +80,13 @@ const Profile: React.FC = () => {
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
-  const [interactionsChartInfo, setTnteractionsChartInfo] = useState<
-    ChartInfo[]
+  const [interactionsChartInfo, setInteractionsChartInfo] = useState<
+  SimpleLineChartInfo[]
   >([]);
+
+  const [linesGrowthChartInfo, setLinesGrowthChartInfo] = useState<
+  LinesGrowthChartInfo[]
+>([]);
 
   const getStudentReport = useCallback(async () => {
     const since = new Date();
@@ -130,14 +141,42 @@ const Profile: React.FC = () => {
         `/student/${username}/interactions/volume?since=${since.toISOString()}`,
       );
 
-      setTnteractionsChartInfo(
+      setInteractionsChartInfo(
         response.data.map(
-          (info: { value: number; date: string }): ChartInfo => {
+          (info: { value: number; date: string }): SimpleLineChartInfo => {
             const infoDate = new Date(info.date);
             const infoName = normalizeDateLabel(infoDate);
 
             return {
               value: info.value,
+              date: infoName,
+            };
+          },
+        ),
+      );
+    } catch (error) {
+      validationError(error);
+    }
+  }, [username]);
+
+  const getLinesGrowhtVolume = useCallback(async () => {
+    const since = new Date();
+    since.setMonth(since.getMonth() - 1);
+
+    try {
+      const response = await api.get(
+        `/student/${username}/lines/volume?since=${since.toISOString()}`,
+      );
+
+      setLinesGrowthChartInfo(
+        response.data.map(
+          (info: { gains: number; loss: number; date: string }): LinesGrowthChartInfo => {
+            const infoDate = new Date(info.date);
+            const infoName = normalizeDateLabel(infoDate);
+
+            return {
+              gains: info.gains,
+              loss: info.loss,
               date: infoName,
             };
           },
@@ -154,7 +193,9 @@ const Profile: React.FC = () => {
     getStudentInfo();
 
     getInteractionsVolume();
-  }, [getStudentReport, getStudentInfo, getInteractionsVolume]);
+
+    getLinesGrowhtVolume();
+  }, [getStudentReport, getStudentInfo, getInteractionsVolume, getLinesGrowhtVolume]);
 
   return (
     <PageContainer>
@@ -217,6 +258,31 @@ const Profile: React.FC = () => {
             xAxisName="date"
           />
         </SingleGraph>
+
+        <SingleGraph>
+          <SimpleBarChart
+            bars={
+              [
+                {
+                  dataKey: 'gains',
+                  name: 'Linhas Adicionadas',
+                  fill: '#04D361',
+                  stackId: 'A'
+                },
+                {
+                  dataKey: 'loss',
+                  name: 'Linhas Removidas',
+                  fill: '#F34444',
+                  stackId: 'A'
+                }
+              ]
+            }
+            title="Linhas Adicionadas e Removidas"
+            data={linesGrowthChartInfo}
+            xAxisName="date"
+          />
+        </SingleGraph>
+
 
         <ListsWrapper>
           <SideContainer>

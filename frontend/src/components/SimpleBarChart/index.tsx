@@ -1,5 +1,6 @@
 import React from 'react'
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, LabelList, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Label } from '../ListItem/styles'
 import { Container, Title } from './styles'
 
 interface SimpleBarChartProps {
@@ -36,7 +37,9 @@ const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ title, data, bars, xAxi
                     name={bar.name}
                     dataKey={bar.dataKey}
                     fill={bar.fill}
-                    />
+                    stackId={bar.stackId}
+                    >
+                    </Bar>
             ))
           }
             </BarChart>
