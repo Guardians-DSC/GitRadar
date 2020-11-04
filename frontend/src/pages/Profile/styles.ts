@@ -24,6 +24,7 @@ export const ProfileContainer = styled.section`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 100px;
 `;
 
 export const UserContainer = styled.div`
@@ -106,10 +107,3 @@ export const ListWrapper = styled.div`
   width: 100%;
 `;
 
-export const GraphicContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 50px 0 20px 0;
-`;

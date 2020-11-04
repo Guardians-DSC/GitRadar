@@ -1,14 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  LineChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Line,
-} from 'recharts';
 import Header from '../../components/Header';
 import api from '../../services/api';
 import validationError from '../../utils/validationError';
@@ -31,9 +22,9 @@ import {
   SideContainer,
   ListWrapper,
   PhotoLink,
-  GraphicContainer,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
+import SingleLineGraphic from '../../components/SingleLineGraphic/index';
 
 interface ProfileParams {
   username: string;
@@ -47,7 +38,7 @@ interface ShowInformationProps {
 
 interface ChartInfo {
   name: string;
-  interactions: number;
+  value: number;
 }
 
 const ShowInformation: React.FC<ShowInformationProps> = ({
@@ -81,7 +72,7 @@ const Profile: React.FC = () => {
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
-  const [chartInfos, setChartInfos] = useState<ChartInfo[]>([]);
+  const [interactionsChartInfo, setTnteractionsChartInfo] = useState<ChartInfo[]>([]);
 
   const getStudentReport = useCallback(async () => {
     const since = new Date();
@@ -136,14 +127,14 @@ const Profile: React.FC = () => {
         `/student/${username}/interactions/volume?since=${since.toISOString()}`,
       );
 
-      setChartInfos(
+      setTnteractionsChartInfo(
         response.data.map(
           (info: { value: number; date: string }): ChartInfo => {
             const infoDate = new Date(info.date);
             const infoName = normalizeDateLabel(infoDate);
 
             return {
-              interactions: info.value,
+              value: info.value,
               name: infoName,
             };
           },
@@ -166,7 +157,6 @@ const Profile: React.FC = () => {
     <PageContainer>
       <Container>
         <Header />
-
         <ProfileContainer>
           <UserContainer>
             {photo && (
@@ -208,21 +198,7 @@ const Profile: React.FC = () => {
           </ReportInfo>
         </ProfileContainer>
 
-        <GraphicContainer>
-          <LineChart width={960} height={250} data={chartInfos}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              name="Interações"
-              type="monotone"
-              dataKey="interactions"
-              stroke="#04D361"
-            />
-          </LineChart>
-        </GraphicContainer>
+        <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={interactionsChartInfo} />
 
         <ListsWrapper>
           <SideContainer>
