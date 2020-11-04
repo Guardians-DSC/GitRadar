@@ -25,7 +25,7 @@ import {
   SingleGraph,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
-import LineGraphic from '../../components/LineGraphic/index';
+import SimpleLineChart from '../../components/LineChart/index';
 
 interface ProfileParams {
   username: string;
@@ -202,7 +202,7 @@ const Profile: React.FC = () => {
         </ProfileContainer>
 
         <SingleGraph>
-          <LineGraphic
+          <SimpleLineChart
             lines={
               [
                 {

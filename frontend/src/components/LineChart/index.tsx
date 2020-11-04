@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { Container, Title } from './styles';
 
-interface LineGraphicProps {
+interface SimpleLineChartProps {
   title: string;
   data: ChartInfo[];
   lines: LinesProps[]
@@ -28,11 +28,11 @@ interface LinesProps {
   stroke: string
 }
 
-const LineGraphic: React.FC<LineGraphicProps> = ({
+const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
   title,
   data,
   lines
-}: LineGraphicProps) => (
+}: SimpleLineChartProps) => (
   <>
     <Container>
       <Title>{title}</Title>
@@ -59,4 +59,4 @@ const LineGraphic: React.FC<LineGraphicProps> = ({
   </>
 );
 
-export default LineGraphic;
+export default SimpleLineChart;
