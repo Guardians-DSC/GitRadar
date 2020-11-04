@@ -27,6 +27,9 @@ class GetInteractionsVolume {
         student_id,
       },
       select: ['created_at', 'new_interactions'],
+      order: {
+        created_at: 'ASC',
+      },
     });
 
     const parsedData = dailyReports.map(

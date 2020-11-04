@@ -21,4 +21,7 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

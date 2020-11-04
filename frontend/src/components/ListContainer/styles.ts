@@ -27,6 +27,7 @@ export const List = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  scrollbar-width: none;
 `;
 
 export const NotFound = styled.p`
