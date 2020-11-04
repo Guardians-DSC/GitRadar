@@ -1,5 +1,5 @@
 import React from 'react'
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Container, Title } from './styles'
 
 
@@ -19,23 +19,25 @@ const SingleLineGraphic: React.FC<SingleLineGraphicProps> = ({ title, data, name
     <>
         <Container>
             <Title>{title}</Title>
-            <LineChart width={960} height={250} data={data}>
-                <CartesianGrid 
-                stroke="eee"
-                strokeDasharray="3 3" 
-                />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                isAnimationActive={true}
-                name={name}
-                type="monotone"
-                dataKey="value"
-                stroke={strokeColor}
-                />
-            </LineChart>
+            <ResponsiveContainer height="100%" width="100%" >
+                <LineChart data={data}>
+                    <CartesianGrid 
+                    stroke="eee"
+                    strokeDasharray="3 3" 
+                    />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                    isAnimationActive={true}
+                    name={name}
+                    type="monotone"
+                    dataKey="value"
+                    stroke={strokeColor}
+                    />
+                </LineChart>
+            </ResponsiveContainer>
         </Container>
     </>
 )

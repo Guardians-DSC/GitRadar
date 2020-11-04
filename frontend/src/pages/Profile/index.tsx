@@ -22,6 +22,7 @@ import {
   SideContainer,
   ListWrapper,
   PhotoLink,
+  SingleGraph,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
 import SingleLineGraphic from '../../components/SingleLineGraphic/index';
@@ -198,7 +199,9 @@ const Profile: React.FC = () => {
           </ReportInfo>
         </ProfileContainer>
 
-        <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={interactionsChartInfo} />
+        <SingleGraph>
+          <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={interactionsChartInfo} />
+        </SingleGraph>
 
         <ListsWrapper>
           <SideContainer>
