@@ -1,5 +1,5 @@
 import React from 'react'
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis } from 'recharts'
+import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { Container, Title } from './styles'
 
 
@@ -7,6 +7,7 @@ interface SingleLineGraphicProps {
     title: string
     data: ChartInfo[]
     name: string
+    strokeColor?: string
   }
 
 interface ChartInfo {
@@ -14,21 +15,25 @@ interface ChartInfo {
     value: number;
 }
 
-const SingleLineGraphic: React.FC<SingleLineGraphicProps> = ({ title, data, name }: SingleLineGraphicProps) => (
+const SingleLineGraphic: React.FC<SingleLineGraphicProps> = ({ title, data, name, strokeColor = "#04D361" }: SingleLineGraphicProps) => (
     <>
         <Container>
             <Title>{title}</Title>
             <LineChart width={960} height={250} data={data}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid 
+                stroke="eee"
+                strokeDasharray="3 3" 
+                />
                 <XAxis dataKey="name" />
-                <XAxis />
+                <YAxis />
                 <Tooltip />
                 <Legend />
                 <Line
+                isAnimationActive={true}
                 name={name}
                 type="monotone"
                 dataKey="value"
-                stroke="#04D361"
+                stroke={strokeColor}
                 />
             </LineChart>
         </Container>

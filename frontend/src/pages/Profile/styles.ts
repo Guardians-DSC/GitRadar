@@ -24,6 +24,7 @@ export const ProfileContainer = styled.section`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 100px;
 `;
 
 export const UserContainer = styled.div`

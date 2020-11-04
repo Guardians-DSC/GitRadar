@@ -73,7 +73,7 @@ const Profile: React.FC = () => {
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
-  const [chartInfos, setChartInfos] = useState<ChartInfo[]>([]);
+  const [interactionsChartInfo, setTnteractionsChartInfo] = useState<ChartInfo[]>([]);
 
   const getStudentReport = useCallback(async () => {
     const since = new Date();
@@ -128,7 +128,7 @@ const Profile: React.FC = () => {
         `/student/${username}/interactions/volume?since=${since.toISOString()}`,
       );
 
-      setChartInfos(
+      setTnteractionsChartInfo(
         response.data.map(
           (info: { value: number; date: string }): ChartInfo => {
             const infoDate = new Date(info.date);
@@ -199,7 +199,7 @@ const Profile: React.FC = () => {
           </ReportInfo>
         </ProfileContainer>
 
-        <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={chartInfos}></SingleLineGraphic>
+        <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={interactionsChartInfo}></SingleLineGraphic>
 
         <ListsWrapper>
           <SideContainer>
