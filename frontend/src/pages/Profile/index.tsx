@@ -1,14 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  LineChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Line,
-} from 'recharts';
 import Header from '../../components/Header';
 import api from '../../services/api';
 import validationError from '../../utils/validationError';
@@ -34,6 +25,7 @@ import {
   GraphicContainer,
 } from './styles';
 import ListContainer from '../../components/ListContainer';
+import SingleLineGraphic from '../../components/SingleLineGraphic/index';
 
 interface ProfileParams {
   username: string;
@@ -47,7 +39,7 @@ interface ShowInformationProps {
 
 interface ChartInfo {
   name: string;
-  interactions: number;
+  value: number;
 }
 
 const ShowInformation: React.FC<ShowInformationProps> = ({
@@ -143,7 +135,7 @@ const Profile: React.FC = () => {
             const infoName = normalizeDateLabel(infoDate);
 
             return {
-              interactions: info.value,
+              value: info.value,
               name: infoName,
             };
           },
@@ -166,7 +158,6 @@ const Profile: React.FC = () => {
     <PageContainer>
       <Container>
         <Header />
-
         <ProfileContainer>
           <UserContainer>
             {photo && (
@@ -208,21 +199,7 @@ const Profile: React.FC = () => {
           </ReportInfo>
         </ProfileContainer>
 
-        <GraphicContainer>
-          <LineChart width={960} height={250} data={chartInfos}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              name="Interações"
-              type="monotone"
-              dataKey="interactions"
-              stroke="#04D361"
-            />
-          </LineChart>
-        </GraphicContainer>
+        <SingleLineGraphic name="Interações" title="Crescimento de Interações" data={chartInfos}></SingleLineGraphic>
 
         <ListsWrapper>
           <SideContainer>
