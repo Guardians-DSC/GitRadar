@@ -180,7 +180,7 @@ const Profile: React.FC = () => {
 
             return {
               gains: info.gains,
-              loss: info.loss * -1,
+              loss: info.loss,
               date: infoName,
             };
           },
