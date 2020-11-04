@@ -1,5 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import {
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Line,
+} from 'recharts';
 import Header from '../../components/Header';
 import api from '../../services/api';
 import validationError from '../../utils/validationError';
@@ -35,6 +44,11 @@ interface ShowInformationProps {
   type?: 'additions' | 'deletions' | 'regular';
 }
 
+interface ChartInfo {
+  name: string;
+  interactions: number;
+}
+
 const ShowInformation: React.FC<ShowInformationProps> = ({
   number,
   label,
@@ -65,6 +79,8 @@ const Profile: React.FC = () => {
   const [newStars, setNewStars] = useState(0);
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  const [chartInfos, setChartInfos] = useState<ChartInfo[]>([]);
 
   const getStudentReport = useCallback(async () => {
     const since = new Date();
@@ -110,11 +126,37 @@ const Profile: React.FC = () => {
     }
   }, [username]);
 
+  const getInteractionsVolume = useCallback(async () => {
+    try {
+      const response = await api.get(
+        `/student/${username}/interactions/volume`,
+      );
+
+      setChartInfos(
+        response.data.map(
+          (info: { value: number; date: string }): ChartInfo => {
+            const infoDate = new Date(info.date);
+            const infoName = `${infoDate.getDate()}/${infoDate.getMonth() + 1}`;
+
+            return {
+              interactions: info.value,
+              name: infoName,
+            };
+          },
+        ),
+      );
+    } catch (error) {
+      validationError(error);
+    }
+  }, []);
+
   useEffect(() => {
     getStudentReport();
 
     getStudentInfo();
-  }, [getStudentReport, getStudentInfo]);
+
+    getInteractionsVolume();
+  }, [getStudentReport, getStudentInfo, getInteractionsVolume()]);
 
   return (
     <PageContainer>
@@ -162,7 +204,16 @@ const Profile: React.FC = () => {
           </ReportInfo>
         </ProfileContainer>
 
-        <GraphicContainer></GraphicContainer>
+        <GraphicContainer>
+          <LineChart width={500} height={300} data={chartInfos}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Interações" stroke="#04D361" />
+          </LineChart>
+        </GraphicContainer>
 
         <ListsWrapper>
           <SideContainer>
