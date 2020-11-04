@@ -1,6 +1,5 @@
 import React from 'react'
-import { Bar, BarChart, CartesianGrid, LabelList, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { Label } from '../ListItem/styles'
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Container, Title } from './styles'
 
 interface SimpleBarChartProps {
