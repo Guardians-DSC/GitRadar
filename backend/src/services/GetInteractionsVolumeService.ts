@@ -8,6 +8,11 @@ interface Request {
 }
 
 interface Data {
+  date: Date;
+  value: number;
+}
+
+interface DataBaseRequest {
   created_at: Date;
   new_interactions: number;
 }
@@ -24,7 +29,16 @@ class GetInteractionsVolume {
       select: ['created_at', 'new_interactions'],
     });
 
-    return dailyReports;
+    const parsedData = dailyReports.map(
+      ({ created_at, new_interactions }: DataBaseRequest) => {
+        return {
+          value: new_interactions,
+          date: created_at,
+        };
+      },
+    );
+
+    return parsedData;
   }
 }
 
