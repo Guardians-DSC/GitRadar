@@ -17,7 +17,7 @@ interface BarProps {
   }
   
 
-const SimpleBarChar: React.FC<SimpleBarChartProps> = ({ title, data, bars, xAxisName }: SimpleBarChartProps) => (
+const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ title, data, bars, xAxisName }: SimpleBarChartProps) => (
     <Container>
         <Title>{title}</Title>
         <ResponsiveContainer height="100%" width="100%">
@@ -44,4 +44,4 @@ const SimpleBarChar: React.FC<SimpleBarChartProps> = ({ title, data, bars, xAxis
     </Container>
 )
 
-export default SimpleBarChar
+export default SimpleBarChart
