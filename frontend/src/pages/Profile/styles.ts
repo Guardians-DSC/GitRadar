@@ -104,11 +104,11 @@ export const SideContainer = styled.div`
 
 export const ListWrapper = styled.div`
   width: 100%;
+  margin-top: 100px;
 `;
 
 export const SingleGraph = styled.div`
   width: 960px;
   height: 350px;
-  margin-bottom: 100px;
   margin-top: 100px;
 `;

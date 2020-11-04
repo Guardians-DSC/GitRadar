@@ -11,45 +11,47 @@ import {
 } from 'recharts';
 import { Container, Title } from './styles';
 
-interface SingleLineGraphicProps {
+interface SimpleLineChartProps {
   title: string;
-  data: ChartInfo[];
+  data: any[];
+  lines: LinesProps[];
+  xAxisName: string;
+}
+interface LinesProps {
   name: string;
-  strokeColor?: string;
+  dataKey: string;
+  stroke: string;
 }
 
-interface ChartInfo {
-  name: string;
-  value: number;
-}
-
-const SingleLineGraphic: React.FC<SingleLineGraphicProps> = ({
+const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
   title,
   data,
-  name,
-  strokeColor = '#04D361',
-}: SingleLineGraphicProps) => (
+  lines,
+  xAxisName,
+}: SimpleLineChartProps) => (
   <>
     <Container>
       <Title>{title}</Title>
       <ResponsiveContainer height="100%" width="100%">
         <LineChart data={data}>
           <CartesianGrid stroke="eee" strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey={xAxisName} />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line
-            isAnimationActive={true}
-            name={name}
-            type="monotone"
-            dataKey="value"
-            stroke={strokeColor}
-          />
+          {lines.map(line => (
+            <Line
+              key={line.name}
+              name={line.name}
+              type="monotone"
+              dataKey={line.dataKey}
+              stroke={line.stroke}
+            />
+          ))}
         </LineChart>
       </ResponsiveContainer>
     </Container>
   </>
 );
 
-export default SingleLineGraphic;
+export default SimpleLineChart;
