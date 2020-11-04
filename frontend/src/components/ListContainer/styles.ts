@@ -27,6 +27,12 @@ export const List = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &:-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const NotFound = styled.p`

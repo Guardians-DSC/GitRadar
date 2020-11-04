@@ -209,7 +209,7 @@ const Profile: React.FC = () => {
         </ProfileContainer>
 
         <GraphicContainer>
-          <LineChart width={500} height={300} data={chartInfos}>
+          <LineChart width={960} height={250} data={chartInfos}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
