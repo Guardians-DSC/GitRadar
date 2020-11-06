@@ -21,3 +21,14 @@ Através dessas turmas, os professores poderão gerar relatórios do estado da t
 O projeto contém um repositório para o Backend e outro para o Frontend da aplicação. Os README's específicos de cada repositório podem ser encontrados em suas respectivas pastas. Lá você encontrará as instruções de uso e desenvolvimento.
 - [Ir para o README do Backend](./backend/README.md)
 - [Ir para o README do Frontend](./frontend/README.md)
+
+## 📸 Screenshots
+
+#### Dashboard de uma Turma:
+![dashboard](https://user-images.githubusercontent.com/40612788/98311926-54f4cf80-1faf-11eb-8962-c1a7a887981f.png)
+
+#### Perfil de Estudante 1/2:
+![profile](https://user-images.githubusercontent.com/40612788/98311933-5aeab080-1faf-11eb-85a6-6929cd482035.png)
+
+#### Perfil de Estudante 2/2:
+![profile2](https://user-images.githubusercontent.com/40612788/98311936-5d4d0a80-1faf-11eb-8268-2b98dd3623cf.png)
