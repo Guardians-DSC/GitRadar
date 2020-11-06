@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
 import Student from '../models/Student';
 
 interface Request {
@@ -20,6 +21,15 @@ class CreateStudentService {
     top_language,
   }: Request): Promise<Student> {
     const studentsRepository = getRepository(Student);
+
+    const searchedStudent = await studentsRepository.findOne({
+      where: {
+        github_id,
+      },
+    });
+    if (searchedStudent) {
+      throw new AppError('Student already exists.');
+    }
 
     const student = studentsRepository.create({
       teacher_id,

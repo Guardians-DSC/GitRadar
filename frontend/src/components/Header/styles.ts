@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { BiPowerOff } from 'react-icons/bi';
 
 export const Container = styled.div`
@@ -34,9 +35,13 @@ export const ButtonsArea = styled.div`
   justify-content: center;
 `;
 
-export const Logo = styled.img`
+export const LogoLink = styled(Link)`
   height: 70%;
   margin-right: 30px;
+`;
+
+export const Logo = styled.img`
+  height: 100%;
 `;
 
 export const Greetings = styled.h3`

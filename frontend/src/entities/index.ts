@@ -15,3 +15,22 @@ export interface Student {
   top_language: string;
   github_id: string;
 }
+
+export interface Commit {
+  sha: string;
+  additions: number;
+  deletions: number;
+  message: string;
+  repository?: {
+    name: string;
+    url: string;
+  };
+}
+
+export interface Repository {
+  name: string;
+  full_name: string;
+  description: string;
+  html_url: string;
+  github_id: string;
+}

@@ -8,7 +8,9 @@ import GetPeriodStudentDailyReportsService from '../services/GetPeriodStudentDai
 class ClassController {
   static async index(request: Request, response: Response): Promise<Response> {
     const studentsRepository = getRepository(Student);
-    const students = await studentsRepository.find();
+    const students = await studentsRepository.find({
+      loadEagerRelations: false,
+    });
 
     if (request.path === '/below_average') {
       const schema = yup.object().shape({
