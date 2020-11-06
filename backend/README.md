@@ -302,15 +302,18 @@ Informando o parâmetro "since" na query, você informa o início do período, o
 ```json
 [
   {
-    "value": 10,
+    "gains": 1532,
+    "loss": 15,
     "date": "2020-11-03T02:46:25.018Z"
   },
   {
-    "value": 2,
+    "gains": 1,
+    "loss": 2,
     "date": "2020-11-04T02:46:25.018Z"
   },
   {
-    "value": 21,
+    "gains": 812,
+    "loss": 153,
     "date": "2020-11-05T05:00:40.687Z"
   }
 ]
