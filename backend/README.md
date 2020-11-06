@@ -13,9 +13,9 @@ Você precisará de NodeJS e Yarn (para facilitar o processo) no seu computador.
 
 ### Instalando
 
-No terminal, abra a pasta do projeto.
+No terminal, abra a pasta do projeto e abra a pasta do Backend.
 ```
-cd GitRadar
+cd GitRadar/backend
 ```
 Então, digite:
 ```
