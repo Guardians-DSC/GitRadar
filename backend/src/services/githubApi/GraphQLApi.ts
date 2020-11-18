@@ -1,5 +1,5 @@
 import axios from 'axios';
-import GetTeacherTokenService from '../GetTeacherTokenService';
+import GetGithubTokenService from '../GetGithubTokenService';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useGlobal: any = global;
@@ -10,8 +10,8 @@ const api = axios.create({
 
 api.interceptors.request.use(async config => {
   if (!useGlobal.teacherToken) {
-    const getTeacherToken = new GetTeacherTokenService();
-    const token = await getTeacherToken.execute();
+    const getGithubTokenService = new GetGithubTokenService();
+    const token = await getGithubTokenService.execute();
 
     if (token) {
       useGlobal.teacherToken = token;
