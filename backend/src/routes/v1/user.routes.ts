@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
 
-import GetProfileService from '../services/GetProfileService';
-import GetLanguagesService from '../services/GetLanguagesService';
-import GetUserDailyReportService from '../services/GetUserDailyReportService';
+import GetProfileService from '../../services/v1/GetProfileService';
+import GetLanguagesService from '../../services/v1/GetLanguagesService';
+import GetUserDailyReportService from '../../services/v1/GetUserDailyReportService';
 
 const userRouter = Router();
 

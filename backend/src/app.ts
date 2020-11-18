@@ -7,7 +7,7 @@ import cron from 'node-cron';
 import { router } from 'bull-board';
 import { Worker } from 'bullmq';
 
-import routes from './routes';
+import v1 from './routes/v1';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import BullQueueProvider from './providers/queue/implementations/BullQueueProvider';
 import RequestStudentsProcessProcessor from './workers/RequestStudentsProcess/RequestStudentsProcessProcessor';
@@ -79,7 +79,7 @@ class App {
   }
 
   private routes(): void {
-    this.express.use(routes);
+    this.express.use('/v1', v1);
   }
 }
 
