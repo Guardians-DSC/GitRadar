@@ -10,20 +10,26 @@ interface Request {
   spot_github_login: string;
 }
 
-interface Repository {
+interface RepositoryInfo {
   id: string;
   name: string;
   full_name: string;
   description: string;
   html_url: string;
-  created_at: string;
-  language: string;
+}
+
+interface RepositoryNode {
+  nameWithOwner: string;
+  name: string;
+  description: string;
+  url: string;
+  id: string;
 }
 
 interface Response {
   github_login: string;
   avatar_url: string;
-  repositories: Repository[];
+  repositories: RepositoryInfo[];
 }
 
 class CreateSpotService {
@@ -44,7 +50,7 @@ class CreateSpotService {
       github_login: spot_github_login,
     });
 
-    if (!existsSpot) {
+    if (existsSpot) {
       throw new AppError('Spot already registered');
     }
 
@@ -52,22 +58,94 @@ class CreateSpotService {
       query: this.getQuery(spot_github_login),
     });
 
-    console.log(spotGithubData.data);
+    const {
+      login,
+      name,
+      avatarUrl,
+      id,
+      repositories,
+    } = spotGithubData.data.data.user;
 
-    return null;
+    console.log(name);
+
+    const spot = spotsRepository.create({
+      avatar_url: avatarUrl,
+      github_id: id,
+      manager_id,
+      name,
+      github_login: login,
+      top_language: 'none',
+    });
+
+    const savedSpot = await spotsRepository.save(spot);
+    const { id: spot_id } = savedSpot;
+
+    // save Repositories
+    const repositoriesNode: RepositoryNode[] = repositories.nodes;
+
+    for (const data of repositoriesNode) {
+      const {
+        description,
+        id: repository_id,
+        name: repositoy_name,
+        nameWithOwner: full_name,
+        url,
+      } = data;
+
+      const repository = repositoriesRepository.create({
+        description,
+        github_id: repository_id,
+        name: repositoy_name,
+        full_name,
+        spot_id,
+        html_url: url,
+      });
+
+      await repositoriesRepository.save(repository);
+    }
+
+    const { github_login, avatar_url } = await spotsRepository.findOne({
+      id: spot_id,
+    });
+
+    const spotRepositories = await repositoriesRepository.find({
+      spot_id,
+    });
+
+    const repositoriesReponse = spotRepositories.map(
+      ({
+        id: repository_id,
+        name: repository_name,
+        full_name,
+        description,
+        html_url,
+      }) => {
+        const parsedRepository = {
+          id: repository_id,
+          name: repository_name,
+          full_name,
+          description,
+          html_url,
+        };
+
+        return parsedRepository;
+      },
+    );
+
+    return { github_login, avatar_url, repositories: repositoriesReponse };
   }
 
   private getQuery(github_id: string): string {
     const query = `query { 
       user(login: "${github_id}") {
-        bio
         login
-        name
         avatarUrl
+        name
         id
         repositories(first: 100 privacy: PUBLIC affiliations: OWNER) {
           nodes {
             nameWithOwner
+            name
             description
             url
             id

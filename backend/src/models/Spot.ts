@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 
 import Manager from './Manager';
+import Repository from './Repository';
 
 @Entity('spots')
 class Spot {
