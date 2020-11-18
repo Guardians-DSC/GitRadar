@@ -4,10 +4,10 @@ import Student from '../../models/Student';
 import Repository from '../../models/Repository';
 import { StudentRequest } from '../../providers/queue/QueueProvider';
 
-import GetUserService from '../../services/GetUserService';
-import GetUserDailyReportService from '../../services/GetUserDailyReportService';
-import CreateStudentDailyReportService from '../../services/CreateStudentDailyReportService';
-import CreateCommitService from '../../services/CreateCommitService';
+import GetUserService from '../../services/v1/GetUserService';
+import GetUserDailyReportService from '../../services/v1/GetUserDailyReportService';
+import CreateStudentDailyReportService from '../../services/v1/CreateStudentDailyReportService';
+import CreateCommitService from '../../services/v1/CreateCommitService';
 
 const processStudentProcessor = async (
   job: Job<StudentRequest>,

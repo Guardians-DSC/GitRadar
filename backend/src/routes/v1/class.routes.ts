@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import ClassController from '../controllers/ClassController';
+import ClassController from '../../controllers/ClassController';
 
 const classRouter = Router();
 
