@@ -25,7 +25,7 @@ class Commit {
   repository: Repository;
 
   @Column('uuid')
-  student_id: string;
+  spot_id: string;
 
   @ManyToOne(() => Spot, { eager: true })
   @JoinColumn({ name: 'spot_id' })
