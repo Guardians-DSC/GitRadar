@@ -1,6 +1,6 @@
 import { EntityRepository, Repository, Between } from 'typeorm';
 
-import StudentDailyReport from '../models/StudentDailyReport';
+import StudentDailyReport from '../models/SpotDailyReport';
 
 @EntityRepository(StudentDailyReport)
 class StudentDailyReportsRepository extends Repository<StudentDailyReport> {

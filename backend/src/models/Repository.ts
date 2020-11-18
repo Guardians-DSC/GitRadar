@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import Student from './Student';
+import Student from './Spot';
 
 @Entity('repositories')
 class Repository {

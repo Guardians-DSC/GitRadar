@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import api from './githubApi/RestApi';
-import Teacher from '../models/Teacher';
+import Teacher from '../models/Manager';
 
 interface Request {
   github_login: string;

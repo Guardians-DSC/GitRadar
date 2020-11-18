@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import { queueProvider } from '../../app';
-import Student from '../../models/Student';
+import Student from '../../models/Spot';
 
 const requestStudentsProcessProcessor = async (): Promise<void> => {
   const studentsRepository = getRepository(Student);

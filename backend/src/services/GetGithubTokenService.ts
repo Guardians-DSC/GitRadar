@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import Teacher from '../models/Teacher';
+import Teacher from '../models/Manager';
 import { decrypt } from '../utils/crypto';
 
 class GetGithubTokenService {

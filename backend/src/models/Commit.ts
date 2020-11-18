@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 
 import Repository from './Repository';
-import Student from './Student';
-import StudentDailyReport from './StudentDailyReport';
+import Student from './Spot';
+import StudentDailyReport from './SpotDailyReport';
 
 @Entity('commits')
 class Commit {

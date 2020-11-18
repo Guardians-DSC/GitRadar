@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import { Job } from 'bullmq';
-import Student from '../../models/Student';
+import Student from '../../models/Spot';
 import Repository from '../../models/Repository';
 import { StudentRequest } from '../../providers/queue/QueueProvider';
 
