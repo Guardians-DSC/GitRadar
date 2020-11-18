@@ -3,15 +3,15 @@ import cors from 'cors';
 import 'express-async-errors';
 import 'reflect-metadata';
 import dotenv from 'dotenv';
-// import cron from 'node-cron';
+import cron from 'node-cron';
 import { router } from 'bull-board';
 import { Worker } from 'bullmq';
 
 import v2 from './routes/v2/index';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import BullQueueProvider from './providers/queue/implementations/BullQueueProvider';
-// import RequestSpotsProcessProcessor from './workers/RequestSpotsProcess/RequestSpotsProcessProcessor';
-// import ProcessSpotProcessor from './workers/ProcessSpot/ProcessSpotProcessor';
+import RequestSpotsProcessProcessor from './workers/RequestSpotsProcess/RequestSpotsProcessProcessor';
+import ProcessSpotProcessor from './workers/ProcessSpot/ProcessSpotProcessor';
 import { QueueProvider } from './providers/queue/QueueProvider';
 import './database';
 
@@ -50,32 +50,32 @@ class App {
   }
 
   private defineCron(): void {
-    // cron.schedule('00 23 * * *', async () =>
-    // this.queueProvider.add({
-    // jobName: 'request students process',
-    // queueName: 'students-process-requester',
-    // opts: {
-    // removeOnComplete: false,
-    // },
-    // }),
-    // );
+    cron.schedule('00 23 * * *', async () =>
+      this.queueProvider.add({
+        jobName: 'request students process',
+        queueName: 'students-process-requester',
+        opts: {
+          removeOnComplete: false,
+        },
+      }),
+    );
   }
 
   private queues(): void {
-    // this.queueProvider.register({ queueName: 'students-process-requester' });
-    // this.queueProvider.register({ queueName: 'student-processor' });
-    // this.queueProvider.setUI();
+    this.queueProvider.register({ queueName: 'students-process-requester' });
+    this.queueProvider.register({ queueName: 'student-processor' });
+    this.queueProvider.setUI();
   }
 
   private workers(): void {
-    // this.studentsProcessRequester = new Worker(
-    // 'students-process-requester',
-    // RequestStudentsProcessProcessor,
-    // );
-    // this.studentProcessor = new Worker(
-    // 'student-processor',
-    // ProcessStudentProcessor,
-    // );
+    this.studentsProcessRequester = new Worker(
+      'students-process-requester',
+      RequestSpotsProcessProcessor,
+    );
+    this.studentProcessor = new Worker(
+      'student-processor',
+      ProcessSpotProcessor,
+    );
   }
 
   private routes(): void {
