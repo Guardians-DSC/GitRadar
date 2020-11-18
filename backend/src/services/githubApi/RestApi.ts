@@ -1,5 +1,5 @@
 import axios from 'axios';
-import GetTeacherTokenService from './GetTeacherTokenService';
+import GetTeacherTokenService from '../GetTeacherTokenService';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useGlobal: any = global;

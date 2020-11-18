@@ -1,4 +1,4 @@
-import api from './api';
+import api from './githubApi/RestApi';
 import { catchGitHubNotFound } from '../utils/exceptions';
 import AppError from '../errors/AppError';
 
