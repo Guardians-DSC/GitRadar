@@ -1,5 +1,7 @@
 interface SpotRequest {
   github_id: string;
+  date: string;
+  github_name: string;
 }
 
 interface addJobRequest {

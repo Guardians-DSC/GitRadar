@@ -66,8 +66,6 @@ class CreateSpotService {
       repositories,
     } = spotGithubData.data.data.user;
 
-    console.log(name);
-
     const spot = spotsRepository.create({
       avatar_url: avatarUrl,
       github_id: id,
@@ -142,7 +140,7 @@ class CreateSpotService {
         avatarUrl
         name
         id
-        repositories(first: 100 privacy: PUBLIC affiliations: OWNER) {
+        repositories(first: 100 privacy: PUBLIC affiliations: OWNER ownerAffiliations:OWNER) {
           nodes {
             nameWithOwner
             name

@@ -4,6 +4,8 @@ import Spot from '../../models/Spot';
 
 const RequestSpotsProcessProcessor = async (): Promise<void> => {
   const spotsRepository = getRepository(Spot);
+  const since = new Date();
+  since.setHours(since.getHours() - 3);
 
   const spots = await spotsRepository.find();
 
@@ -13,6 +15,8 @@ const RequestSpotsProcessProcessor = async (): Promise<void> => {
     queueProvider.add({
       job: {
         github_id: spot.github_id,
+        date: since.toISOString(),
+        github_name: spot.github_login,
       },
       jobName: `${spot.github_id} process request`,
       queueName: 'spot-processor',

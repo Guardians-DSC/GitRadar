@@ -23,16 +23,10 @@ class SpotDailyReport {
   spot: Spot;
 
   @Column('int2')
-  new_forks: number;
-
-  @Column('int2')
   new_issues: number;
 
   @Column('int2')
   new_prs: number;
-
-  @Column('int2')
-  new_stars: number;
 
   @Column('int2')
   new_repositories: number;
