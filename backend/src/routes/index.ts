@@ -9,13 +9,13 @@ import userRouter from './user.routes';
 
 const routes = Router();
 
-routes.use('/user', userRouter);
-routes.use('/teacher', teacherRouter);
-routes.use('/session', sessionRouter);
+routes.use('v1/user', userRouter);
+routes.use('v1/teacher', teacherRouter);
+routes.use('v1/session', sessionRouter);
 
 routes.use(authMiddleware);
 
-routes.use('/student', studentRouter);
-routes.use('/class', classRouter);
+routes.use('v1/student', studentRouter);
+routes.use('v1/class', classRouter);
 
 export default routes;
