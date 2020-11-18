@@ -11,7 +11,7 @@ import {
 import Spot from './Spot';
 
 @Entity('spot_daily_reports')
-class SpotDailyReports {
+class SpotDailyReport {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -56,4 +56,4 @@ class SpotDailyReports {
   updated_at: Date;
 }
 
-export default SpotDailyReports;
+export default SpotDailyReport;
