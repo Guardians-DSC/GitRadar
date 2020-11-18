@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import api from './githubApi/RestApi';
-import Teacher from '../models/Manager';
+import Manager from '../models/Manager';
 
 interface Request {
   github_login: string;
@@ -22,7 +22,7 @@ class CreateManagerService {
     email,
     password,
   }: Request): Promise<Response> {
-    const managerRepository = getRepository(Teacher);
+    const managerRepository = getRepository(Manager);
 
     const githubData = await api.get(`/users/${github_login}`);
 

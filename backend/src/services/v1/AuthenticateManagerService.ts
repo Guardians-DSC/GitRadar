@@ -1,25 +1,25 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Teacher from '../../models/Manager';
+import Manager from '../../models/Manager';
 import AppError from '../../errors/AppError';
 
 interface Response {
-  teacher: Teacher;
+  manager: Manager;
   token: string;
 }
 
-class AuthenticateTeacherService {
+class AuthenticateManagerService {
   public async execute(email: string, password: string): Promise<Response> {
-    const teachersRepository = getRepository(Teacher);
+    const managersRepository = getRepository(Manager);
 
-    const teacher = await teachersRepository.findOne({ email });
+    const manager = await managersRepository.findOne({ email });
 
-    if (!teacher) {
+    if (!manager) {
       throw new AppError('E-mail not found.', 404);
     }
 
-    const passwordMatched = await compare(password, teacher.password);
+    const passwordMatched = await compare(password, manager.password);
 
     if (!passwordMatched) {
       throw new AppError('Incorrect password.', 401);
@@ -31,12 +31,12 @@ class AuthenticateTeacherService {
     }
 
     const token = jwt.sign({}, secret, {
-      subject: teacher.id,
+      subject: manager.id,
       expiresIn: '7d',
     });
 
-    return { teacher, token };
+    return { manager, token };
   }
 }
 
-export default AuthenticateTeacherService;
+export default AuthenticateManagerService;
