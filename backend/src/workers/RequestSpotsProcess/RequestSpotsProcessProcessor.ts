@@ -14,11 +14,11 @@ const RequestSpotsProcessProcessor = async (): Promise<void> => {
 
     queueProvider.add({
       job: {
-        github_id: spot.github_id,
+        spot_id: spot.id,
         date: since.toISOString(),
         github_name: spot.github_login,
       },
-      jobName: `${spot.github_id} process request`,
+      jobName: `${spot.github_login} process request`,
       queueName: 'spot-processor',
       opts: {
         removeOnComplete: false,

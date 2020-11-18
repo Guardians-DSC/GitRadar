@@ -1,5 +1,5 @@
 interface SpotRequest {
-  github_id: string;
+  spot_id: string;
   date: string;
   github_name: string;
 }

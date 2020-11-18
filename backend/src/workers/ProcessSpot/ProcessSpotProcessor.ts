@@ -7,7 +7,7 @@ import Commit from '../../models/Commit';
 import SpotDailyReport from '../../models/SpotDailyReport';
 
 const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
-  const { github_id: spot_id, date, github_name: github_login } = job.data;
+  const { spot_id, date, github_name: github_login } = job.data;
 
   const commitRepository = getRepository(Commit);
   const dailyReportRepository = getRepository(SpotDailyReport);
