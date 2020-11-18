@@ -3,15 +3,15 @@ import cors from 'cors';
 import 'express-async-errors';
 import 'reflect-metadata';
 import dotenv from 'dotenv';
-import cron from 'node-cron';
+// import cron from 'node-cron';
 import { router } from 'bull-board';
 import { Worker } from 'bullmq';
 
 import v2 from './routes/v2/index';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import BullQueueProvider from './providers/queue/implementations/BullQueueProvider';
-import RequestStudentsProcessProcessor from './workers/RequestStudentsProcess/RequestStudentsProcessProcessor';
-import ProcessStudentProcessor from './workers/ProcessStudent/ProcessStudentProcessor';
+// import RequestSpotsProcessProcessor from './workers/RequestSpotsProcess/RequestSpotsProcessProcessor';
+// import ProcessSpotProcessor from './workers/ProcessSpot/ProcessSpotProcessor';
 import { QueueProvider } from './providers/queue/QueueProvider';
 import './database';
 

@@ -1,11 +1,11 @@
-interface StudentRequest {
+interface SpotRequest {
   github_id: string;
 }
 
 interface addJobRequest {
   queueName: string;
   jobName: string;
-  job?: StudentRequest;
+  job?: SpotRequest;
   opts?: {
     removeOnComplete: boolean;
   };
@@ -21,4 +21,4 @@ interface QueueProvider {
   setUI(): void;
 }
 
-export { QueueProvider, addJobRequest, registerQueueRequest, StudentRequest };
+export { QueueProvider, addJobRequest, registerQueueRequest, SpotRequest };
