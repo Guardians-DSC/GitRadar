@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import CreateSpotService from '../../services/Spot/CreateSpotService';
+import authMiddleware from '../../middlewares/authMiddleware';
 
 const spotRouter = Router();
 
-spotRouter.post('/', async (request, response) => {
+spotRouter.post('/', authMiddleware, async (request, response) => {
   const { github_login } = request.body;
   const { id } = request.manager;
 
