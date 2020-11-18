@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Manager from '../../models/Manager';
-import AppError from '../../errors/AppError';
+import Manager from '../models/Manager';
+import AppError from '../errors/AppError';
 
 interface Response {
   manager: Manager;
