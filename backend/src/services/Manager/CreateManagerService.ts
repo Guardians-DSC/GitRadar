@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
-import api from './githubApi/RestApi';
-import Manager from '../models/Manager';
-import AppError from '../errors/AppError';
+import api from '../githubApi/RestApi';
+import Manager from '../../models/Manager';
+import AppError from '../../errors/AppError';
 
 interface Request {
   github_login: string;

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import CreateManagerService from '../../services/CreateManagerService';
+import CreateManagerService from '../../services/Manager/CreateManagerService';
 
 const manangerRouter = Router();
 
