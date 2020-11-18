@@ -20,7 +20,7 @@ class SpotDailyReports {
 
   @ManyToOne(() => Spot, { eager: true })
   @JoinColumn({ name: 'spot_id' })
-  student: Spot;
+  spot: Spot;
 
   @Column('int2')
   new_forks: number;

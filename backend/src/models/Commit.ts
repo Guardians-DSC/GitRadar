@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 import Repository from './Repository';
-import Student from './Spot';
+import Spot from './Spot';
 import StudentDailyReport from './SpotDailyReport';
 
 @Entity('commits')
@@ -27,16 +27,16 @@ class Commit {
   @Column('uuid')
   student_id: string;
 
-  @ManyToOne(() => Student, { eager: true })
-  @JoinColumn({ name: 'student_id' })
-  student: Student;
+  @ManyToOne(() => Spot, { eager: true })
+  @JoinColumn({ name: 'spot_id' })
+  spot: Spot;
 
   @Column('uuid')
-  student_daily_report_id: string;
+  spot_daily_report_id: string;
 
   @ManyToOne(() => StudentDailyReport, { eager: true })
-  @JoinColumn({ name: 'student_daily_report_id' })
-  studentDailyReport: StudentDailyReport;
+  @JoinColumn({ name: 'spot_daily_report_id' })
+  spotDailyReport: StudentDailyReport;
 
   @Column('varchar')
   message: string;

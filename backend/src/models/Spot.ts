@@ -20,7 +20,7 @@ class Spot {
 
   @ManyToOne(() => Manager, { eager: true })
   @JoinColumn({ name: 'manager_id' })
-  teacher: Manager;
+  manager: Manager;
 
   @Column('varchar')
   github_login: string;
