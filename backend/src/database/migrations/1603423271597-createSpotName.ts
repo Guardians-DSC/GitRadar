@@ -1,10 +1,9 @@
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
-export default class createStudentName1603423271597
-  implements MigrationInterface {
+export default class createSpotName1603423271597 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
-      'students',
+      'spots',
       new TableColumn({
         name: 'name',
         type: 'varchar',
@@ -14,6 +13,6 @@ export default class createStudentName1603423271597
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropColumn('students', 'name');
+    await queryRunner.dropColumn('spots', 'name');
   }
 }

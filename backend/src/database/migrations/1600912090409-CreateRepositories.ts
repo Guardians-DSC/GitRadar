@@ -15,7 +15,7 @@ export default class CreateRepositories1600912090409
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'student_id',
+            name: 'spot_id',
             type: 'uuid',
             isNullable: true,
           },

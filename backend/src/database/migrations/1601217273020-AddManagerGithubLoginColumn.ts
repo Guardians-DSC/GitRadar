@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
-export default class AddTeacherGithubLoginColumn1601217273020
+export default class AddManagerGithubLoginColumn1601217273020
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
-      'teachers',
+      'managers',
       new TableColumn({
         name: 'github_login',
         type: 'varchar',
@@ -14,6 +14,6 @@ export default class AddTeacherGithubLoginColumn1601217273020
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropColumn('teachers', 'github_login');
+    await queryRunner.dropColumn('managers', 'github_login');
   }
 }

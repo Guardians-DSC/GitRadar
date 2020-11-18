@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateStudents1600910013765 implements MigrationInterface {
+export default class CreateSpots1600910013765 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'students',
+        name: 'spots',
         columns: [
           {
             name: 'id',
@@ -14,7 +14,7 @@ export default class CreateStudents1600910013765 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'teacher_id',
+            name: 'manager_id',
             type: 'uuid',
             isNullable: true,
           },
@@ -49,6 +49,6 @@ export default class CreateStudents1600910013765 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('students');
+    await queryRunner.dropTable('spots');
   }
 }

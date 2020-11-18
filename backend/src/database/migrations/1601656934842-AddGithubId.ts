@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 export default class AddGithubId1601656934842 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
-      'teachers',
+      'managers',
       new TableColumn({
         name: 'github_id',
         type: 'varchar',
@@ -11,7 +11,7 @@ export default class AddGithubId1601656934842 implements MigrationInterface {
       }),
     );
     await queryRunner.addColumn(
-      'students',
+      'spots',
       new TableColumn({
         name: 'github_id',
         type: 'varchar',
@@ -39,7 +39,7 @@ export default class AddGithubId1601656934842 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropColumn('commits', 'sha');
     await queryRunner.dropColumn('repositories', 'github_id');
-    await queryRunner.dropColumn('students', 'github_id');
-    await queryRunner.dropColumn('teachers', 'github_id');
+    await queryRunner.dropColumn('spots', 'github_id');
+    await queryRunner.dropColumn('managers', 'github_id');
   }
 }

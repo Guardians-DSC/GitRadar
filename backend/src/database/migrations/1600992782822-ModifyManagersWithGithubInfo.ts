@@ -1,13 +1,13 @@
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
-export default class ModifyTeachersWithGithubInfo1600992782822
+export default class ModifyManagersWithGithubInfo1600992782822
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropColumn('teachers', 'name');
-    await queryRunner.dropColumn('teachers', 'github_token');
+    await queryRunner.dropColumn('managers', 'name');
+    await queryRunner.dropColumn('managers', 'github_token');
 
     await queryRunner.addColumn(
-      'teachers',
+      'managers',
       new TableColumn({
         name: 'name',
         type: 'varchar',
@@ -16,7 +16,7 @@ export default class ModifyTeachersWithGithubInfo1600992782822
     );
 
     await queryRunner.addColumn(
-      'teachers',
+      'managers',
       new TableColumn({
         name: 'github_token',
         type: 'varchar',
@@ -25,7 +25,7 @@ export default class ModifyTeachersWithGithubInfo1600992782822
     );
 
     await queryRunner.addColumn(
-      'teachers',
+      'managers',
       new TableColumn({
         name: 'avatar_url',
         type: 'varchar',
@@ -35,12 +35,12 @@ export default class ModifyTeachersWithGithubInfo1600992782822
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropColumn('teachers', 'avatar_url');
-    await queryRunner.dropColumn('teachers', 'github_token');
-    await queryRunner.dropColumn('teachers', 'name');
+    await queryRunner.dropColumn('managers', 'avatar_url');
+    await queryRunner.dropColumn('managers', 'github_token');
+    await queryRunner.dropColumn('managers', 'name');
 
     await queryRunner.addColumn(
-      'teachers',
+      'managers',
       new TableColumn({
         name: 'github_token',
         type: 'varchar',
@@ -49,7 +49,7 @@ export default class ModifyTeachersWithGithubInfo1600992782822
     );
 
     await queryRunner.addColumn(
-      'teachers',
+      'managers',
       new TableColumn({
         name: 'name',
         type: 'varchar',

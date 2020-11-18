@@ -6,10 +6,10 @@ export default class CreateRepositoriesForeignKey1600912665069
     await queryRunner.createForeignKey(
       'repositories',
       new TableForeignKey({
-        name: 'repositoryStudent',
-        columnNames: ['student_id'],
+        name: 'repositorySpot',
+        columnNames: ['spot_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'students',
+        referencedTableName: 'spots',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -17,6 +17,6 @@ export default class CreateRepositoriesForeignKey1600912665069
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('repositories', 'repositoryStudent');
+    await queryRunner.dropForeignKey('repositories', 'repositorySpot');
   }
 }
