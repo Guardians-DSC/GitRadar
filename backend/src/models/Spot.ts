@@ -8,19 +8,19 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Teacher from './Teacher';
+import Manager from './Manager';
 
-@Entity('students')
-class Student {
+@Entity('spots')
+class Spot {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('uuid')
-  teacher_id: string;
+  manager_id: string;
 
-  @ManyToOne(() => Teacher, { eager: true })
-  @JoinColumn({ name: 'teacher_id' })
-  teacher: Teacher;
+  @ManyToOne(() => Manager, { eager: true })
+  @JoinColumn({ name: 'manager_id' })
+  teacher: Manager;
 
   @Column('varchar')
   github_login: string;
@@ -44,4 +44,4 @@ class Student {
   updated_at: Date;
 }
 
-export default Student;
+export default Spot;

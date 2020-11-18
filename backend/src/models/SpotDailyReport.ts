@@ -8,19 +8,19 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import Student from './Student';
+import Spot from './Spot';
 
-@Entity('student_daily_reports')
-class StudentDailyReport {
+@Entity('spot_daily_reports')
+class SpotDailyReports {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('uuid')
-  student_id: string;
+  spot_id: string;
 
-  @ManyToOne(() => Student, { eager: true })
-  @JoinColumn({ name: 'student_id' })
-  student: Student;
+  @ManyToOne(() => Spot, { eager: true })
+  @JoinColumn({ name: 'spot_id' })
+  student: Spot;
 
   @Column('int2')
   new_forks: number;
@@ -56,4 +56,4 @@ class StudentDailyReport {
   updated_at: Date;
 }
 
-export default StudentDailyReport;
+export default SpotDailyReports;
