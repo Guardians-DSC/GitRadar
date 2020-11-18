@@ -8,6 +8,7 @@ import { router } from 'bull-board';
 import { Worker } from 'bullmq';
 
 import v1 from './routes/v1';
+import v2 from './routes/v2/index';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import BullQueueProvider from './providers/queue/implementations/BullQueueProvider';
 import RequestStudentsProcessProcessor from './workers/RequestStudentsProcess/RequestStudentsProcessProcessor';
@@ -80,6 +81,7 @@ class App {
 
   private routes(): void {
     this.express.use('/v1', v1);
+    this.express.use('/v2', v2);
   }
 }
 

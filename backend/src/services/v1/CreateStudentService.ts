@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import AppError from '../errors/AppError';
-import Student from '../models/Student';
+import AppError from '../../errors/AppError';
+import Student from '../../models/Student';
 
 interface Request {
   github_id: string;

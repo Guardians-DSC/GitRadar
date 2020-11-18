@@ -1,7 +1,7 @@
 import GetRepositoriesService from './GetRepositoriesService';
-import Repository from '../entities/Repository';
-import AppError from '../errors/AppError';
-import api from './githubApi/RestApi';
+import Repository from '../../entities/Repository';
+import AppError from '../../errors/AppError';
+import api from '../githubApi/RestApi';
 
 interface Response {
   top_language: string;

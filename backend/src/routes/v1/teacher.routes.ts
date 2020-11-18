@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import TeacherController from '../controllers/TeacherController';
-import GithubTokenController from '../controllers/GithubTokenController';
+import TeacherController from '../../controllers/TeacherController';
+import GithubTokenController from '../../controllers/GithubTokenController';
 
 const teacherRouter = Router();
 

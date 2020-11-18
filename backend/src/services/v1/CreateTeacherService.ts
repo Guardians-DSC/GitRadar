@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
-import AppError from '../errors/AppError';
-import Teacher from '../models/Teacher';
+import AppError from '../../errors/AppError';
+import Teacher from '../../models/Teacher';
 import GetUserService from './GetUserService';
 
 interface CreateTeacherRequest {

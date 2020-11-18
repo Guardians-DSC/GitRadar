@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import Teacher from '../models/Teacher';
-import { decrypt } from '../utils/crypto';
+import Teacher from '../../models/Teacher';
+import { decrypt } from '../../utils/crypto';
 
 class GetTeacherTokenService {
   public async execute(): Promise<string> {

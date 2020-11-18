@@ -1,6 +1,6 @@
 import { getCustomRepository, getRepository } from 'typeorm';
-import StudentDailyReportsRepository from '../repositories/StudentDailyReportsRepository';
-import Commit from '../models/Commit';
+import StudentDailyReportsRepository from '../../repositories/StudentDailyReportsRepository';
+import Commit from '../../models/Commit';
 
 interface CommitResponse {
   repository?: {

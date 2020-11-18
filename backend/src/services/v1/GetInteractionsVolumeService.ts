@@ -1,5 +1,5 @@
 import { Between, getRepository } from 'typeorm';
-import StudentDailyReport from '../models/StudentDailyReport';
+import StudentDailyReport from '../../models/StudentDailyReport';
 
 interface Request {
   since: string;

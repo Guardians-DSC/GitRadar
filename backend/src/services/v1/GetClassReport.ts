@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import Student from '../models/Student';
+import Student from '../../models/Student';
 import GetPeriodStudentDailyReportsService from './GetPeriodStudentDailyReportsService';
 
 interface Response {

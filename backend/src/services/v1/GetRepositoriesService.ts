@@ -1,6 +1,6 @@
-import api from './githubApi/RestApi';
-import { catchGitHubNotFound } from '../utils/exceptions';
-import Repository from '../entities/Repository';
+import api from '../githubApi/RestApi';
+import { catchGitHubNotFound } from '../../utils/exceptions';
+import Repository from '../../entities/Repository';
 
 class GetRepositoriesService {
   public async execute(username: string): Promise<Repository[]> {

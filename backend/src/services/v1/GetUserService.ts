@@ -1,6 +1,6 @@
-import api from './githubApi/RestApi';
-import { catchGitHubNotFound } from '../utils/exceptions';
-import AppError from '../errors/AppError';
+import api from '../githubApi/RestApi';
+import { catchGitHubNotFound } from '../../utils/exceptions';
+import AppError from '../../errors/AppError';
 
 interface Request {
   username?: string;

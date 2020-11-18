@@ -1,7 +1,7 @@
-import api from './githubApi/RestApi';
-import Event from '../entities/Event';
-import { catchGitHubNotFound } from '../utils/exceptions';
-import AppError from '../errors/AppError';
+import api from '../githubApi/RestApi';
+import Event from '../../entities/Event';
+import { catchGitHubNotFound } from '../../utils/exceptions';
+import AppError from '../../errors/AppError';
 
 interface Commit {
   repository: {

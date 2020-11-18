@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import StudentDailyReport from '../models/StudentDailyReport';
+import StudentDailyReport from '../../models/StudentDailyReport';
 
 interface Request {
   student_id: string;

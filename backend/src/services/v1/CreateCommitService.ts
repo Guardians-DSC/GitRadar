@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import Commit from '../models/Commit';
+import Commit from '../../models/Commit';
 
 interface Request {
   repository_id: string | null;
