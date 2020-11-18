@@ -1,15 +1,15 @@
 import { getRepository } from 'typeorm';
-import Teacher from '../models/Manager';
+import Manager from '../models/Manager';
 import { decrypt } from '../utils/crypto';
 
 class GetGithubTokenService {
   async execute(): Promise<string> {
-    const teachersRepository = getRepository(Teacher);
+    const managersRepository = getRepository(Manager);
 
-    const teacher = await teachersRepository.findOne();
-    if (!teacher || !teacher.github_token) return '';
+    const manager = await managersRepository.findOne();
+    if (!manager || !manager.github_token) return '';
 
-    return decrypt(teacher.github_token);
+    return decrypt(manager.github_token);
   }
 }
 
