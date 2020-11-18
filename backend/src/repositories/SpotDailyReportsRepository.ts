@@ -5,7 +5,7 @@ import SpotDailyReport from '../models/SpotDailyReport';
 @EntityRepository(SpotDailyReport)
 class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
   public async findByPeriod(
-    student_id: string,
+    spot_id: string,
     since: Date,
     until: Date,
   ): Promise<SpotDailyReport[] | null> {
@@ -15,7 +15,7 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
     const foundSpotDailyReports = await this.find({
       where: {
         created_at: Between(since, until),
-        student_id,
+        spot_id,
       },
     });
 

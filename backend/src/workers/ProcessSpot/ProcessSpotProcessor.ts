@@ -25,25 +25,23 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
     commits,
     new_commits,
     new_interactions,
-    new_issues,
+    new_issues: issues,
     new_prs,
     new_repositories,
   } = payload;
 
   const dailyReport = dailyReportRepository.create({
+    new_issues: issues,
     additions,
     deletions,
     new_commits,
     new_interactions,
-    new_issues,
     new_prs,
     new_repositories,
     spot_id,
   });
 
-  const { id: spot_daily_report_id } = await dailyReportRepository.save(
-    dailyReport,
-  );
+  const { id: daily_id } = await dailyReportRepository.save(dailyReport);
 
   for await (const commit of commits) {
     const {
@@ -57,7 +55,7 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
       additions: commit_additions,
       deletions: commit_deletions,
       message,
-      spot_daily_report_id,
+      spot_daily_report_id: daily_id,
       spot_id,
       sha,
     });
