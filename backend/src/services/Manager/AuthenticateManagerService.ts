@@ -1,16 +1,21 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Manager from '../models/Manager';
-import AppError from '../errors/AppError';
+import Manager from '../../models/Manager';
+import AppError from '../../errors/AppError';
 
 interface Response {
   manager: Manager;
   token: string;
 }
 
+interface Request {
+  email: string;
+  password: string;
+}
+
 class AuthenticateManagerService {
-  public async execute(email: string, password: string): Promise<Response> {
+  public async execute({ email, password }: Request): Promise<Response> {
     const managersRepository = getRepository(Manager);
 
     const manager = await managersRepository.findOne({ email });
