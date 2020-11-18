@@ -1,6 +1,6 @@
 declare namespace Express {
   export interface Request {
-    teacher: {
+    manager: {
       id: string;
     };
   }
