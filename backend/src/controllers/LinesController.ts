@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { getRepository } from 'typeorm';
 import AppError from '../errors/AppError';
 import Student from '../models/Student';
-import GetLinesGrowthVolume from '../services/GetLinesGrowthVolume';
+import GetLinesGrowthVolume from '../services/v1/GetLinesGrowthVolume';
 
 class LinesController {
   static async index(request: Request, response: Response): Promise<Response> {

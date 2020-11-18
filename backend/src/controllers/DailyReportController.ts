@@ -3,8 +3,8 @@ import { getRepository } from 'typeorm';
 import * as yup from 'yup';
 import AppError from '../errors/AppError';
 import Student from '../models/Student';
-import GetPeriodStudentDailyReportsService from '../services/GetPeriodStudentDailyReportsService';
-import GetUserService from '../services/GetUserService';
+import GetPeriodStudentDailyReportsService from '../services/v1/GetPeriodStudentDailyReportsService';
+import GetUserService from '../services/v1/GetUserService';
 
 class DailyReportController {
   static async show(request: Request, response: Response): Promise<Response> {

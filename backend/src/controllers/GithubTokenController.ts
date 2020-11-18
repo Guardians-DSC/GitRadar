@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import RegisterTeacherGithubService from '../services/RegisterTeacherGithubService';
+import RegisterTeacherGithubService from '../services/v1/RegisterTeacherGithubService';
 
 class GithubTokenController {
   static async store(request: Request, response: Response): Promise<Response> {

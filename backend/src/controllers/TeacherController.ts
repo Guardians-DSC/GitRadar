@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import * as yup from 'yup';
 
-import GetUserService from '../services/GetUserService';
-import CreateTeacherService from '../services/CreateTeacherService';
+import GetUserService from '../services/v1/GetUserService';
+import CreateTeacherService from '../services/v1/CreateTeacherService';
 
 class TeacherController {
   static async store(request: Request, response: Response): Promise<Response> {

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as yup from 'yup';
 
-import AuthenticateTeacherService from '../services/AuthenticateTeacherService';
+import AuthenticateTeacherService from '../services/v1/AuthenticateTeacherService';
 
 class SessionController {
   static async store(request: Request, response: Response): Promise<Response> {

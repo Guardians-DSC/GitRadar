@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import * as yup from 'yup';
 import Student from '../models/Student';
-import GetClassReport from '../services/GetClassReport';
-import GetPeriodStudentDailyReportsService from '../services/GetPeriodStudentDailyReportsService';
+import GetClassReport from '../services/v1/GetClassReport';
+import GetPeriodStudentDailyReportsService from '../services/v1/GetPeriodStudentDailyReportsService';
 
 class ClassController {
   static async index(request: Request, response: Response): Promise<Response> {

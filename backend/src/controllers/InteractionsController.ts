@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 import { getRepository } from 'typeorm';
 import AppError from '../errors/AppError';
-import GetInteractionsVolume from '../services/GetInteractionsVolumeService';
+import GetInteractionsVolume from '../services/v1/GetInteractionsVolumeService';
 import Student from '../models/Student';
 
 class InteractionsController {

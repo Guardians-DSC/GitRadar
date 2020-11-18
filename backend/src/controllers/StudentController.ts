@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import * as yup from 'yup';
 
-import GetUserService from '../services/GetUserService';
-import GetProfileService from '../services/GetProfileService';
-import GetLanguagesService from '../services/GetLanguagesService';
-import CreateStudentService from '../services/CreateStudentService';
-import CreateRepositoryService from '../services/CreateRepositoryService';
+import GetUserService from '../services/v1/GetUserService';
+import GetProfileService from '../services/v1/GetProfileService';
+import GetLanguagesService from '../services/v1/GetLanguagesService';
+import CreateStudentService from '../services/v1/CreateStudentService';
+import CreateRepositoryService from '../services/v1/CreateRepositoryService';
 import Student from '../models/Student';
 import AppError from '../errors/AppError';
 import Repository from '../models/Repository';
