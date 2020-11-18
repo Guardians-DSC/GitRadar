@@ -18,7 +18,7 @@ api.interceptors.request.use(async config => {
     }
   }
   if (useGlobal.teacherToken) {
-    config.headers.authorization = `token ${useGlobal.teacherToken}`;
+    config.headers.authorization = `bearer ${useGlobal.teacherToken}`;
   }
 
   return config;
