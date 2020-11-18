@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Teacher from '../models/Teacher';
-import AppError from '../errors/AppError';
+import Teacher from '../../models/Teacher';
+import AppError from '../../errors/AppError';
 
 interface Response {
   teacher: Teacher;

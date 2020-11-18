@@ -1,6 +1,6 @@
 import axios from 'axios';
-import AppError from '../errors/AppError';
-import { encrypt } from '../utils/crypto';
+import AppError from '../../errors/AppError';
+import { encrypt } from '../../utils/crypto';
 import EditTeacherService from './EditTeacherService';
 
 class RegisterTeacherGithubService {
