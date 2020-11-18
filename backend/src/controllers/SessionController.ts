@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as yup from 'yup';
 
-import AuthenticateTeacherService from '../services/v1/AuthenticateManagerService';
+import AuthenticateManagerService from '../services/AuthenticateManagerService';
 
 class SessionController {
   static async store(request: Request, response: Response): Promise<Response> {
@@ -14,8 +14,8 @@ class SessionController {
 
     const { email, password } = request.body;
 
-    const authenticateTeacher = new AuthenticateTeacherService();
-    const { manager, token } = await authenticateTeacher.execute(
+    const authenticateManager = new AuthenticateManagerService();
+    const { manager, token } = await authenticateManager.execute(
       email,
       password,
     );
