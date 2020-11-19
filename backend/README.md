@@ -38,7 +38,8 @@ Com isso feito, você precisa criar um aplicativo OAuth com a sua conta do GitHu
 - [Siga esse tutorial do GitHub para isso.](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
 
 A sua página da aplicação deve ficar assim:
-<img width="600px" src="https://user-images.githubusercontent.com/40612788/99671001-2d424480-2a50-11eb-95a2-dea2c961b331.png"/>
+<img width="1100px" src="https://user-images.githubusercontent.com/40612788/99671001-2d424480-2a50-11eb-95a2-dea2c961b331.png"/>
+<br>
 Guarde os valores do ClientID e ClientSecret, você usará no ".env", além disso atente-se para as urls da aplicação, como a aplicação está sendo executada localmente, as urls direcionam para o frontend no endereço localhost, segue os campos em texto:
 
 - Homepage URL: http://localhost:3000
