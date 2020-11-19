@@ -40,7 +40,7 @@ interface Report {
 
 @EntityRepository(SpotDailyReport)
 class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
-  public async findByPeriod(
+  public async findByPeriodAndId(
     spot_id: string,
     since: Date,
     until: Date,
@@ -65,6 +65,33 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
       .getRawOne();
 
     const report = this.parsetRawReport(rawReport);
+
+    return report;
+  }
+
+  public async findByPeriod(
+    since: Date,
+    until: Date,
+  ): Promise<Report[] | null> {
+    since.setDate(since.getDate() - 1);
+    until.setDate(until.getDate() + 1);
+
+    const rawReport: RawReport[] = await this.createQueryBuilder('report')
+      .leftJoinAndSelect('report.spot', 'spot')
+      .andWhere(`report.created_at >= :since`, { since: since.toISOString() })
+      .andWhere('report.created_at < :until', { until: until.toISOString() })
+      .select('spot')
+      .addSelect('SUM(report.new_interactions)', 'new_interactions')
+      .addSelect('SUM(report.new_commits)', 'new_commits')
+      .addSelect('SUM(report.new_prs)', 'new_prs')
+      .addSelect('SUM(report.new_issues)', 'new_issues')
+      .addSelect('SUM(report.new_repositories)', 'new_repositories')
+      .addSelect('SUM(report.additions)', 'additions')
+      .addSelect('SUM(report.deletions)', 'deletions')
+      .groupBy('spot.id')
+      .getRawMany();
+
+    const report = rawReport.map(raw => this.parsetRawReport(raw));
 
     return report;
   }
