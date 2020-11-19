@@ -2,8 +2,8 @@ import { getCustomRepository } from 'typeorm';
 import SpotDailyReportsRepository from '../../repositories/SpotDailyReportsRepository';
 
 interface Request {
-  since: Date;
-  until: Date;
+  since: string;
+  until: string;
 }
 
 interface Spot {

@@ -48,17 +48,14 @@ interface Report {
 class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
   public async findByPeriodAndId(
     spot_id: string,
-    since: Date,
-    until: Date,
+    since: string,
+    until: string,
   ): Promise<Report | null> {
-    since.setDate(since.getDate() - 1);
-    until.setDate(until.getDate() + 1);
-
     const rawReport: RawReport = await this.createQueryBuilder('report')
       .where('report.spot_id = :id', { id: spot_id })
       .leftJoinAndSelect('report.spot', 'spot')
-      .andWhere(`report.created_at >= :since`, { since: since.toISOString() })
-      .andWhere('report.created_at < :until', { until: until.toISOString() })
+      .andWhere(`report.created_at >= :since`, { since })
+      .andWhere('report.created_at < :until', { until })
       .select('spot')
       .addSelect('SUM(report.new_interactions)', 'new_interactions')
       .addSelect('SUM(report.new_commits)', 'new_commits')
@@ -76,16 +73,13 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
   }
 
   public async findByPeriod(
-    since: Date,
-    until: Date,
+    since: string,
+    until: string,
   ): Promise<Report[] | null> {
-    since.setDate(since.getDate() - 1);
-    until.setDate(until.getDate() + 1);
-
     const rawReport: RawReport[] = await this.createQueryBuilder('report')
       .leftJoinAndSelect('report.spot', 'spot')
-      .andWhere(`report.created_at >= :since`, { since: since.toISOString() })
-      .andWhere('report.created_at < :until', { until: until.toISOString() })
+      .andWhere(`report.created_at >= :since`, { since })
+      .andWhere('report.created_at < :until', { until })
       .select('spot')
       .addSelect('SUM(report.new_interactions)', 'new_interactions')
       .addSelect('SUM(report.new_commits)', 'new_commits')
