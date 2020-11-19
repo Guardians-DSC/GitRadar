@@ -1,5 +1,4 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Spot from '../models/Spot';
 
 import SpotDailyReport from '../models/SpotDailyReport';
 
@@ -15,8 +14,9 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
 
     const report = await this.createQueryBuilder('report')
       .where('report.spot_id = :id', { id: spot_id })
-      .andWhere(`created_at >= :since`, { since: since.toISOString() })
-      .andWhere('created_at < :until', { until: until.toISOString() })
+      .leftJoinAndSelect('report.spot', 'spot')
+      .andWhere(`report.created_at >= :since`, { since: since.toISOString() })
+      .andWhere('report.created_at < :until', { until: until.toISOString() })
       .select('SUM(report.new_interactions)', 'new_interactions')
       .addSelect('SUM(report.new_commits)', 'new_commits')
       .addSelect('SUM(report.new_prs)', 'new_prs')
