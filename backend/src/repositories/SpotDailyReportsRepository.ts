@@ -90,13 +90,13 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
         name: spot_name,
       },
       metrics: {
-        additions,
-        deletions,
-        new_commits,
-        new_interactions,
-        new_issues,
-        new_prs,
-        new_repositories,
+        additions: Number(additions),
+        deletions: Number(deletions),
+        new_commits: Number(new_commits),
+        new_interactions: Number(new_interactions),
+        new_issues: Number(new_issues),
+        new_prs: Number(new_prs),
+        new_repositories: Number(new_repositories),
       },
     };
     return report;
