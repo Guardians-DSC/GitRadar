@@ -75,7 +75,13 @@ Pronto! Tudo está configurado para você começar a usar o projeto.
 
 ## 🚀 Modo de uso
 
-Você pode iniciar o servidor local de desenvolvimento, com o seguinte comando:
+Com o Banco de Dados devidamente configurado, você deve executar as migrations da aplicação para que sejam criadas as tabelas necessárias. Execute o seguinte comando:
+
+```
+yarn typeorm migration:run
+```
+
+Agora, você pode iniciar o servidor local de desenvolvimento, com o seguinte comando:
 
 ```
 yarn dev:server
