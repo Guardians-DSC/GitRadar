@@ -24,6 +24,9 @@ interface RepositoryNode {
   description: string;
   url: string;
   id: string;
+  primaryLanguage: {
+    name: string;
+  };
 }
 
 interface Response {
@@ -110,7 +113,7 @@ class CreateSpotService {
       spot_id,
     });
 
-    const repositoriesReponse = spotRepositories.map(
+    const repositoriesReponse: RepositoryInfo[] = spotRepositories.map(
       ({
         id: repository_id,
         name: repository_name,
@@ -147,6 +150,9 @@ class CreateSpotService {
             description
             url
             id
+            primaryLanguage {
+              name
+            }
           }
         }
       }
