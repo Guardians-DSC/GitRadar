@@ -2,7 +2,8 @@ import api from '../githubApi/GraphQLApi';
 
 interface Request {
   github_login: string;
-  date: string;
+  since: string;
+  until: string;
 }
 
 interface Commit {
@@ -69,9 +70,9 @@ interface CommitNode {
 }
 
 class GetDailyReportService {
-  async execute({ github_login, date }: Request): Promise<Response> {
+  async execute({ github_login, since, until }: Request): Promise<Response> {
     const data = await api.post('', {
-      query: this.getQuery(github_login, date),
+      query: this.getQuery(github_login, since, until),
     });
 
     const {
@@ -196,7 +197,7 @@ class GetDailyReportService {
     return commits;
   }
 
-  private getQuery(github_login: string, date: string): string {
+  private getQuery(github_login: string, since: string, until: string): string {
     const query = `{
         user(login:"${github_login}") {
           avatarUrl
@@ -208,7 +209,7 @@ class GetDailyReportService {
               defaultBranchRef {
                 target {
                   ... on Commit {
-                    history(first: 100, since: "${date}") {
+                    history(first: 100, since: "${since}" until: "${until}") {
                       nodes {
                         ... on Commit {
                           commitUrl
@@ -230,7 +231,7 @@ class GetDailyReportService {
               }
             }
           }
-          contributionsCollection(from: "${date}") {
+          contributionsCollection(from: "${since}" to:"${until}") {
             totalIssueContributions
             totalCommitContributions
             totalRepositoryContributions
