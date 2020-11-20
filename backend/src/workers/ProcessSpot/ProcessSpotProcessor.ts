@@ -61,6 +61,7 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
       sha,
       commit_url,
       repository_name: repository.name,
+      repository_url: repository.url,
     });
 
     await commitRepository.save(spotCommit);

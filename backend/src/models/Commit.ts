@@ -26,6 +26,9 @@ class Commit {
   @Column('varchar')
   repository_name: string;
 
+  @Column('varchar')
+  repository_url: string;
+
   @Column('int2')
   deletions: number;
 
