@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import CreateManagerService from '../../services/Manager/CreateManagerService';
-import SetGithubTokenService from '../../services/Manager/SetGithubTokenService';
+import CreateManagerService from '../services/Manager/CreateManagerService';
+import SetGithubTokenService from '../services/Manager/SetGithubTokenService';
 
 const manangerRouter = Router();
 

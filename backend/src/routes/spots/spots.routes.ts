@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import CreateSpotService from '../../../services/Spot/CreateSpotService';
-import authMiddleware from '../../../middlewares/authMiddleware';
-import GetSpotReportService from '../../../services/Spot/GetSpotReportService';
+import CreateSpotService from '../../services/Spot/CreateSpotService';
+import authMiddleware from '../../middlewares/authMiddleware';
+import GetSpotReportService from '../../services/Spot/GetSpotReportService';
 import spotVolumeRouter from './volume/spots.volume.routes';
 
 const spotRouter = Router();

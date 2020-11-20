@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import authMiddleware from '../../middlewares/authMiddleware';
-import GetBelowAverageOnProjectService from '../../services/Project/GetBelowAverageOnProjectService';
-import GetProjectReportService from '../../services/Project/GetProjectReport';
-import GetSpotsOnProjectService from '../../services/Spot/GetSpotsOnProjectService';
+import authMiddleware from '../middlewares/authMiddleware';
+import GetBelowAverageOnProjectService from '../services/Project/GetBelowAverageOnProjectService';
+import GetProjectReportService from '../services/Project/GetProjectReport';
+import GetSpotsOnProjectService from '../services/Spot/GetSpotsOnProjectService';
 
 const projectRouter = Router();
 

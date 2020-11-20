@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import authMiddleware from '../../../../middlewares/authMiddleware';
-import GetInteractionsVolumeService from '../../../../services/Spot/GetInteractionsVolumeService';
-import GetLinesVolumeService from '../../../../services/Spot/GetLinesVolumeService';
+import authMiddleware from '../../../middlewares/authMiddleware';
+import GetInteractionsVolumeService from '../../../services/Spot/GetInteractionsVolumeService';
+import GetLinesVolumeService from '../../../services/Spot/GetLinesVolumeService';
 
 const spotVolumeRouter = Router();
 
