@@ -48,6 +48,9 @@ class SpotDailyReport {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column('timestamp')
+  taken_at: Date;
 }
 
 export default SpotDailyReport;

@@ -40,6 +40,7 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
     new_prs,
     new_repositories,
     spot_id,
+    taken_at: until,
   });
 
   await dailyReportRepository.save(dailyReport);
