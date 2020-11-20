@@ -1,6 +1,7 @@
 import { Between, getCustomRepository, getRepository } from 'typeorm';
 import SpotDailyReportsRepository from '../../repositories/SpotDailyReportsRepository';
 import Commit from '../../models/Commit';
+import Spot from '../../models/Spot';
 
 interface Request {
   spot_id: string;
@@ -17,8 +18,8 @@ interface Response {
     top_language: string;
     github_id: string;
     name: string;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
   };
   metrics: {
     new_interactions: number;
@@ -36,12 +37,20 @@ class GetSpotReportService {
   async execute({ spot_id, since, until }: Request): Promise<Response> {
     const reportsRepository = getCustomRepository(SpotDailyReportsRepository);
     const commitRepository = getRepository(Commit);
+    const spotRepository = getRepository(Spot);
 
-    const spotReport = await reportsRepository.findByPeriodAndId(
+    const { metrics } = await reportsRepository.findByPeriodAndId(
       spot_id,
       since,
       until,
     );
+
+    const spot = await spotRepository.findOne({
+      where: {
+        id: spot_id,
+      },
+      loadEagerRelations: false,
+    });
 
     const commits = await commitRepository.find({
       where: {
@@ -50,7 +59,7 @@ class GetSpotReportService {
       },
     });
 
-    return { ...spotReport, commits };
+    return { spot: { ...spot }, metrics: { ...metrics }, commits };
   }
 }
 

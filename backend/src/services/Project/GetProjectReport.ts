@@ -14,17 +14,6 @@ interface Request {
 }
 
 interface Report {
-  spot: {
-    id: string;
-    github_login: string;
-    manager_id: string;
-    avatar_url: string;
-    top_language: string;
-    github_id: string;
-    name: string;
-    created_at: string;
-    updated_at: string;
-  };
   metrics: {
     new_interactions: number;
     new_commits: number;
@@ -62,9 +51,10 @@ class GetProjectReportService {
 
     const spots = reports.length;
 
-    projectReports.new_commits_average = projectReports.all_new_commits / spots;
+    projectReports.new_commits_average =
+      projectReports.all_new_commits / spots || 0;
     projectReports.new_interactions_average =
-      projectReports.all_new_interactions / spots;
+      projectReports.all_new_interactions / spots || 0;
 
     return projectReports;
   }

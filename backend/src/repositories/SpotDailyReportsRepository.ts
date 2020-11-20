@@ -3,15 +3,6 @@ import { EntityRepository, Repository } from 'typeorm';
 import SpotDailyReport from '../models/SpotDailyReport';
 
 interface RawReport {
-  spot_id: string;
-  spot_manager_id: string;
-  spot_github_login: string;
-  spot_avatar_url: string;
-  spot_top_language: string;
-  spot_github_id: string;
-  spot_name: string;
-  spot_created_at: string;
-  spot_updated_at: string;
   new_interactions: number;
   new_commits: number;
   new_prs: number;
@@ -22,17 +13,6 @@ interface RawReport {
 }
 
 interface Report {
-  spot: {
-    id: string;
-    github_login: string;
-    manager_id: string;
-    avatar_url: string;
-    top_language: string;
-    github_id: string;
-    name: string;
-    created_at: string;
-    updated_at: string;
-  };
   metrics: {
     new_interactions: number;
     new_commits: number;
@@ -97,48 +77,41 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
   }
 
   private parseRawReport(rawReport: RawReport): Report {
-    const {
-      additions,
-      deletions,
-      new_commits,
-      new_interactions,
-      new_issues,
-      new_prs,
-      new_repositories,
-      spot_github_login,
-      spot_id,
-      spot_name,
-      spot_avatar_url,
-      spot_top_language,
-      spot_created_at,
-      spot_github_id,
-      spot_manager_id,
-      spot_updated_at,
-    } = rawReport;
+    if (rawReport) {
+      const {
+        additions,
+        deletions,
+        new_commits,
+        new_interactions,
+        new_issues,
+        new_prs,
+        new_repositories,
+      } = rawReport;
 
-    const report: Report = {
-      spot: {
-        id: spot_id,
-        github_login: spot_github_login,
-        name: spot_name,
-        avatar_url: spot_avatar_url,
-        top_language: spot_top_language,
-        github_id: spot_github_id,
-        manager_id: spot_manager_id,
-        created_at: spot_created_at,
-        updated_at: spot_updated_at,
-      },
+      const report: Report = {
+        metrics: {
+          additions: Number(additions),
+          deletions: Number(deletions),
+          new_commits: Number(new_commits),
+          new_interactions: Number(new_interactions),
+          new_issues: Number(new_issues),
+          new_prs: Number(new_prs),
+          new_repositories: Number(new_repositories),
+        },
+      };
+      return report;
+    }
+    return {
       metrics: {
-        additions: Number(additions),
-        deletions: Number(deletions),
-        new_commits: Number(new_commits),
-        new_interactions: Number(new_interactions),
-        new_issues: Number(new_issues),
-        new_prs: Number(new_prs),
-        new_repositories: Number(new_repositories),
+        additions: 0,
+        deletions: 0,
+        new_commits: 0,
+        new_interactions: 0,
+        new_issues: 0,
+        new_prs: 0,
+        new_repositories: 0,
       },
     };
-    return report;
   }
 }
 
