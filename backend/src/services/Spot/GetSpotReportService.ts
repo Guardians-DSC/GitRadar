@@ -50,10 +50,6 @@ class GetSpotReportService {
       },
     });
 
-    console.log(spot_id);
-
-    console.log(spotReport);
-
     return { ...spotReport, commits };
   }
 }
