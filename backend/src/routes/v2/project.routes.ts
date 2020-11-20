@@ -2,8 +2,17 @@ import { Router } from 'express';
 import authMiddleware from '../../middlewares/authMiddleware';
 import GetBelowAverageOnProjectService from '../../services/Project/GetBelowAverageOnProjectService';
 import GetProjectReportService from '../../services/Project/GetProjectReport';
+import GetSpotsOnProjectService from '../../services/Spot/GetSpotsOnProjectService';
 
 const projectRouter = Router();
+
+projectRouter.get('/:project', authMiddleware, async (request, response) => {
+  const getSpotsService = new GetSpotsOnProjectService();
+
+  const spots = await getSpotsService.execute();
+
+  return response.json(spots);
+});
 
 projectRouter.get(
   '/below_average',

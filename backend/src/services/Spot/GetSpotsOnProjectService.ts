@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import Spot from '../../models/Spot';
 
-class GetSpotsService {
+class GetSpotsOnProjectService {
   async execute(): Promise<Spot[]> {
     const spotsRepository = getRepository(Spot);
 
@@ -13,4 +13,4 @@ class GetSpotsService {
   }
 }
 
-export default GetSpotsService;
+export default GetSpotsOnProjectService;
