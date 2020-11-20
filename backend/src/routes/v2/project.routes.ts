@@ -15,7 +15,7 @@ projectRouter.get('/:project', authMiddleware, async (request, response) => {
 });
 
 projectRouter.get(
-  '/below_average',
+  '/below_average/:project',
   authMiddleware,
   async (request, response) => {
     const getBelowAverageOnProjectService = new GetBelowAverageOnProjectService();
@@ -33,19 +33,23 @@ projectRouter.get(
   },
 );
 
-projectRouter.get('/report', authMiddleware, async (request, response) => {
-  const getProjectReportService = new GetProjectReportService();
+projectRouter.get(
+  '/report/:project',
+  authMiddleware,
+  async (request, response) => {
+    const getProjectReportService = new GetProjectReportService();
 
-  let { until } = request.query;
-  until = until || new Date().toISOString();
-  const { since } = request.query;
+    let { until } = request.query;
+    until = until || new Date().toISOString();
+    const { since } = request.query;
 
-  const spots = await getProjectReportService.execute({
-    since: since as string,
-    until: until as string,
-  });
+    const spots = await getProjectReportService.execute({
+      since: since as string,
+      until: until as string,
+    });
 
-  return response.json(spots);
-});
+    return response.json(spots);
+  },
+);
 
 export default projectRouter;
