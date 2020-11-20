@@ -67,7 +67,7 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
       .groupBy('spot.id')
       .getRawOne();
 
-    const report = this.parsetRawReport(rawReport);
+    const report = this.parseRawReport(rawReport);
 
     return report;
   }
@@ -91,12 +91,12 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
       .groupBy('spot.id')
       .getRawMany();
 
-    const report = rawReport.map(raw => this.parsetRawReport(raw));
+    const report = rawReport.map(raw => this.parseRawReport(raw));
 
     return report;
   }
 
-  private parsetRawReport(rawReport: RawReport): Report {
+  private parseRawReport(rawReport: RawReport): Report {
     const {
       additions,
       deletions,
