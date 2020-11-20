@@ -11,6 +11,7 @@ interface Commit {
     name: string;
     url: string;
   };
+  commit_url: string;
   sha: string;
   message: string;
   additions: number;
@@ -167,13 +168,20 @@ class GetDailyReportService {
       });
 
       for (const commit of spotCommits) {
-        const { additions, deletions, id: commit_id, message } = commit;
+        const {
+          additions,
+          deletions,
+          id: commit_id,
+          message,
+          commitUrl,
+        } = commit;
 
         const serializedCommit: Commit = {
           additions,
           deletions,
           message,
           sha: commit_id,
+          commit_url: commitUrl,
           repository: {
             id: repository_id,
             name: nameWithOwner,

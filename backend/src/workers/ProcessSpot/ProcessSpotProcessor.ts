@@ -49,6 +49,8 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
       deletions: commit_deletions,
       message,
       sha,
+      commit_url,
+      repository,
     } = commit;
 
     const spotCommit = commitRepository.create({
@@ -57,6 +59,8 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
       message,
       spot_id,
       sha,
+      commit_url,
+      repository_name: repository.name,
     });
 
     await commitRepository.save(spotCommit);

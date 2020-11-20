@@ -20,6 +20,12 @@ class Commit {
   @Column('int2')
   additions: number;
 
+  @Column('varchar')
+  commit_url: string;
+
+  @Column('varchar')
+  repository_name: string;
+
   @Column('int2')
   deletions: number;
 
