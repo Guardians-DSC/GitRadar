@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import manangerRouter from './manager.routes';
-import spotRouter from './spots.routes';
+import spotRouter from './spots/spots.routes';
 import sessionsRouter from './sessions.routes';
 import projectRouter from './project.routes';
 
