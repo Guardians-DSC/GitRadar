@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import CreateSpotService from '../../services/Spot/CreateSpotService';
 import authMiddleware from '../../middlewares/authMiddleware';
+import GetSpotReportService from '../../services/Spot/GetSpotReportService';
 
 const spotRouter = Router();
 
@@ -17,5 +18,27 @@ spotRouter.post('/', authMiddleware, async (request, response) => {
 
   return response.json(spot);
 });
+
+spotRouter.get(
+  '/:spot_id/report',
+  authMiddleware,
+  async (request, response) => {
+    const { spot_id } = request.params;
+
+    let { until } = request.query;
+    until = until || new Date().toISOString();
+    const { since } = request.query;
+
+    const getSpotReportService = new GetSpotReportService();
+
+    const spotReport = await getSpotReportService.execute({
+      since: since as string,
+      spot_id,
+      until: until as string,
+    });
+
+    return response.json(spotReport);
+  },
+);
 
 export default spotRouter;
