@@ -5,10 +5,12 @@ import Spot from '../../models/Spot';
 const RequestSpotsProcessProcessor = async (): Promise<void> => {
   const spotsRepository = getRepository(Spot);
   const since = new Date();
-  since.setHours(0);
+  since.setHours(-3);
   since.setMinutes(0);
   since.setSeconds(0);
   since.setMilliseconds(0);
+
+  console.log(`Starting spot crawl request at ${since.toISOString()}`);
 
   const spots = await spotsRepository.find();
 

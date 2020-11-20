@@ -50,7 +50,7 @@ class App {
   }
 
   private defineCron(): void {
-    cron.schedule('00 23 * * *', async () =>
+    cron.schedule('* * * * *', async () =>
       this.queueProvider.add({
         jobName: 'request spot process',
         queueName: 'spot-process-requester',
