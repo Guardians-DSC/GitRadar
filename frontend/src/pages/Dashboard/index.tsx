@@ -69,7 +69,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/project/report/coming?since=${since.toISOString()}`,
+        `/project/coming/report?since=${since.toISOString()}`,
       );
 
       const {
@@ -109,7 +109,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/project/below_average?since=${since.toISOString()}`,
+        `/project/coming/below_average?since=${since.toISOString()}`,
       );
 
       setBelowAverage(response.data);
