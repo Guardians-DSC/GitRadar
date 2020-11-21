@@ -29,7 +29,7 @@ import SimpleLineChart from '../../components/SimpleLineChart/index';
 import SimpleBarChart from '../../components/SimpleBarChart/index';
 
 interface ProfileParams {
-  spotId: string;
+  githubLogin: string;
 }
 
 interface ShowInformationProps {
@@ -61,7 +61,7 @@ const ShowInformation: React.FC<ShowInformationProps> = ({
 );
 
 const Profile: React.FC = () => {
-  const { spotId } = useParams<ProfileParams>();
+  const { githubLogin } = useParams<ProfileParams>();
 
   const [loadingRepos, setLoadingRepos] = useState(false);
   const [loadingCommits, setLoadingCommits] = useState(false);
@@ -94,7 +94,7 @@ const Profile: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/spot/${spotId}/report?since=${since.toISOString()}`,
+        `/spot/${githubLogin}/report?since=${since.toISOString()}`,
       );
       const { spot, metrics, commits: responseCommits } = response.data;
       setLoadingCommits(false);
@@ -116,12 +116,12 @@ const Profile: React.FC = () => {
       setLoadingCommits(false);
       validationError(error);
     }
-  }, [spotId]);
+  }, [githubLogin]);
 
   const getSpotRepositories = useCallback(async () => {
     try {
       setLoadingRepos(true);
-      const response = await api.get(`/spot/${spotId}/repositories`);
+      const response = await api.get(`/spot/${githubLogin}/repositories`);
       setLoadingRepos(false);
 
       setRepositories(response.data);
@@ -129,7 +129,7 @@ const Profile: React.FC = () => {
       setLoadingCommits(false);
       validationError(error);
     }
-  }, [spotId]);
+  }, [githubLogin]);
 
   const getInteractionsVolume = useCallback(async () => {
     const since = new Date();
@@ -137,7 +137,7 @@ const Profile: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/spot/volume/${spotId}/interactions?since=${since.toISOString()}`,
+        `/spot/volume/${githubLogin}/interactions?since=${since.toISOString()}`,
       );
 
       setInteractionsChartInfo(
@@ -156,7 +156,7 @@ const Profile: React.FC = () => {
     } catch (error) {
       validationError(error);
     }
-  }, [spotId]);
+  }, [githubLogin]);
 
   const getLinesGrowhtVolume = useCallback(async () => {
     const since = new Date();
@@ -164,7 +164,7 @@ const Profile: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/spot/volume/${spotId}/lines?since=${since.toISOString()}`,
+        `/spot/volume/${githubLogin}/lines?since=${since.toISOString()}`,
       );
 
       setLinesGrowthChartInfo(
@@ -188,7 +188,7 @@ const Profile: React.FC = () => {
     } catch (error) {
       validationError(error);
     }
-  }, [spotId]);
+  }, [githubLogin]);
 
   useEffect(() => {
     getSpotReport();
