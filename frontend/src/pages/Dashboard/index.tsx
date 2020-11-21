@@ -182,7 +182,7 @@ const Dashboard: React.FC = () => {
                 label: item.github_login,
                 subLabel: item.name,
                 photo: item.avatar_url,
-                link: `/dashboard/${item.github_login}`,
+                link: `/dashboard/${item.id}`,
               })}
             />
           </LeftContainer>
@@ -225,7 +225,7 @@ const Dashboard: React.FC = () => {
                 label: item.github_login,
                 subLabel: item.name,
                 photo: item.avatar_url,
-                link: `/dashboard/${item.github_login}`,
+                link: `/dashboard/${item.id}`,
               })}
             />
           </RightContainer>
