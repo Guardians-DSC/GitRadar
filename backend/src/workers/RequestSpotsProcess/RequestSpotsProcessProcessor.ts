@@ -32,7 +32,6 @@ const RequestSpotsProcessProcessor = async (): Promise<void> => {
   console.log(
     `Starting spot crawl request at ${since.toISOString()} - ${until.toISOString()}`,
   );
-  console.log('aaaaa', since.getTimezoneOffset());
 
   const spots = await spotsRepository.find();
 

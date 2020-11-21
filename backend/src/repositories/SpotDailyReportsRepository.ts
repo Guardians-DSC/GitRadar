@@ -56,9 +56,6 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
       until,
     );
 
-    console.log(parsedSince);
-    console.log(parsedUntil);
-
     const rawReport: RawReport = await this.createQueryBuilder('report')
       .where('report.spot_id = :id', { id: spot_id })
       .leftJoinAndSelect('report.spot', 'spot')
