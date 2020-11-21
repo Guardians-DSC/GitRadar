@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
 
     if (code) {
       try {
-        await api.get(`/teacher/callback?code=${code}`);
+        await api.get(`/manager/callback?code=${code}`);
         toast('Sua conta do GitHub foi vinculada com sucesso!', {
           type: 'success',
         });
@@ -69,7 +69,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/class/report?since=${since.toISOString()}`,
+        `/project/report?since=${since.toISOString()}`,
       );
 
       const {
@@ -92,7 +92,7 @@ const Dashboard: React.FC = () => {
     setLoadingStudents(true);
 
     try {
-      const response = await api.get('/class');
+      const response = await api.get('/project');
 
       setAllStudents(response.data);
       setLoadingStudents(false);
@@ -109,7 +109,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/class/below_average?since=${since.toISOString()}`,
+        `/project/below_average?since=${since.toISOString()}`,
       );
 
       setBelowAverage(response.data);
@@ -126,7 +126,7 @@ const Dashboard: React.FC = () => {
 
       try {
         setLoadingSubmit(true);
-        await api.post('/student', {
+        await api.post('/spot', {
           github_login: monitored,
         });
         setLoadingSubmit(false);
