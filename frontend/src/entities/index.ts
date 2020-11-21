@@ -8,7 +8,7 @@ export interface Manager {
 
 export interface Spot {
   id: string;
-  teacher_id: string;
+  manager_id: string;
   github_login: string;
   name: string;
   avatar_url: string;
