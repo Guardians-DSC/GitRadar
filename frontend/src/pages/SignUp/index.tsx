@@ -55,7 +55,7 @@ const SignUp: React.FC = () => {
         password,
       });
 
-      await api.post('/teacher', {
+      await api.post('/manager', {
         github_login: github,
         email,
         password,
