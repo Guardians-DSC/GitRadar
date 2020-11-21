@@ -23,40 +23,32 @@ spotRouter.post('/', authMiddleware, async (request, response) => {
   return response.json(spot);
 });
 
-spotRouter.get(
-  '/:github_login/report',
-  authMiddleware,
-  async (request, response) => {
-    const { github_login } = request.params;
+spotRouter.get('/:github_login/report', async (request, response) => {
+  const { github_login } = request.params;
 
-    let { until } = request.query;
-    until = until || new Date().toISOString();
-    const { since } = request.query;
+  let { until } = request.query;
+  until = until || new Date().toISOString();
+  const { since } = request.query;
 
-    const getSpotReportService = new GetSpotReportService();
+  const getSpotReportService = new GetSpotReportService();
 
-    const spotReport = await getSpotReportService.execute({
-      since: since as string,
-      github_login,
-      until: until as string,
-    });
+  const spotReport = await getSpotReportService.execute({
+    since: since as string,
+    github_login,
+    until: until as string,
+  });
 
-    return response.json(spotReport);
-  },
-);
+  return response.json(spotReport);
+});
 
-spotRouter.get(
-  '/:github_login/repositories',
-  authMiddleware,
-  async (request, response) => {
-    const { github_login } = request.params;
+spotRouter.get('/:github_login/repositories', async (request, response) => {
+  const { github_login } = request.params;
 
-    const getSpotRepositories = new GetSpotRepositories();
+  const getSpotRepositories = new GetSpotRepositories();
 
-    const repositories = await getSpotRepositories.execute({ github_login });
+  const repositories = await getSpotRepositories.execute({ github_login });
 
-    return response.json(repositories);
-  },
-);
+  return response.json(repositories);
+});
 
 export default spotRouter;
