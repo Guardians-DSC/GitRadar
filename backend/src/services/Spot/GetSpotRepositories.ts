@@ -26,6 +26,7 @@ class GetSpotRepositories {
       where: {
         spot_id: spot.id,
       },
+      loadEagerRelations: false,
     });
 
     return repositories;
