@@ -6,10 +6,10 @@ import GetLinesVolumeService from '../../../services/Spot/GetLinesVolumeService'
 const spotVolumeRouter = Router();
 
 spotVolumeRouter.get(
-  '/:spot_id/interactions',
+  '/:github_login/interactions',
   authMiddleware,
   async (request, response) => {
-    const { spot_id } = request.params;
+    const { github_login } = request.params;
 
     let { until } = request.query;
     until = until || new Date().toISOString();
@@ -18,7 +18,7 @@ spotVolumeRouter.get(
     const getInteractionsVolume = new GetInteractionsVolumeService();
 
     const volume = await getInteractionsVolume.execute({
-      spot_id,
+      github_login,
       since: since as string,
       until: until as string,
     });
@@ -28,10 +28,10 @@ spotVolumeRouter.get(
 );
 
 spotVolumeRouter.get(
-  '/:spot_id/lines',
+  '/:github_login/lines',
   authMiddleware,
   async (request, response) => {
-    const { spot_id } = request.params;
+    const { github_login } = request.params;
 
     let { until } = request.query;
     until = until || new Date().toISOString();
@@ -40,7 +40,7 @@ spotVolumeRouter.get(
     const getLinesVolume = new GetLinesVolumeService();
 
     const volume = await getLinesVolume.execute({
-      spot_id,
+      github_login,
       since: since as string,
       until: until as string,
     });
