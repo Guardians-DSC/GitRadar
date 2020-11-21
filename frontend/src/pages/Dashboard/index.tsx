@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const [allStudents, setAllStudents] = useState<Student[]>([]);
+  const [allSpots, setallSpots] = useState<Student[]>([]);
   const [belowAverage, setBelowAverage] = useState<Student[]>([]);
   const [allNewInteractions, setAllNewInteractions] = useState(0);
   const [allNewCommits, setAllNewCommits] = useState(0);
@@ -63,13 +63,13 @@ const Dashboard: React.FC = () => {
     }
   }, [location.search, history]);
 
-  const getClassInformation = useCallback(async () => {
+  const getProjectInformation = useCallback(async () => {
     const since = new Date();
     since.setMonth(since.getMonth() - 1);
 
     try {
       const response = await api.get(
-        `/project/report?since=${since.toISOString()}`,
+        `/report/coming?since=${since.toISOString()}`,
       );
 
       const {
@@ -88,13 +88,13 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
-  const getAllStudents = useCallback(async () => {
+  const getallSpots = useCallback(async () => {
     setLoadingStudents(true);
 
     try {
-      const response = await api.get('/project');
+      const response = await api.get('/project/coming');
 
-      setAllStudents(response.data);
+      setallSpots(response.data);
       setLoadingStudents(false);
     } catch (error) {
       setLoadingStudents(false);
@@ -132,28 +132,28 @@ const Dashboard: React.FC = () => {
         setLoadingSubmit(false);
 
         setMonitored('');
-        setAllStudents([]);
+        setallSpots([]);
         setBelowAverage([]);
 
-        getAllStudents();
+        getallSpots();
         getBelowAverage();
       } catch (error) {
         setLoadingSubmit(false);
         validationError(error);
       }
     },
-    [monitored, getAllStudents, getBelowAverage],
+    [monitored, getallSpots, getBelowAverage],
   );
 
   useEffect(() => {
     syncGithub();
 
-    getClassInformation();
+    getProjectInformation();
 
-    getAllStudents();
+    getallSpots();
 
     getBelowAverage();
-  }, [syncGithub, getClassInformation, getAllStudents, getBelowAverage]);
+  }, [syncGithub, getProjectInformation, getallSpots, getBelowAverage]);
 
   return (
     <PageContainer>
@@ -177,7 +177,7 @@ const Dashboard: React.FC = () => {
               isLoading={loadingStudents}
               listHeight={285}
               title="Spots Monitorados"
-              items={allStudents}
+              items={allSpots}
               mapItem={item => ({
                 label: item.github_login,
                 subLabel: item.name,
