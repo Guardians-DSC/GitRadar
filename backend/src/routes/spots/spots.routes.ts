@@ -2,6 +2,7 @@ import { Router } from 'express';
 import CreateSpotService from '../../services/Spot/CreateSpotService';
 import authMiddleware from '../../middlewares/authMiddleware';
 import GetSpotReportService from '../../services/Spot/GetSpotReportService';
+import GetSpotRepositories from '../../services/Spot/GetSpotRepositories';
 import spotVolumeRouter from './volume/spots.volume.routes';
 
 const spotRouter = Router();
@@ -41,6 +42,20 @@ spotRouter.get(
     });
 
     return response.json(spotReport);
+  },
+);
+
+spotRouter.get(
+  '/:spot_id/repositories',
+  authMiddleware,
+  async (request, response) => {
+    const { spot_id } = request.params;
+
+    const getSpotRepositories = new GetSpotRepositories();
+
+    const repositories = await getSpotRepositories.execute({ spot_id });
+
+    return response.json(repositories);
   },
 );
 
