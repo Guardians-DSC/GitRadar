@@ -7,6 +7,7 @@ import AppError from '../../errors/AppError';
 interface Response {
   manager: Manager;
   token: string;
+  hasGithubToken: boolean;
 }
 
 interface Request {
@@ -40,7 +41,9 @@ class AuthenticateManagerService {
       expiresIn: '7d',
     });
 
-    return { manager, token };
+    const hasGithubToken = !!manager.github_token;
+
+    return { manager, token, hasGithubToken };
   }
 }
 

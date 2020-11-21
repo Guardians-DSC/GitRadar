@@ -51,11 +51,20 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
     since: string,
     until: string,
   ): Promise<Report | null> {
+    const { since: parsedSince, until: parsedUntil } = this.parseDates(
+      since,
+      until,
+    );
+
     const rawReport: RawReport = await this.createQueryBuilder('report')
       .where('report.spot_id = :id', { id: spot_id })
       .leftJoinAndSelect('report.spot', 'spot')
-      .andWhere(`report.taken_at >= :since`, { since })
-      .andWhere('report.taken_at <= :until', { until })
+      .andWhere(`report.taken_at >= :since`, {
+        since: parsedSince.toISOString(),
+      })
+      .andWhere('report.taken_at < :until', {
+        until: parsedUntil.toISOString(),
+      })
       .select('spot')
       .addSelect('SUM(report.new_interactions)', 'new_interactions')
       .addSelect('SUM(report.new_commits)', 'new_commits')
@@ -76,10 +85,19 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
     since: string,
     until: string,
   ): Promise<Report[] | null> {
+    const { since: parsedSince, until: parsedUntil } = this.parseDates(
+      since,
+      until,
+    );
+
     const rawReport: RawReport[] = await this.createQueryBuilder('report')
       .leftJoinAndSelect('report.spot', 'spot')
-      .andWhere(`report.taken_at >= :since`, { since })
-      .andWhere('report.taken_at <= :until', { until })
+      .andWhere(`report.taken_at >= :since`, {
+        since: parsedSince.toISOString(),
+      })
+      .andWhere('report.taken_at < :until', {
+        until: parsedUntil.toISOString(),
+      })
       .select('spot')
       .addSelect('SUM(report.new_interactions)', 'new_interactions')
       .addSelect('SUM(report.new_commits)', 'new_commits')
@@ -94,6 +112,43 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
     const report = rawReport.map(raw => this.parseRawReport(raw));
 
     return report;
+  }
+
+  private parseDates(
+    since: string,
+    until: string,
+  ): { since: Date; until: Date } {
+    const sinceDate = new Date(since);
+    const untilDate = new Date(until);
+
+    const parsedSince = new Date(
+      Date.UTC(
+        sinceDate.getFullYear(),
+        sinceDate.getMonth(),
+        sinceDate.getDate(),
+        0,
+        0,
+        0,
+        0,
+      ),
+    );
+
+    const parsedUntil = new Date(
+      Date.UTC(
+        untilDate.getFullYear(),
+        untilDate.getMonth(),
+        untilDate.getDate(),
+        23,
+        59,
+        59,
+        59,
+      ),
+    );
+
+    return {
+      since: parsedSince,
+      until: parsedUntil,
+    };
   }
 
   private parseRawReport(rawReport: RawReport): Report {

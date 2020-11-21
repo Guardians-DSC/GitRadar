@@ -1,15 +1,13 @@
 import { Router } from 'express';
-import authMiddleware from '../../../middlewares/authMiddleware';
 import GetInteractionsVolumeService from '../../../services/Spot/GetInteractionsVolumeService';
 import GetLinesVolumeService from '../../../services/Spot/GetLinesVolumeService';
 
 const spotVolumeRouter = Router();
 
 spotVolumeRouter.get(
-  '/:spot_id/interactions',
-  authMiddleware,
+  '/:github_login/interactions',
   async (request, response) => {
-    const { spot_id } = request.params;
+    const { github_login } = request.params;
 
     let { until } = request.query;
     until = until || new Date().toISOString();
@@ -18,7 +16,7 @@ spotVolumeRouter.get(
     const getInteractionsVolume = new GetInteractionsVolumeService();
 
     const volume = await getInteractionsVolume.execute({
-      spot_id,
+      github_login,
       since: since as string,
       until: until as string,
     });
@@ -27,26 +25,22 @@ spotVolumeRouter.get(
   },
 );
 
-spotVolumeRouter.get(
-  '/:spot_id/lines',
-  authMiddleware,
-  async (request, response) => {
-    const { spot_id } = request.params;
+spotVolumeRouter.get('/:github_login/lines', async (request, response) => {
+  const { github_login } = request.params;
 
-    let { until } = request.query;
-    until = until || new Date().toISOString();
-    const { since } = request.query;
+  let { until } = request.query;
+  until = until || new Date().toISOString();
+  const { since } = request.query;
 
-    const getLinesVolume = new GetLinesVolumeService();
+  const getLinesVolume = new GetLinesVolumeService();
 
-    const volume = await getLinesVolume.execute({
-      spot_id,
-      since: since as string,
-      until: until as string,
-    });
+  const volume = await getLinesVolume.execute({
+    github_login,
+    since: since as string,
+    until: until as string,
+  });
 
-    return response.json(volume);
-  },
-);
+  return response.json(volume);
+});
 
 export default spotVolumeRouter;

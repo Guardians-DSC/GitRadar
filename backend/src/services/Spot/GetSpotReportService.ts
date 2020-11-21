@@ -2,9 +2,10 @@ import { Between, getCustomRepository, getRepository } from 'typeorm';
 import SpotDailyReportsRepository from '../../repositories/SpotDailyReportsRepository';
 import Commit from '../../models/Commit';
 import Spot from '../../models/Spot';
+import AppError from '../../errors/AppError';
 
 interface Request {
-  spot_id: string;
+  github_login: string;
   since: string;
   until: string;
 }
@@ -34,27 +35,32 @@ interface Response {
 }
 
 class GetSpotReportService {
-  async execute({ spot_id, since, until }: Request): Promise<Response> {
+  async execute({ github_login, since, until }: Request): Promise<Response> {
     const reportsRepository = getCustomRepository(SpotDailyReportsRepository);
     const commitRepository = getRepository(Commit);
     const spotRepository = getRepository(Spot);
 
-    const { metrics } = await reportsRepository.findByPeriodAndId(
-      spot_id,
-      since,
-      until,
-    );
-
     const spot = await spotRepository.findOne({
       where: {
-        id: spot_id,
+        github_login,
       },
       loadEagerRelations: false,
     });
 
+    if (!spot) {
+      throw new AppError('Spot not registered', 400);
+    }
+
+    const { id } = spot;
+
+    const { metrics } = await reportsRepository.findByPeriodAndId(
+      id,
+      since,
+      until,
+    );
     const commits = await commitRepository.find({
       where: {
-        spot_id,
+        id,
         created_at: Between(since, until),
       },
     });

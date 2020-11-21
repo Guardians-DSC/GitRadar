@@ -8,14 +8,14 @@ sessionsRouter.post('/', async (request, response) => {
 
   const authenticateUser = new AuthenticateManagerService();
 
-  const { manager, token } = await authenticateUser.execute({
+  const { manager, token, hasGithubToken } = await authenticateUser.execute({
     email,
     password,
   });
 
   delete manager.password;
 
-  return response.json({ manager, token });
+  return response.json({ manager, token, hasGithubToken });
 });
 
 export default sessionsRouter;

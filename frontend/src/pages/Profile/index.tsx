@@ -29,7 +29,7 @@ import SimpleLineChart from '../../components/SimpleLineChart/index';
 import SimpleBarChart from '../../components/SimpleBarChart/index';
 
 interface ProfileParams {
-  username: string;
+  githubLogin: string;
 }
 
 interface ShowInformationProps {
@@ -61,22 +61,21 @@ const ShowInformation: React.FC<ShowInformationProps> = ({
 );
 
 const Profile: React.FC = () => {
-  const { username } = useParams<ProfileParams>();
+  const { githubLogin } = useParams<ProfileParams>();
 
   const [loadingRepos, setLoadingRepos] = useState(false);
   const [loadingCommits, setLoadingCommits] = useState(false);
 
   const [photo, setPhoto] = useState('');
+  const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [newCommits, setNewCommits] = useState(0);
   const [newInteractions, setNewInteractions] = useState(0);
   const [additions, setAdditions] = useState(0);
   const [deletions, setDeletions] = useState(0);
-  const [newForks, setNewForks] = useState(0);
   const [newIssues, setNewIssues] = useState(0);
   const [newPrs, setNewPrs] = useState(0);
   const [newRepos, setNewRepos] = useState(0);
-  const [newStars, setNewStars] = useState(0);
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
@@ -88,49 +87,49 @@ const Profile: React.FC = () => {
     LinesGrowthChartInfo[]
   >([]);
 
-  const getStudentReport = useCallback(async () => {
+  const getSpotReport = useCallback(async () => {
     const since = new Date();
     since.setMonth(since.getMonth() - 1);
     setLoadingCommits(true);
 
     try {
       const response = await api.get(
-        `/student/${username}/report?since=${since.toISOString()}`,
+        `/spot/${githubLogin}/report?since=${since.toISOString()}`,
       );
-      const report = response.data;
+      const { spot, metrics, commits: responseCommits } = response.data;
       setLoadingCommits(false);
 
-      setNewCommits(report.new_commits);
-      setNewInteractions(report.new_interactions);
-      setAdditions(report.additions);
-      setDeletions(report.deletions);
-      setNewForks(report.new_forks);
-      setNewIssues(report.new_issues);
-      setNewPrs(report.new_prs);
-      setNewRepos(report.new_repositories);
-      setNewStars(report.new_stars);
-      setCommits(report.commits);
+      setName(spot.name);
+      setPhoto(spot.avatar_url);
+      setUsername(spot.github_login);
+
+      setNewCommits(metrics.new_commits);
+      setNewInteractions(metrics.new_interactions);
+      setAdditions(metrics.additions);
+      setDeletions(metrics.deletions);
+      setNewIssues(metrics.new_issues);
+      setNewPrs(metrics.new_prs);
+      setNewRepos(metrics.new_repositories);
+
+      setCommits(responseCommits);
     } catch (error) {
       setLoadingCommits(false);
       validationError(error);
     }
-  }, [username]);
+  }, [githubLogin]);
 
-  const getStudentInfo = useCallback(async () => {
-    setLoadingRepos(true);
+  const getSpotRepositories = useCallback(async () => {
     try {
-      const response = await api.get(`/student/${username}`);
-      const { student, repositories: repositoriesResponse } = response.data;
+      setLoadingRepos(true);
+      const response = await api.get(`/spot/${githubLogin}/repositories`);
       setLoadingRepos(false);
 
-      setName(student.name);
-      setPhoto(student.avatar_url);
-      setRepositories(repositoriesResponse);
+      setRepositories(response.data);
     } catch (error) {
-      setLoadingRepos(false);
+      setLoadingCommits(false);
       validationError(error);
     }
-  }, [username]);
+  }, [githubLogin]);
 
   const getInteractionsVolume = useCallback(async () => {
     const since = new Date();
@@ -138,7 +137,7 @@ const Profile: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/student/${username}/interactions/volume?since=${since.toISOString()}`,
+        `/spot/volume/${githubLogin}/interactions?since=${since.toISOString()}`,
       );
 
       setInteractionsChartInfo(
@@ -157,7 +156,7 @@ const Profile: React.FC = () => {
     } catch (error) {
       validationError(error);
     }
-  }, [username]);
+  }, [githubLogin]);
 
   const getLinesGrowhtVolume = useCallback(async () => {
     const since = new Date();
@@ -165,7 +164,7 @@ const Profile: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/student/${username}/lines/volume?since=${since.toISOString()}`,
+        `/spot/volume/${githubLogin}/lines?since=${since.toISOString()}`,
       );
 
       setLinesGrowthChartInfo(
@@ -189,19 +188,19 @@ const Profile: React.FC = () => {
     } catch (error) {
       validationError(error);
     }
-  }, [username]);
+  }, [githubLogin]);
 
   useEffect(() => {
-    getStudentReport();
+    getSpotReport();
 
-    getStudentInfo();
+    getSpotRepositories();
 
     getInteractionsVolume();
 
     getLinesGrowhtVolume();
   }, [
-    getStudentReport,
-    getStudentInfo,
+    getSpotReport,
+    getSpotRepositories,
     getInteractionsVolume,
     getLinesGrowhtVolume,
   ]);
@@ -243,11 +242,9 @@ const Profile: React.FC = () => {
               number={deletions}
               label="Linhas Removidas"
             />
-            <ShowInformation number={newForks} label="Novos Forks" />
             <ShowInformation number={newIssues} label="Novas Issues" />
             <ShowInformation number={newPrs} label="Novas PR's" />
             <ShowInformation number={newRepos} label="Novos Repositórios" />
-            <ShowInformation number={newStars} label="Novas Stars" />
           </ReportInfo>
         </ProfileContainer>
 

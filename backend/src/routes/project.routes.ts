@@ -15,7 +15,7 @@ projectRouter.get('/:project', authMiddleware, async (request, response) => {
 });
 
 projectRouter.get(
-  '/below_average/:project',
+  '/:project/below_average',
   authMiddleware,
   async (request, response) => {
     const getBelowAverageOnProjectService = new GetBelowAverageOnProjectService();
@@ -34,7 +34,7 @@ projectRouter.get(
 );
 
 projectRouter.get(
-  '/report/:project',
+  '/:project/report',
   authMiddleware,
   async (request, response) => {
     const getProjectReportService = new GetProjectReportService();

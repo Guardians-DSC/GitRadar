@@ -1,10 +1,12 @@
 import { Between, getRepository } from 'typeorm';
+import Spot from '../../models/Spot';
 import SpotDailyReport from '../../models/SpotDailyReport';
+import { AppError } from '../../errors/AppError';
 
 interface Request {
   since: string;
   until: string;
-  spot_id: string;
+  github_login: string;
 }
 
 interface Data {
@@ -18,13 +20,24 @@ interface DataBaseRequest {
 }
 
 class GetInteractionsVolumeService {
-  async execute({ since, until, spot_id }: Request): Promise<Data[]> {
+  async execute({ since, until, github_login }: Request): Promise<Data[]> {
     const dailyReportRepository = getRepository(SpotDailyReport);
+    const spotRepository = getRepository(Spot);
+
+    const spot = await spotRepository.findOne({
+      where: {
+        github_login,
+      },
+    });
+
+    if (!spot) {
+      throw new AppError('Spot not registered', 400);
+    }
 
     const dailyReports = await dailyReportRepository.find({
       where: {
         created_at: Between(since, until),
-        spot_id,
+        spot_id: spot.id,
       },
       select: ['created_at', 'new_interactions'],
       order: {

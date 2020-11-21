@@ -2,6 +2,7 @@ import { Router } from 'express';
 import CreateSpotService from '../../services/Spot/CreateSpotService';
 import authMiddleware from '../../middlewares/authMiddleware';
 import GetSpotReportService from '../../services/Spot/GetSpotReportService';
+import GetSpotRepositories from '../../services/Spot/GetSpotRepositories';
 import spotVolumeRouter from './volume/spots.volume.routes';
 
 const spotRouter = Router();
@@ -22,26 +23,32 @@ spotRouter.post('/', authMiddleware, async (request, response) => {
   return response.json(spot);
 });
 
-spotRouter.get(
-  '/:spot_id/report',
-  authMiddleware,
-  async (request, response) => {
-    const { spot_id } = request.params;
+spotRouter.get('/:github_login/report', async (request, response) => {
+  const { github_login } = request.params;
 
-    let { until } = request.query;
-    until = until || new Date().toISOString();
-    const { since } = request.query;
+  let { until } = request.query;
+  until = until || new Date().toISOString();
+  const { since } = request.query;
 
-    const getSpotReportService = new GetSpotReportService();
+  const getSpotReportService = new GetSpotReportService();
 
-    const spotReport = await getSpotReportService.execute({
-      since: since as string,
-      spot_id,
-      until: until as string,
-    });
+  const spotReport = await getSpotReportService.execute({
+    since: since as string,
+    github_login,
+    until: until as string,
+  });
 
-    return response.json(spotReport);
-  },
-);
+  return response.json(spotReport);
+});
+
+spotRouter.get('/:github_login/repositories', async (request, response) => {
+  const { github_login } = request.params;
+
+  const getSpotRepositories = new GetSpotRepositories();
+
+  const repositories = await getSpotRepositories.execute({ github_login });
+
+  return response.json(repositories);
+});
 
 export default spotRouter;
