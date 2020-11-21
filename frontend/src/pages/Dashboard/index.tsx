@@ -176,7 +176,7 @@ const Dashboard: React.FC = () => {
             <ListContainer
               isLoading={loadingStudents}
               listHeight={285}
-              title="Alunos Monitorados"
+              title="Spots Monitorados"
               items={allStudents}
               mapItem={item => ({
                 label: item.github_login,
@@ -189,7 +189,7 @@ const Dashboard: React.FC = () => {
 
           <RightContainer>
             <InformationContainer>
-              <InformationTitle>Informações da Turma</InformationTitle>
+              <InformationTitle>Informações do Radar</InformationTitle>
 
               <InformationGrid>
                 <Information>
@@ -219,7 +219,7 @@ const Dashboard: React.FC = () => {
             <ListContainer
               isLoading={loadingBelow}
               listHeight={385}
-              title="Alunos com interações abaixo da média"
+              title="Spots com interações abaixo da média"
               items={belowAverage}
               mapItem={item => ({
                 label: item.github_login,

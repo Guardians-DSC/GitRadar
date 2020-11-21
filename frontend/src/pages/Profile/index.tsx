@@ -72,11 +72,9 @@ const Profile: React.FC = () => {
   const [newInteractions, setNewInteractions] = useState(0);
   const [additions, setAdditions] = useState(0);
   const [deletions, setDeletions] = useState(0);
-  const [newForks, setNewForks] = useState(0);
   const [newIssues, setNewIssues] = useState(0);
   const [newPrs, setNewPrs] = useState(0);
   const [newRepos, setNewRepos] = useState(0);
-  const [newStars, setNewStars] = useState(0);
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
@@ -104,11 +102,9 @@ const Profile: React.FC = () => {
       setNewInteractions(report.new_interactions);
       setAdditions(report.additions);
       setDeletions(report.deletions);
-      setNewForks(report.new_forks);
       setNewIssues(report.new_issues);
       setNewPrs(report.new_prs);
       setNewRepos(report.new_repositories);
-      setNewStars(report.new_stars);
       setCommits(report.commits);
     } catch (error) {
       setLoadingCommits(false);
@@ -243,11 +239,9 @@ const Profile: React.FC = () => {
               number={deletions}
               label="Linhas Removidas"
             />
-            <ShowInformation number={newForks} label="Novos Forks" />
             <ShowInformation number={newIssues} label="Novas Issues" />
             <ShowInformation number={newPrs} label="Novas PR's" />
             <ShowInformation number={newRepos} label="Novos Repositórios" />
-            <ShowInformation number={newStars} label="Novas Stars" />
           </ReportInfo>
         </ProfileContainer>
 
