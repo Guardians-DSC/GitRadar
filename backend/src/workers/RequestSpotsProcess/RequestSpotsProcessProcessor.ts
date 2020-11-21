@@ -4,24 +4,35 @@ import Spot from '../../models/Spot';
 
 const RequestSpotsProcessProcessor = async (): Promise<void> => {
   const spotsRepository = getRepository(Spot);
-  const since = new Date();
-  const until = new Date();
 
-  // since
-  since.setHours(-3);
-  since.setMinutes(0);
-  since.setSeconds(0);
-  since.setMilliseconds(0);
-
-  // until
-  until.setHours(20);
-  until.setMinutes(59);
-  until.setSeconds(59);
-  until.setMilliseconds(59);
+  const today = new Date();
+  const since = new Date(
+    Date.UTC(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      0,
+      0,
+      0,
+      0,
+    ),
+  );
+  const until = new Date(
+    Date.UTC(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      23,
+      59,
+      59,
+      999,
+    ),
+  );
 
   console.log(
     `Starting spot crawl request at ${since.toISOString()} - ${until.toISOString()}`,
   );
+  console.log('aaaaa', since.getTimezoneOffset());
 
   const spots = await spotsRepository.find();
 

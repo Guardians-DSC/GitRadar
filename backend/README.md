@@ -1,6 +1,7 @@
 ## 🏁 Iniciando
 
 Você pode clonar o respositório com o git, com o seguinte comando:
+
 ```
 git clone https://github.com/Guardians-DSC/GitRadar.git
 ```
@@ -8,25 +9,80 @@ git clone https://github.com/Guardians-DSC/GitRadar.git
 ### Pré-requisitos
 
 Você precisará de NodeJS e Yarn (para facilitar o processo) no seu computador. <br>
+
 - [NodeJS](https://nodejs.org/en/download/) <br>
 - [Yarn](https://yarnpkg.com/getting-started/install)
 
 ### Instalando
 
 No terminal, abra a pasta do projeto e abra a pasta do Backend.
+
 ```
 cd GitRadar/backend
 ```
+
 Então, digite:
+
 ```
 yarn
 ```
-Pronto! Tudo está configurado para você começar a usar o projeto.
 
+<br> 
+Antes de executar a aplicação, você precisa configurar alguns serviços, o primeiro deles é ter um Banco de Dados Postgres para a utilização da aplicação.
+
+- [Link para a imagem Docker aqui.](https://hub.docker.com/_/postgres)
+
+<br>
+Com isso feito, você precisa criar um aplicativo OAuth com a sua conta do GitHub, a aplicação irá utilizá-la para permitir o uso das credenciais dos usuários e aumentar o limite de requisições.
+
+- [Siga esse tutorial do GitHub para isso.](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
+
+A sua página da aplicação deve ficar assim:
+<img width="1100px" src="https://user-images.githubusercontent.com/40612788/99671001-2d424480-2a50-11eb-95a2-dea2c961b331.png"/>
+<br>
+Guarde os valores do ClientID e ClientSecret, você usará no ".env", além disso atente-se para as urls da aplicação, como a aplicação está sendo executada localmente, as urls direcionam para o frontend no endereço localhost, segue os campos em texto:
+
+- Homepage URL: http://localhost:3000
+- Authorization callback URL: http://localhost:3000/dashboard
+
+Essa configuração serve para que a autenticação com o Github de um professor seja possível. A maneira mais fácil e eficiente é executar o frontend e o backend simultaneamente para que você realize o vínculo através da interface gráfica do site.
+<br><br>
+Agora, precisamos configurar as variáveis de ambiente. Para isso, você deve copiar o arquivo ".env.sample" e
+o renomear para ".env" na pasta raiz do Backend. Você precisa preencher os valores de todas as variáveis de acordo com o seu significado.
+<br>
+Segue o arquivo ".env" comentado:
+
+```bash
+# Informações do Banco de Dados Postgresql
+DB_HOST=localhost # Endereço de acesso
+DB_PORT=5432 # Porta de acesso
+DB_USERNAME=example_username # Usuário do BD
+DB_PASSWORD=example_password # Senha do BD
+DB_NAME=database_name # Nome do Bando de Dados
+
+# Informações do Aplicativo OAuth do GitHub
+GITHUB_APP_CLIENT_ID=your_client_id # ClientID
+GITHUB_APP_CLIENT_SECRET=your_client_secret # ClientSecret
+
+# Informações de segurança para o GitRadar
+JWT_SECRET=your_jwt_secret # Gere um código qualquer para servir como secret da autenticação JWT da aplicação. Recomendo usar geradores de hash online.
+
+CRYPTO_SECRET=your_crypto_secret # Gere um código qualquer para servir como secret para encriptações na aplicação.
+CRYPTO_IV=90b7fd08a94e987e6aeb910a79e26672 # Buffer em hexadecimal do Crypto IV usado nas encriptações da aplicação, recomendo deixar esse valor padrão.
+```
+
+Pronto! Tudo está configurado para você começar a usar o projeto.
 
 ## 🚀 Modo de uso
 
-Você pode iniciar o servidor local de desenvolvimento, com o seguinte comando:
+Com o Banco de Dados devidamente configurado, você deve executar as migrations da aplicação para que sejam criadas as tabelas necessárias. Execute o seguinte comando:
+
+```
+yarn typeorm migration:run
+```
+
+Agora, você pode iniciar o servidor local de desenvolvimento, com o seguinte comando:
+
 ```
 yarn dev:server
 ```
@@ -34,10 +90,13 @@ yarn dev:server
 # 🔎 Endpoints da API <a name = "endpoints"></a>
 
 ## Obter perfil:
+
 ```
 GET /user/:username
 ```
+
 Use essa rota para obter informações sobre o perfil de determinado usuário, basta substituir o parâmetro ":username" da rota pelo usuário do github correspondente, você deve receber uma resposta no seguinte modelo:
+
 ```json
 {
   "github_login": "davigsousa",
@@ -58,24 +117,21 @@ Use essa rota para obter informações sobre o perfil de determinado usuário, b
       "html_url": "https://github.com/davigsousa/doeteca",
       "created_at": "2020-02-17T22:01:18Z",
       "language": "JavaScript"
-    },
+    }
   ],
   "top_language": "JavaScript",
-  "top_5_languages": [
-    "JavaScript",
-    "Python",
-    "C++",
-    "CSS",
-    "TypeScript"
-  ]
+  "top_5_languages": ["JavaScript", "Python", "C++", "CSS", "TypeScript"]
 }
 ```
 
 ## Obter relatório do dia atual:
+
 ```
 GET /user/daily/:username
 ```
+
 Use essa rota para obter informações de interações de determinado usuário no dia atual, basta substituir o parâmetro ":username" da rota pelo usuário do github correspondente, você deve receber uma resposta no seguinte modelo:
+
 ```json
 {
   "new_forks": 0,
@@ -107,10 +163,13 @@ Use essa rota para obter informações de interações de determinado usuário n
 ```
 
 ## Iniciar sessão com a conta de um professor:
+
 ```
 POST /session
 ```
+
 Realiza a sessão de um professor na aplicação, para realizar a requisição, deve-se enviar uma chave "email" com o e-mail do professor uma chave "password" com a senha, dessa forma, se recebe como retorno o token JWT para o uso em rotas autenticadas, exemplo de retorno:
+
 ```json
 {
   "teacher": {
@@ -131,10 +190,13 @@ Realiza a sessão de um professor na aplicação, para realizar a requisição, 
 ## ⭐ A partir daqui, todas as rotas são autenticadas.
 
 ## Listar alunos de uma turma:
+
 ```
 GET /class/
 ```
+
 Listar todos os alunos da turma da aplicação, exemplo de retorno:
+
 ```json
 [
   {
@@ -163,10 +225,13 @@ Listar todos os alunos da turma da aplicação, exemplo de retorno:
 ```
 
 ## Listar alunos da turma abaixo da média:
+
 ```
 GET /class/below_average?since=2020-10-02
 ```
+
 Informando o parâmetro "since" na query, você informa o início do período de avaliação da média, outro parâmetro opcional na rota é "until" que delimita o final do período. Use essa rota para listar todos os alunos da turma abaixo da média de interações, exemplo de retorno:
+
 ```json
 [
   {
@@ -195,10 +260,13 @@ Informando o parâmetro "since" na query, você informa o início do período de
 ```
 
 ## Obter Relatório da Turma:
+
 ```
 GET /class/report?since=2020-10-02
 ```
+
 Informando o parâmetro "since" na query, você informa o início do período, outro parâmetro opcional na rota é "until" que delimita o final do período. Use essa rota para obter o relatório de uma turma em um período, exemplo de retorno:
+
 ```json
 {
   "all_new_interactions": 36,
@@ -209,10 +277,13 @@ Informando o parâmetro "since" na query, você informa o início do período, o
 ```
 
 ## Adicionar aluno na Turma:
+
 ```
 POST /student
 ```
+
 Adiciona-se um aluno na turma, para realizar a requisição, deve-se enviar uma chave "github_login" com o username do aluno no Github, dessa forma, se recebe como retorno o aluno criado, exemplo de retorno:
+
 ```json
 {
   "teacher_id": "84e5a509-16af-4f3d-805c-c400751e6d4c",
@@ -228,10 +299,13 @@ Adiciona-se um aluno na turma, para realizar a requisição, deve-se enviar uma 
 ```
 
 ## Obtém as informações de um aluno:
+
 ```
 GET /student/:username
 ```
+
 Obtém as informações de um aluno, deve-se enviar o username do Github do aluno como params :username, é retornado as informações do estudante e seus repositórios:
+
 ```json
 {
   "student": {
@@ -273,10 +347,13 @@ Obtém as informações de um aluno, deve-se enviar o username do Github do alun
 ```
 
 ## Obtém a quantidade de interações por dia em um período de um estudante:
+
 ```
 GET /student/:username/interactions/volume?since=2020-11-02
 ```
+
 Informando o parâmetro "since" na query, você informa o início do período, outro parâmetro opcional na rota é "until" que delimita o final do período. Obtém a quantidade de interações por dia de um aluno, deve-se enviar o username do Github do aluno como params :username, as quantidades são retornadas no seguinte modelo:
+
 ```json
 [
   {
@@ -295,10 +372,13 @@ Informando o parâmetro "since" na query, você informa o início do período, o
 ```
 
 ## Obtém a adição e remoção de linhas por dia em um período de um estudante:
+
 ```
 GET /student/:username/lines/volume?since=2020-11-02
 ```
+
 Informando o parâmetro "since" na query, você informa o início do período, outro parâmetro opcional na rota é "until" que delimita o final do período. Obtém a quantidade adições e remoções de linhas de código por dia de um aluno, deve-se enviar o username do Github do aluno como params :username, as quantidades são retornadas no seguinte modelo:
+
 ```json
 [
   {
@@ -320,10 +400,13 @@ Informando o parâmetro "since" na query, você informa o início do período, o
 ```
 
 ## Obter Relatório de um estudante:
+
 ```
 GET /student/:username/report?since=2020-10-02
 ```
+
 Informando o parâmetro "since" na query, você informa o início do período, outro parâmetro opcional na rota é "until" que delimita o final do período. Use essa rota para obter o relatório de um estudante em um período, exemplo de retorno:
+
 ```json
 {
   "additions": 3950,
@@ -354,10 +437,13 @@ Informando o parâmetro "since" na query, você informa o início do período, o
 ```
 
 ## Adicionar professor na aplicação:
+
 ```
 POST /teacher
 ```
+
 Adiciona-se um professor na aplicação, para realizar a requisição, deve-se enviar uma chave "github_login" com o username do professor no Github, uma chave "email" com o e-mail do professor e uma chave "password" no body da requisição, dessa forma, se recebe como retorno o professor criado, exemplo de retorno:
+
 ```json
 {
   "github_login": "davigsousa",
