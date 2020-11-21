@@ -1,11 +1,12 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateRepositories1600912090409
-  implements MigrationInterface {
+export default class CreateManagers1600909362948 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
+
     await queryRunner.createTable(
       new Table({
-        name: 'repositories',
+        name: 'managers',
         columns: [
           {
             name: 'id',
@@ -15,27 +16,22 @@ export default class CreateRepositories1600912090409
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'spot_id',
-            type: 'uuid',
-            isNullable: true,
-          },
-          {
             name: 'name',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'full_name',
+            name: 'email',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'description',
+            name: 'password',
             type: 'varchar',
-            isNullable: true,
+            isNullable: false,
           },
           {
-            name: 'html_url',
+            name: 'github_token',
             type: 'varchar',
             isNullable: false,
           },
@@ -55,6 +51,6 @@ export default class CreateRepositories1600912090409
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('repositories');
+    await queryRunner.dropTable('managers');
   }
 }

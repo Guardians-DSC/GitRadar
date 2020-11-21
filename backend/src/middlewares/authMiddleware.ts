@@ -31,7 +31,7 @@ function authMiddleware(
 
     const { sub } = decoded;
 
-    request.teacher = {
+    request.manager = {
       id: sub,
     };
 

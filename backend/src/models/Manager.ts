@@ -1,39 +1,36 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('commits')
-class Commit {
+@Entity('managers')
+class Manager {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('uuid')
-  spot_id: string;
+  @Column('varchar')
+  github_login: string;
 
   @Column('varchar')
-  message: string;
-
-  @Column('int2')
-  additions: number;
+  name: string;
 
   @Column('varchar')
-  commit_url: string;
+  email: string;
 
   @Column('varchar')
-  repository_name: string;
+  password: string;
 
   @Column('varchar')
-  repository_url: string;
-
-  @Column('int2')
-  deletions: number;
+  github_token: string;
 
   @Column('varchar')
-  sha: string;
+  avatar_url: string;
+
+  @Column('varchar')
+  github_id: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -42,4 +39,4 @@ class Commit {
   updated_at: Date;
 }
 
-export default Commit;
+export default Manager;

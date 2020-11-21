@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateRepositories1600912090409
+export default class CreateSpotDailyReports1600913787538
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'repositories',
+        name: 'spot_daily_reports',
         columns: [
           {
             name: 'id',
@@ -20,23 +20,48 @@ export default class CreateRepositories1600912090409
             isNullable: true,
           },
           {
-            name: 'name',
-            type: 'varchar',
+            name: 'new_forks',
+            type: 'int2',
             isNullable: false,
           },
           {
-            name: 'full_name',
-            type: 'varchar',
+            name: 'new_issues',
+            type: 'int2',
             isNullable: false,
           },
           {
-            name: 'description',
-            type: 'varchar',
-            isNullable: true,
+            name: 'new_prs',
+            type: 'int2',
+            isNullable: false,
           },
           {
-            name: 'html_url',
-            type: 'varchar',
+            name: 'new_stars',
+            type: 'int2',
+            isNullable: false,
+          },
+          {
+            name: 'new_repositories',
+            type: 'int2',
+            isNullable: false,
+          },
+          {
+            name: 'new_interactions',
+            type: 'int2',
+            isNullable: false,
+          },
+          {
+            name: 'new_commits',
+            type: 'int2',
+            isNullable: false,
+          },
+          {
+            name: 'additions',
+            type: 'int2',
+            isNullable: false,
+          },
+          {
+            name: 'deletions',
+            type: 'int2',
             isNullable: false,
           },
           {
@@ -55,6 +80,6 @@ export default class CreateRepositories1600912090409
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('repositories');
+    await queryRunner.dropTable('spot_daily_reports');
   }
 }

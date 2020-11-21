@@ -1,12 +1,16 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 
-export default class CreateRepositoriesForeignKey1600912665069
+export default class RemoveSpotDailyReportForeignKey1605898322310
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey('spot_daily_reports', 'dailySpot');
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createForeignKey(
-      'repositories',
+      'spot_daily_reports',
       new TableForeignKey({
-        name: 'repositorySpot',
+        name: 'dailySpot',
         columnNames: ['spot_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'spots',
@@ -14,9 +18,5 @@ export default class CreateRepositoriesForeignKey1600912665069
         onUpdate: 'CASCADE',
       }),
     );
-  }
-
-  public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('repositories', 'repositorySpot');
   }
 }

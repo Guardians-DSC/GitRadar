@@ -1,41 +1,41 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
   Column,
   ManyToOne,
   JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
-import Spot from './Spot';
+import Manager from './Manager';
 
-@Entity('repositories')
-class Repository {
+@Entity('spots')
+class Spot {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('uuid')
-  spot_id: string;
+  manager_id: string;
 
-  @ManyToOne(() => Spot, { eager: true })
-  @JoinColumn({ name: 'spot_id' })
-  spot: Spot;
-
-  @Column('varchar')
-  name: string;
+  @ManyToOne(() => Manager, { eager: true })
+  @JoinColumn({ name: 'manager_id' })
+  manager: Manager;
 
   @Column('varchar')
-  full_name: string;
+  github_login: string;
 
   @Column('varchar')
-  description: string;
+  avatar_url: string;
 
   @Column('varchar')
-  html_url: string;
+  top_language: string;
 
   @Column('varchar')
   github_id: string;
+
+  @Column('varchar')
+  name: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -44,4 +44,4 @@ class Repository {
   updated_at: Date;
 }
 
-export default Repository;
+export default Spot;

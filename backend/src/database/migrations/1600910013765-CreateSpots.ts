@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateRepositories1600912090409
-  implements MigrationInterface {
+export default class CreateSpots1600910013765 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'repositories',
+        name: 'spots',
         columns: [
           {
             name: 'id',
@@ -15,27 +14,22 @@ export default class CreateRepositories1600912090409
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'spot_id',
+            name: 'manager_id',
             type: 'uuid',
             isNullable: true,
           },
           {
-            name: 'name',
+            name: 'github_login',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'full_name',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'description',
+            name: 'avatar_url',
             type: 'varchar',
             isNullable: true,
           },
           {
-            name: 'html_url',
+            name: 'top_language',
             type: 'varchar',
             isNullable: false,
           },
@@ -55,6 +49,6 @@ export default class CreateRepositories1600912090409
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('repositories');
+    await queryRunner.dropTable('spots');
   }
 }

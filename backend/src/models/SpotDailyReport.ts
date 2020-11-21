@@ -10,8 +10,8 @@ import {
 
 import Spot from './Spot';
 
-@Entity('repositories')
-class Repository {
+@Entity('spot_daily_reports')
+class SpotDailyReport {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -22,26 +22,35 @@ class Repository {
   @JoinColumn({ name: 'spot_id' })
   spot: Spot;
 
-  @Column('varchar')
-  name: string;
+  @Column('int2')
+  new_issues: number;
 
-  @Column('varchar')
-  full_name: string;
+  @Column('int2')
+  new_prs: number;
 
-  @Column('varchar')
-  description: string;
+  @Column('int2')
+  new_repositories: number;
 
-  @Column('varchar')
-  html_url: string;
+  @Column('int2')
+  new_interactions: number;
 
-  @Column('varchar')
-  github_id: string;
+  @Column('int2')
+  new_commits: number;
+
+  @Column('int2')
+  additions: number;
+
+  @Column('int2')
+  deletions: number;
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column('timestamp')
+  taken_at: Date;
 }
 
-export default Repository;
+export default SpotDailyReport;

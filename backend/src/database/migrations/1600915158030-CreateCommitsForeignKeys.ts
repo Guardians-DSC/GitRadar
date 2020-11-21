@@ -18,10 +18,10 @@ export default class CreateCommitsForeignKeys1600915158030
     await queryRunner.createForeignKey(
       'commits',
       new TableForeignKey({
-        name: 'commitStudent',
-        columnNames: ['student_id'],
+        name: 'commitSpot',
+        columnNames: ['spot_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'students',
+        referencedTableName: 'spots',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -29,7 +29,7 @@ export default class CreateCommitsForeignKeys1600915158030
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('commits', 'commitStudent');
+    await queryRunner.dropForeignKey('commits', 'commitSpot');
     await queryRunner.dropForeignKey('commits', 'commitRepository');
   }
 }
