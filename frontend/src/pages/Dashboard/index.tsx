@@ -69,7 +69,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/report/coming?since=${since.toISOString()}`,
+        `/project/report/coming?since=${since.toISOString()}`,
       );
 
       const {
