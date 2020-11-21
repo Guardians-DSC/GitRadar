@@ -51,6 +51,9 @@ class SpotDailyReport {
 
   @Column('timestamp')
   taken_at: Date;
+
+  @Column('int2')
+  new_prs_review: Date;
 }
 
 export default SpotDailyReport;

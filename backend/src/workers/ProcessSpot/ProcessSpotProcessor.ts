@@ -29,6 +29,7 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
     new_issues: issues,
     new_prs,
     new_repositories,
+    new_prs_review,
   } = payload;
 
   const dailyReport = dailyReportRepository.create({
@@ -41,6 +42,7 @@ const ProcessSpotProcessor = async (job: Job<SpotRequest>): Promise<void> => {
     new_repositories,
     spot_id,
     taken_at: until,
+    new_prs_review,
   });
 
   await dailyReportRepository.save(dailyReport);

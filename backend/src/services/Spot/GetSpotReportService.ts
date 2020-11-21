@@ -27,6 +27,7 @@ interface Response {
     new_commits: number;
     new_prs: number;
     new_issues: number;
+    new_prs_review: number;
     new_repositories: number;
     additions: number;
     deletions: number;
