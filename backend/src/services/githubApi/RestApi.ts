@@ -9,16 +9,17 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(async config => {
-  if (!useGlobal.teacherToken) {
+  if (!useGlobal.managerToken) {
     const getGithubTokenService = new GetGithubTokenService();
     const token = await getGithubTokenService.execute();
+    console.log(token);
 
     if (token) {
-      useGlobal.teacherToken = token;
+      useGlobal.managerToken = token;
     }
   }
-  if (useGlobal.teacherToken) {
-    config.headers.authorization = `token ${useGlobal.teacherToken}`;
+  if (useGlobal.managerToken) {
+    config.headers.authorization = `token ${useGlobal.managerToken}`;
   }
 
   return config;

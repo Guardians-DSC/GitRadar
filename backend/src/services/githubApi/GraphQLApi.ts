@@ -14,11 +14,11 @@ api.interceptors.request.use(async config => {
     const token = await getGithubTokenService.execute();
 
     if (token) {
-      useGlobal.teacherToken = token;
+      useGlobal.managerToken = token;
     }
   }
-  if (useGlobal.teacherToken) {
-    config.headers.authorization = `bearer ${useGlobal.teacherToken}`;
+  if (useGlobal.managerToken) {
+    config.headers.authorization = `bearer ${useGlobal.managerToken}`;
   }
 
   return config;
