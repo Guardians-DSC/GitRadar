@@ -6,7 +6,7 @@ import api from '../../services/api';
 import { confirmHasGithubToken } from '../../services/auth';
 import validationError from '../../utils/validationError';
 import { normalizeInformation } from '../../utils/normalizeStrings';
-import { Student } from '../../entities';
+import { Spot } from '../../entities';
 import ListContainer from '../../components/ListContainer';
 import {
   PageContainer,
@@ -30,8 +30,8 @@ const Dashboard: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const [allSpots, setallSpots] = useState<Student[]>([]);
-  const [belowAverage, setBelowAverage] = useState<Student[]>([]);
+  const [allSpots, setallSpots] = useState<Spot[]>([]);
+  const [belowAverage, setBelowAverage] = useState<Spot[]>([]);
   const [allNewInteractions, setAllNewInteractions] = useState(0);
   const [allNewCommits, setAllNewCommits] = useState(0);
   const [newInteractionsAverage, setNewInteractionsAverage] = useState(0);
@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
   const [monitored, setMonitored] = useState('');
 
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [loadingStudents, setLoadingStudents] = useState(false);
+  const [loadingSpots, setLoadingSpots] = useState(false);
   const [loadingBelow, setLoadingBelow] = useState(false);
 
   const syncGithub = useCallback(async () => {
@@ -89,15 +89,15 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const getallSpots = useCallback(async () => {
-    setLoadingStudents(true);
+    setLoadingSpots(true);
 
     try {
       const response = await api.get('/project/coming');
 
       setallSpots(response.data);
-      setLoadingStudents(false);
+      setLoadingSpots(false);
     } catch (error) {
-      setLoadingStudents(false);
+      setLoadingSpots(false);
       validationError(error);
     }
   }, []);
@@ -174,7 +174,7 @@ const Dashboard: React.FC = () => {
             </MonitorWrapper>
 
             <ListContainer
-              isLoading={loadingStudents}
+              isLoading={loadingSpots}
               listHeight={285}
               title="Spots Monitorados"
               items={allSpots}

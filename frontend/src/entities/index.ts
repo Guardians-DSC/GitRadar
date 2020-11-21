@@ -1,4 +1,4 @@
-export interface Teacher {
+export interface Manager {
   github_login: string;
   name: string;
   email: string;
@@ -6,7 +6,7 @@ export interface Teacher {
   github_id: string;
 }
 
-export interface Student {
+export interface Spot {
   id: string;
   teacher_id: string;
   github_login: string;

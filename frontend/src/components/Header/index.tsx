@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Teacher } from '../../entities';
-import { getTeacher, logout, verifyHasGithubToken } from '../../services/auth';
+import { Manager } from '../../entities';
+import { getManager, logout, verifyHasGithubToken } from '../../services/auth';
 import {
   Container,
   ButtonsArea,
@@ -21,7 +21,7 @@ import logo from '../../assets/logo.png';
 
 const Header: React.FC = () => {
   const history = useHistory();
-  const [teacher] = useState<Teacher | null>(getTeacher());
+  const [manager] = useState<Manager | null>(getManager());
 
   const handleLogout = () => {
     logout();
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
             <Logo src={logo} alt="GitRadar" />
           </LogoLink>
           <Greetings>
-            Bem-vindo, <Highlight>{teacher?.name}</Highlight>
+            Bem-vindo, <Highlight>{manager?.name}</Highlight>
           </Greetings>
         </GreetingsArea>
         {!verifyHasGithubToken() && (
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
       </MessageArea>
 
       <ButtonsArea>
-        <ProfileImage src={teacher?.avatar_url} alt={teacher?.name} />
+        <ProfileImage src={manager?.avatar_url} alt={manager?.name} />
 
         <LogoutButton onClick={handleLogout}>
           Log out
