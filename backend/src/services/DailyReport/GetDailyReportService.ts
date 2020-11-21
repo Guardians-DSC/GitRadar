@@ -27,6 +27,7 @@ interface Response {
   payload: {
     new_interactions: number;
     new_repositories: number;
+    new_prs_review: number;
     new_prs: number;
     new_issues: number;
     new_commits: number;
@@ -113,6 +114,7 @@ class GetDailyReportService {
       new_prs: totalPullRequestContributions,
       new_issues: totalIssueContributions,
       new_commits: totalCommitContributions,
+      new_prs_review: totalPullRequestReviewContributions,
       additions,
       deletions,
       commits,
