@@ -7,7 +7,7 @@ export default class AddPullRequestsReviewOnReport1605975756087
       'spot_daily_reports',
       new TableColumn({
         name: 'new_prs_review',
-        type: 'timestamp',
+        type: 'int2',
         isNullable: false,
       }),
     );
