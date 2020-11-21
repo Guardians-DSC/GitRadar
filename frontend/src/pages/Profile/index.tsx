@@ -102,7 +102,6 @@ const Profile: React.FC = () => {
       setName(spot.name);
       setPhoto(spot.avatar_url);
       setUsername(spot.github_login);
-      setRepositories([]);
 
       setNewCommits(metrics.new_commits);
       setNewInteractions(metrics.new_interactions);
@@ -122,8 +121,9 @@ const Profile: React.FC = () => {
   const getSpotRepositories = useCallback(async () => {
     try {
       setLoadingRepos(true);
-      const response = await api.get('/spot/${spotId}/repositories');
+      const response = await api.get(`/spot/${spotId}/repositories`);
       setLoadingRepos(false);
+
       setRepositories(response.data);
     } catch (error) {
       setLoadingCommits(false);

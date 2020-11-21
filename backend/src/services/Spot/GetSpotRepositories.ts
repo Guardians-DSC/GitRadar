@@ -9,7 +9,7 @@ class GetSpotRepositories {
   async execute({ spot_id }: Request): Promise<Repository[]> {
     const repositoriesRepository = getRepository(Repository);
 
-    const repositories = repositoriesRepository.find({
+    const repositories = await repositoriesRepository.find({
       where: {
         spot_id,
       },
