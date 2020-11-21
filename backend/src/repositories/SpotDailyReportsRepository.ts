@@ -13,6 +13,7 @@ interface RawReport {
   spot_created_at: string;
   spot_updated_at: string;
   new_interactions: number;
+  new_prs_review: number;
   new_commits: number;
   new_prs: number;
   new_issues: number;
@@ -34,6 +35,7 @@ interface Report {
     updated_at: string;
   };
   metrics: {
+    new_prs_review: number;
     new_interactions: number;
     new_commits: number;
     new_prs: number;
@@ -68,6 +70,7 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
       .select('spot')
       .addSelect('SUM(report.new_interactions)', 'new_interactions')
       .addSelect('SUM(report.new_commits)', 'new_commits')
+      .addSelect('SUM(report.new_prs_review)', 'new_prs_review')
       .addSelect('SUM(report.new_prs)', 'new_prs')
       .addSelect('SUM(report.new_issues)', 'new_issues')
       .addSelect('SUM(report.new_repositories)', 'new_repositories')
@@ -161,6 +164,7 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
         new_issues,
         new_prs,
         new_repositories,
+        new_prs_review,
         spot_avatar_url,
         spot_created_at,
         spot_github_id,
@@ -192,6 +196,7 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
           new_issues: Number(new_issues),
           new_prs: Number(new_prs),
           new_repositories: Number(new_repositories),
+          new_prs_review: Number(new_prs_review),
         },
       };
       return report;
@@ -205,6 +210,7 @@ class SpotDailyReportsRepository extends Repository<SpotDailyReport> {
         new_issues: 0,
         new_prs: 0,
         new_repositories: 0,
+        new_prs_review: 0,
       },
     };
   }
