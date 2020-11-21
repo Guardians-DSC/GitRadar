@@ -198,7 +198,12 @@ const Profile: React.FC = () => {
     getInteractionsVolume();
 
     getLinesGrowhtVolume();
-  }, [getSpotReport, getInteractionsVolume, getLinesGrowhtVolume]);
+  }, [
+    getSpotReport,
+    getSpotRepositories,
+    getInteractionsVolume,
+    getLinesGrowhtVolume,
+  ]);
 
   return (
     <PageContainer>
