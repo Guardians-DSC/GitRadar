@@ -119,6 +119,18 @@ const Profile: React.FC = () => {
     }
   }, [spotId]);
 
+  const getSpotRepositories = useCallback(async () => {
+    try {
+      setLoadingRepos(true);
+      const response = await api.get('/spot/${spotId}/repositories');
+      setLoadingRepos(false);
+      setRepositories(response.data);
+    } catch (error) {
+      setLoadingCommits(false);
+      validationError(error);
+    }
+  }, [spotId]);
+
   const getInteractionsVolume = useCallback(async () => {
     const since = new Date();
     since.setMonth(since.getMonth() - 1);
@@ -180,6 +192,8 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     getSpotReport();
+
+    getSpotRepositories();
 
     getInteractionsVolume();
 
