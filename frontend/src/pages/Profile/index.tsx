@@ -29,7 +29,7 @@ import SimpleLineChart from '../../components/SimpleLineChart/index';
 import SimpleBarChart from '../../components/SimpleBarChart/index';
 
 interface ProfileParams {
-  username: string;
+  spotId: string;
 }
 
 interface ShowInformationProps {
@@ -61,12 +61,13 @@ const ShowInformation: React.FC<ShowInformationProps> = ({
 );
 
 const Profile: React.FC = () => {
-  const { username } = useParams<ProfileParams>();
+  const { spotId } = useParams<ProfileParams>();
 
   const [loadingRepos, setLoadingRepos] = useState(false);
   const [loadingCommits, setLoadingCommits] = useState(false);
 
   const [photo, setPhoto] = useState('');
+  const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [newCommits, setNewCommits] = useState(0);
   const [newInteractions, setNewInteractions] = useState(0);
@@ -86,47 +87,37 @@ const Profile: React.FC = () => {
     LinesGrowthChartInfo[]
   >([]);
 
-  const getStudentReport = useCallback(async () => {
+  const getSpotReport = useCallback(async () => {
     const since = new Date();
     since.setMonth(since.getMonth() - 1);
     setLoadingCommits(true);
 
     try {
       const response = await api.get(
-        `/student/${username}/report?since=${since.toISOString()}`,
+        `/spot/${spotId}/report?since=${since.toISOString()}`,
       );
-      const report = response.data;
+      const { spot, metrics, commits: responseCommits } = response.data;
       setLoadingCommits(false);
 
-      setNewCommits(report.new_commits);
-      setNewInteractions(report.new_interactions);
-      setAdditions(report.additions);
-      setDeletions(report.deletions);
-      setNewIssues(report.new_issues);
-      setNewPrs(report.new_prs);
-      setNewRepos(report.new_repositories);
-      setCommits(report.commits);
+      setName(spot.name);
+      setPhoto(spot.avatar_url);
+      setUsername(spot.github_login);
+      setRepositories([]);
+
+      setNewCommits(metrics.new_commits);
+      setNewInteractions(metrics.new_interactions);
+      setAdditions(metrics.additions);
+      setDeletions(metrics.deletions);
+      setNewIssues(metrics.new_issues);
+      setNewPrs(metrics.new_prs);
+      setNewRepos(metrics.new_repositories);
+
+      setCommits(responseCommits);
     } catch (error) {
       setLoadingCommits(false);
       validationError(error);
     }
-  }, [username]);
-
-  const getStudentInfo = useCallback(async () => {
-    setLoadingRepos(true);
-    try {
-      const response = await api.get(`/student/${username}`);
-      const { student, repositories: repositoriesResponse } = response.data;
-      setLoadingRepos(false);
-
-      setName(student.name);
-      setPhoto(student.avatar_url);
-      setRepositories(repositoriesResponse);
-    } catch (error) {
-      setLoadingRepos(false);
-      validationError(error);
-    }
-  }, [username]);
+  }, [spotId]);
 
   const getInteractionsVolume = useCallback(async () => {
     const since = new Date();
@@ -134,7 +125,7 @@ const Profile: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/student/${username}/interactions/volume?since=${since.toISOString()}`,
+        `/spot/volume/${spotId}/interactions?since=${since.toISOString()}`,
       );
 
       setInteractionsChartInfo(
@@ -153,7 +144,7 @@ const Profile: React.FC = () => {
     } catch (error) {
       validationError(error);
     }
-  }, [username]);
+  }, [spotId]);
 
   const getLinesGrowhtVolume = useCallback(async () => {
     const since = new Date();
@@ -161,7 +152,7 @@ const Profile: React.FC = () => {
 
     try {
       const response = await api.get(
-        `/student/${username}/lines/volume?since=${since.toISOString()}`,
+        `/spot/volume/${spotId}/lines?since=${since.toISOString()}`,
       );
 
       setLinesGrowthChartInfo(
@@ -185,22 +176,15 @@ const Profile: React.FC = () => {
     } catch (error) {
       validationError(error);
     }
-  }, [username]);
+  }, [spotId]);
 
   useEffect(() => {
-    getStudentReport();
-
-    getStudentInfo();
+    getSpotReport();
 
     getInteractionsVolume();
 
     getLinesGrowhtVolume();
-  }, [
-    getStudentReport,
-    getStudentInfo,
-    getInteractionsVolume,
-    getLinesGrowhtVolume,
-  ]);
+  }, [getSpotReport, getInteractionsVolume, getLinesGrowhtVolume]);
 
   return (
     <PageContainer>
