@@ -89,79 +89,6 @@ yarn dev:server
 
 # 🔎 Endpoints da API <a name = "endpoints"></a>
 
-## Obter perfil:
-
-```
-GET /user/:username
-```
-
-Use essa rota para obter informações sobre o perfil de determinado usuário, basta substituir o parâmetro ":username" da rota pelo usuário do github correspondente, você deve receber uma resposta no seguinte modelo:
-
-```json
-{
-  "github_login": "davigsousa",
-  "avatar_url": "https://avatars0.githubusercontent.com/u/40612788?v=4",
-  "repositories": [
-    {
-      "name": "algorithms",
-      "full_name": "davigsousa/algorithms",
-      "description": "Some useful algorithms (Still learning and updating more).",
-      "html_url": "https://github.com/davigsousa/algorithms",
-      "created_at": "2020-05-27T14:50:25Z",
-      "language": "C++"
-    },
-    {
-      "name": "doeteca",
-      "full_name": "davigsousa/doeteca",
-      "description": "A Frontend for a Conceptual Project named Doeteca. Online on: https://doeteca.netlify.app/",
-      "html_url": "https://github.com/davigsousa/doeteca",
-      "created_at": "2020-02-17T22:01:18Z",
-      "language": "JavaScript"
-    }
-  ],
-  "top_language": "JavaScript",
-  "top_5_languages": ["JavaScript", "Python", "C++", "CSS", "TypeScript"]
-}
-```
-
-## Obter relatório do dia atual:
-
-```
-GET /user/daily/:username
-```
-
-Use essa rota para obter informações de interações de determinado usuário no dia atual, basta substituir o parâmetro ":username" da rota pelo usuário do github correspondente, você deve receber uma resposta no seguinte modelo:
-
-```json
-{
-  "new_forks": 0,
-  "new_issues": 0,
-  "new_prs": 4,
-  "new_stars": 0,
-  "new_repositories": 0,
-  "new_interactions": 4,
-  "new_commits": 32,
-  "commits": [
-    {
-      "repository": {
-        "id": 289791710,
-        "name": "Guardians-DSC/GitRadar",
-        "url": "https://api.github.com/repos/Guardians-DSC/GitRadar"
-      },
-      "message": "initial Service structure created"
-    },
-    {
-      "repository": {
-        "id": 293942092,
-        "name": "davigsousa/GitRadar",
-        "url": "https://api.github.com/repos/davigsousa/GitRadar"
-      },
-      "message": "Merge pull request #1 from davigsousa/develop\n\nCriação da Api e Criação do Profile Service"
-    }
-  ]
-}
-```
-
 ## Iniciar sessão com a conta de um professor:
 
 ```
@@ -172,18 +99,19 @@ Realiza a sessão de um professor na aplicação, para realizar a requisição, 
 
 ```json
 {
-  "teacher": {
-    "id": "7ea79496-c141-487c-a810-522aa949839f",
-    "github_login": "davigsousa",
-    "name": "Davi Sousa",
-    "email": "davi@email.com",
-    "avatar_url": "https://avatars0.githubusercontent.com/u/40612788?v=4",
-    "github_id": "40612788",
-    "created_at": "2020-10-28T04:41:07.360Z",
-    "updated_at": "2020-10-28T04:45:26.492Z"
+  "manager": {
+    "id": "058bd335-1a2a-4856-8969-861d6707586a",
+    "github_login": "AntonioNtV",
+    "name": "Antonio Bertino de Vasconcelos Cabral Neto ",
+    "email": "antoniontv1920@gmail.com",
+    "github_token": null,
+    "avatar_url": "https://avatars3.githubusercontent.com/u/38543529?v=4",
+    "github_id": "38543529",
+    "created_at": "2020-11-22T16:50:12.236Z",
+    "updated_at": "2020-11-22T16:50:12.236Z"
   },
-  "token": "tokenJWT",
-  "hasGithubToken": true
+  "token": "TOKEN",
+  "hasGithubToken": false
 }
 ```
 
