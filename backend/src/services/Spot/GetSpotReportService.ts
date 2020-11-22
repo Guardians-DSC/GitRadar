@@ -61,7 +61,7 @@ class GetSpotReportService {
     );
     const commits = await commitRepository.find({
       where: {
-        id,
+        spot_id: id,
         created_at: Between(since, until),
       },
     });
