@@ -308,11 +308,9 @@ const Profile: React.FC = () => {
                 isLoading={loadingCommits}
                 items={commits}
                 mapItem={item => {
-                  const repositoryName = item.repository
-                    ? item.repository.name
-                    : 'Repositório indisponível';
+                  const repositoryName = item.repository_name ||
+                     'Repositório indisponível';
                   
-
                   return {
                     label: repositoryName,
                     subLabel: item.message,
