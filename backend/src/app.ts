@@ -7,11 +7,11 @@ import cron from 'node-cron';
 import { router } from 'bull-board';
 import { Worker } from 'bullmq';
 
-import routes from './routes';
+import routes from './routes/index';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import BullQueueProvider from './providers/queue/implementations/BullQueueProvider';
-import RequestStudentsProcessProcessor from './workers/RequestStudentsProcess/RequestStudentsProcessProcessor';
-import ProcessStudentProcessor from './workers/ProcessStudent/ProcessStudentProcessor';
+import RequestSpotsProcessProcessor from './workers/RequestSpotsProcess/RequestSpotsProcessProcessor';
+import ProcessSpotProcessor from './workers/ProcessSpot/ProcessSpotProcessor';
 import { QueueProvider } from './providers/queue/QueueProvider';
 import './database';
 
@@ -52,8 +52,8 @@ class App {
   private defineCron(): void {
     cron.schedule('00 23 * * *', async () =>
       this.queueProvider.add({
-        jobName: 'request students process',
-        queueName: 'students-process-requester',
+        jobName: 'request spot process',
+        queueName: 'spot-process-requester',
         opts: {
           removeOnComplete: false,
         },
@@ -62,20 +62,17 @@ class App {
   }
 
   private queues(): void {
-    this.queueProvider.register({ queueName: 'students-process-requester' });
-    this.queueProvider.register({ queueName: 'student-processor' });
+    this.queueProvider.register({ queueName: 'spot-process-requester' });
+    this.queueProvider.register({ queueName: 'spot-processor' });
     this.queueProvider.setUI();
   }
 
   private workers(): void {
     this.studentsProcessRequester = new Worker(
-      'students-process-requester',
-      RequestStudentsProcessProcessor,
+      'spot-process-requester',
+      RequestSpotsProcessProcessor,
     );
-    this.studentProcessor = new Worker(
-      'student-processor',
-      ProcessStudentProcessor,
-    );
+    this.studentProcessor = new Worker('spot-processor', ProcessSpotProcessor);
   }
 
   private routes(): void {

@@ -2,15 +2,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-import Repository from './Repository';
-import Student from './Student';
-import StudentDailyReport from './StudentDailyReport';
 
 @Entity('commits')
 class Commit {
@@ -18,31 +12,22 @@ class Commit {
   id: string;
 
   @Column('uuid')
-  repository_id: string;
-
-  @ManyToOne(() => Repository, { eager: true })
-  @JoinColumn({ name: 'repository_id' })
-  repository: Repository;
-
-  @Column('uuid')
-  student_id: string;
-
-  @ManyToOne(() => Student, { eager: true })
-  @JoinColumn({ name: 'student_id' })
-  student: Student;
-
-  @Column('uuid')
-  student_daily_report_id: string;
-
-  @ManyToOne(() => StudentDailyReport, { eager: true })
-  @JoinColumn({ name: 'student_daily_report_id' })
-  studentDailyReport: StudentDailyReport;
+  spot_id: string;
 
   @Column('varchar')
   message: string;
 
   @Column('int2')
   additions: number;
+
+  @Column('varchar')
+  commit_url: string;
+
+  @Column('varchar')
+  repository_name: string;
+
+  @Column('varchar')
+  repository_url: string;
 
   @Column('int2')
   deletions: number;

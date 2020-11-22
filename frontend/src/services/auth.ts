@@ -1,7 +1,7 @@
-import { Teacher } from '../entities';
+import { Manager } from '../entities';
 
 export const TOKEN_KEY = '@GitRadar-Token';
-export const TEACHER_KEY = '@Logged-Teacher';
+export const MANAGER_KEY = '@Logged-Manager';
 export const HAS_GITHUB_KEY = '@Github-Token';
 
 export const isAuthenticated = (): boolean =>
@@ -9,11 +9,11 @@ export const isAuthenticated = (): boolean =>
 
 export const getToken = (): string | null => localStorage.getItem(TOKEN_KEY);
 
-export const getTeacher = (): Teacher | null => {
-  const teacherJSON = localStorage.getItem(TEACHER_KEY);
+export const getManager = (): Manager | null => {
+  const managerJSON = localStorage.getItem(MANAGER_KEY);
 
-  if (teacherJSON) {
-    return JSON.parse(teacherJSON);
+  if (managerJSON) {
+    return JSON.parse(managerJSON);
   }
 
   return null;
@@ -31,11 +31,11 @@ export const verifyHasGithubToken = (): boolean => {
 
 export const login = (
   token: string,
-  teacher: Teacher,
+  manager: Manager,
   hasGithubToken: boolean,
 ): void => {
   localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(TEACHER_KEY, JSON.stringify(teacher));
+  localStorage.setItem(MANAGER_KEY, JSON.stringify(manager));
   localStorage.setItem(HAS_GITHUB_KEY, String(hasGithubToken));
 };
 

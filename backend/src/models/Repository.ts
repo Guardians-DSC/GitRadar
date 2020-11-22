@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import Student from './Student';
+import Spot from './Spot';
 
 @Entity('repositories')
 class Repository {
@@ -16,11 +16,11 @@ class Repository {
   id: string;
 
   @Column('uuid')
-  student_id: string;
+  spot_id: string;
 
-  @ManyToOne(() => Student, { eager: true })
-  @JoinColumn({ name: 'student_id' })
-  student: Student;
+  @ManyToOne(() => Spot, { eager: true })
+  @JoinColumn({ name: 'spot_id' })
+  spot: Spot;
 
   @Column('varchar')
   name: string;

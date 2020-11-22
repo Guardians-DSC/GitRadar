@@ -19,7 +19,7 @@ export default class CreateCommits1600914995731 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'student_id',
+            name: 'spot_id',
             type: 'uuid',
             isNullable: true,
           },
