@@ -311,14 +311,12 @@ const Profile: React.FC = () => {
                   const repositoryName = item.repository
                     ? item.repository.name
                     : 'Repositório indisponível';
-                  const repositoryLink = item.repository
-                    ? `https://github.com/${username}/${repositoryName}`
-                    : '';
+                  
 
                   return {
                     label: repositoryName,
                     subLabel: item.message,
-                    link: repositoryLink,
+                    link: item.commit_url,
                   };
                 }}
                 title="Commits"
