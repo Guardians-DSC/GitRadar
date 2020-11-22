@@ -93,7 +93,10 @@ class GetDailyReportService {
     const repositoriesNodes: RepositoryNode[] = repositories.nodes;
 
     const filteredRepositories = repositoriesNodes.filter(rep => {
-      return rep.defaultBranchRef.target.history.nodes.length > 0;
+      if (rep.defaultBranchRef) {
+        return rep.defaultBranchRef.target.history.nodes.length > 0;
+      }
+      return false;
     });
 
     const commits: Commit[] = this.getCommits(
