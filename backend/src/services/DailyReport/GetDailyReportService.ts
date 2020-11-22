@@ -162,7 +162,13 @@ class GetDailyReportService {
         url,
       } = repository;
 
-      const repositoryCommits = defaultBranchRef.target.history.nodes;
+      // Empty Repositories
+      let repositoryCommits: CommitNode[] = [];
+      if (defaultBranchRef) {
+        repositoryCommits = defaultBranchRef.target.history.nodes;
+      } else {
+        repositoryCommits = [];
+      }
 
       const spotCommits = repositoryCommits.filter(({ author }) => {
         const { login } = author.user;
