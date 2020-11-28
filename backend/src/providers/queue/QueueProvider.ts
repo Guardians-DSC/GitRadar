@@ -5,6 +5,10 @@ interface SpotRequest {
   github_name: string;
 }
 
+interface InitalSpotRequest {
+  spot_id: string;
+}
+
 interface addJobRequest {
   queueName: string;
   jobName: string;
@@ -24,4 +28,10 @@ interface QueueProvider {
   setUI(): void;
 }
 
-export { QueueProvider, addJobRequest, registerQueueRequest, SpotRequest };
+export {
+  QueueProvider,
+  addJobRequest,
+  registerQueueRequest,
+  SpotRequest,
+  InitalSpotRequest,
+};

@@ -22,9 +22,11 @@ class App {
 
   public queueProvider: QueueProvider;
 
-  public studentsProcessRequester: Worker;
+  public spotsProcessRequester: Worker;
 
-  public studentProcessor: Worker;
+  public spotsProcessor: Worker;
+
+  public initalSpotsProcessRequester: Worker;
 
   constructor() {
     this.express = express();
@@ -68,11 +70,11 @@ class App {
   }
 
   private workers(): void {
-    this.studentsProcessRequester = new Worker(
+    this.spotsProcessRequester = new Worker(
       'spot-process-requester',
       RequestSpotsProcessProcessor,
     );
-    this.studentProcessor = new Worker('spot-processor', ProcessSpotProcessor);
+    this.spotsProcessor = new Worker('spot-processor', ProcessSpotProcessor);
   }
 
   private routes(): void {
