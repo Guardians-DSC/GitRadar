@@ -1,12 +1,8 @@
 interface SpotRequest {
-  spot_id: string;
-  since: string;
-  until: string;
-  github_name: string;
-}
-
-interface InitalSpotRequest {
-  spot_id: string;
+  spot_id?: string;
+  since?: string;
+  until?: string;
+  github_name?: string;
 }
 
 interface addJobRequest {
@@ -28,10 +24,4 @@ interface QueueProvider {
   setUI(): void;
 }
 
-export {
-  QueueProvider,
-  addJobRequest,
-  registerQueueRequest,
-  SpotRequest,
-  InitalSpotRequest,
-};
+export { QueueProvider, addJobRequest, registerQueueRequest, SpotRequest };

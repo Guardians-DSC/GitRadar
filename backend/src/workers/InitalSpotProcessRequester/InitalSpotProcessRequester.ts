@@ -2,11 +2,11 @@ import { Job } from 'bullmq';
 import { getRepository } from 'typeorm';
 import { queueProvider } from '../../app';
 import Spot from '../../models/Spot';
-import { InitalSpotRequest } from '../../providers/queue/QueueProvider';
+import { SpotRequest } from '../../providers/queue/QueueProvider';
 import { AppError } from '../../errors/AppError';
 
 const InitalSpotProcessRequester = async (
-  job: Job<InitalSpotRequest>,
+  job: Job<SpotRequest>,
 ): Promise<void> => {
   const { spot_id } = job.data;
   const spotsRepository = getRepository(Spot);

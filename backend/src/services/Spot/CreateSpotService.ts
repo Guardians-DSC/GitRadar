@@ -4,6 +4,7 @@ import Spot from '../../models/Spot';
 import { AppError } from '../../errors/AppError';
 import api from '../githubApi/GraphQLApi';
 import Repository from '../../models/Repository';
+import { queueProvider } from '../../app';
 
 interface Request {
   manager_id: string;
@@ -132,6 +133,17 @@ class CreateSpotService {
         return parsedRepository;
       },
     );
+
+    queueProvider.add({
+      job: {
+        spot_id: spot.id,
+      },
+      jobName: `${spot.github_login} process initial request`,
+      queueName: 'initial-spot-process-requester',
+      opts: {
+        removeOnComplete: false,
+      },
+    });
 
     return { github_login, avatar_url, repositories: repositoriesReponse };
   }

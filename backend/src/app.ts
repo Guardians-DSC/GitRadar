@@ -12,6 +12,7 @@ import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import BullQueueProvider from './providers/queue/implementations/BullQueueProvider';
 import RequestSpotsProcessProcessor from './workers/RequestSpotsProcess/RequestSpotsProcessProcessor';
 import ProcessSpotProcessor from './workers/ProcessSpot/ProcessSpotProcessor';
+import InitalSpotProcessRequester from './workers/InitalSpotProcessRequester/InitalSpotProcessRequester';
 import { QueueProvider } from './providers/queue/QueueProvider';
 import './database';
 
@@ -66,6 +67,9 @@ class App {
   private queues(): void {
     this.queueProvider.register({ queueName: 'spot-process-requester' });
     this.queueProvider.register({ queueName: 'spot-processor' });
+    this.queueProvider.register({
+      queueName: 'initial-spot-process-requester',
+    });
     this.queueProvider.setUI();
   }
 
@@ -75,6 +79,10 @@ class App {
       RequestSpotsProcessProcessor,
     );
     this.spotsProcessor = new Worker('spot-processor', ProcessSpotProcessor);
+    this.initalSpotsProcessRequester = new Worker(
+      'initial-spot-process-requester',
+      InitalSpotProcessRequester,
+    );
   }
 
   private routes(): void {
