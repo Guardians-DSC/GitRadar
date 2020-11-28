@@ -16,7 +16,7 @@ interface Data {
 }
 
 interface DataBaseRequest {
-  created_at: Date;
+  taken_at: Date;
   additions: number;
   deletions: number;
 }
@@ -38,21 +38,21 @@ class GetLinesVolumeService {
 
     const dailyReports = await dailyReportRepository.find({
       where: {
-        created_at: Between(since, until),
+        taken_at: Between(since, until),
         spot_id: spot.id,
       },
-      select: ['created_at', 'additions', 'deletions'],
+      select: ['taken_at', 'additions', 'deletions'],
       order: {
-        created_at: 'ASC',
+        taken_at: 'ASC',
       },
     });
 
     const parsedData = dailyReports.map(
-      ({ created_at, additions, deletions }: DataBaseRequest) => {
+      ({ taken_at, additions, deletions }: DataBaseRequest) => {
         return {
           gains: additions,
           loss: deletions,
-          date: created_at,
+          date: taken_at,
         };
       },
     );

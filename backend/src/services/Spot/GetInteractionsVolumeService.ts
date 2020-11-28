@@ -15,7 +15,7 @@ interface Data {
 }
 
 interface DataBaseRequest {
-  created_at: Date;
+  taken_at: Date;
   new_interactions: number;
 }
 
@@ -36,20 +36,20 @@ class GetInteractionsVolumeService {
 
     const dailyReports = await dailyReportRepository.find({
       where: {
-        created_at: Between(since, until),
+        taken_at: Between(since, until),
         spot_id: spot.id,
       },
-      select: ['created_at', 'new_interactions'],
+      select: ['taken_at', 'new_interactions'],
       order: {
-        created_at: 'ASC',
+        taken_at: 'ASC',
       },
     });
 
     const parsedData = dailyReports.map(
-      ({ created_at, new_interactions }: DataBaseRequest) => {
+      ({ taken_at, new_interactions }: DataBaseRequest) => {
         return {
           value: new_interactions,
-          date: created_at,
+          date: taken_at,
         };
       },
     );

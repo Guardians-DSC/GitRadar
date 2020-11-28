@@ -1,8 +1,8 @@
 interface SpotRequest {
-  spot_id: string;
-  since: string;
-  until: string;
-  github_name: string;
+  spot_id?: string;
+  since?: string;
+  until?: string;
+  github_name?: string;
 }
 
 interface addJobRequest {
