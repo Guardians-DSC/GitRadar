@@ -174,9 +174,13 @@ class GetDailyReportService {
       }
 
       const spotCommits = repositoryCommits.filter(({ author }) => {
-        const { login } = author.user;
+        if (author.user) {
+          const { login } = author.user;
 
-        return login === github_login;
+          return login === github_login;
+        }
+
+        return false;
       });
 
       for (const commit of spotCommits) {

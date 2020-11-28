@@ -77,11 +77,17 @@ class App {
     this.spotsProcessRequester = new Worker(
       'spot-process-requester',
       RequestSpotsProcessProcessor,
+      {
+        concurrency: 10,
+      },
     );
-    this.spotsProcessor = new Worker('spot-processor', ProcessSpotProcessor);
+    this.spotsProcessor = new Worker('spot-processor', ProcessSpotProcessor, {
+      concurrency: 10,
+    });
     this.initalSpotsProcessRequester = new Worker(
       'initial-spot-process-requester',
       InitalSpotProcessRequester,
+      { concurrency: 10 },
     );
   }
 
