@@ -40,6 +40,9 @@ class Commit {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column('timestamp')
+  taken_at: Date;
 }
 
 export default Commit;

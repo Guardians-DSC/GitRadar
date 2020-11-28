@@ -12,6 +12,7 @@ import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 import BullQueueProvider from './providers/queue/implementations/BullQueueProvider';
 import RequestSpotsProcessProcessor from './workers/RequestSpotsProcess/RequestSpotsProcessProcessor';
 import ProcessSpotProcessor from './workers/ProcessSpot/ProcessSpotProcessor';
+import InitalSpotProcessRequester from './workers/InitalSpotProcessRequester/InitalSpotProcessRequester';
 import { QueueProvider } from './providers/queue/QueueProvider';
 import './database';
 
@@ -22,9 +23,11 @@ class App {
 
   public queueProvider: QueueProvider;
 
-  public studentsProcessRequester: Worker;
+  public spotsProcessRequester: Worker;
 
-  public studentProcessor: Worker;
+  public spotsProcessor: Worker;
+
+  public initalSpotsProcessRequester: Worker;
 
   constructor() {
     this.express = express();
@@ -64,15 +67,22 @@ class App {
   private queues(): void {
     this.queueProvider.register({ queueName: 'spot-process-requester' });
     this.queueProvider.register({ queueName: 'spot-processor' });
+    this.queueProvider.register({
+      queueName: 'initial-spot-process-requester',
+    });
     this.queueProvider.setUI();
   }
 
   private workers(): void {
-    this.studentsProcessRequester = new Worker(
+    this.spotsProcessRequester = new Worker(
       'spot-process-requester',
       RequestSpotsProcessProcessor,
     );
-    this.studentProcessor = new Worker('spot-processor', ProcessSpotProcessor);
+    this.spotsProcessor = new Worker('spot-processor', ProcessSpotProcessor);
+    this.initalSpotsProcessRequester = new Worker(
+      'initial-spot-process-requester',
+      InitalSpotProcessRequester,
+    );
   }
 
   private routes(): void {
