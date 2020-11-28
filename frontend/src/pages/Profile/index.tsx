@@ -308,7 +308,6 @@ const Profile: React.FC = () => {
                 isLoading={loadingCommits}
                 items={commits}
                 mapItem={item => {
-                  
                   return {
                     label: item.repository_name,
                     subLabel: item.message,
