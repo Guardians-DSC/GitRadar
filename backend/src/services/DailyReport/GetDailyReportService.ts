@@ -216,7 +216,7 @@ class GetDailyReportService {
     const query = `{
         user(login:"${github_login}") {
           avatarUrl
-          repositories(first: 100, privacy: PUBLIC, affiliations: COLLABORATOR) {
+          repositories(first: 100, privacy: PUBLIC, affiliations: COLLABORATOR, orderBy: { field: UPDATED_AT, direction: DESC }) {
             nodes {
               nameWithOwner
               id
