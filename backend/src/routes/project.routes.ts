@@ -1,10 +1,20 @@
 import { Router } from 'express';
 import authMiddleware from '../middlewares/authMiddleware';
+import CreateProjectService from '../services/Project/CreateProjectService';
 import GetBelowAverageOnProjectService from '../services/Project/GetBelowAverageOnProjectService';
 import GetProjectReportService from '../services/Project/GetProjectReport';
 import GetSpotsOnProjectService from '../services/Spot/GetSpotsOnProjectService';
 
 const projectRouter = Router();
+
+projectRouter.post('/', authMiddleware, async (request, response) => {
+  const { name } = request.body;
+
+  const createProject = new CreateProjectService();
+  const project = await createProject.execute({ name });
+
+  return response.json(project);
+});
 
 projectRouter.get('/:project', authMiddleware, async (request, response) => {
   const getSpotsService = new GetSpotsOnProjectService();
