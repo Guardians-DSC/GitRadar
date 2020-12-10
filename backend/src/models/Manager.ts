@@ -4,7 +4,10 @@ import {
   UpdateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+import Project from './Project';
 
 @Entity('managers')
 class Manager {
@@ -31,6 +34,10 @@ class Manager {
 
   @Column('varchar')
   github_id: string;
+
+  @ManyToMany(() => Project)
+  @JoinTable()
+  projects: Project[];
 
   @CreateDateColumn()
   created_at: Date;
