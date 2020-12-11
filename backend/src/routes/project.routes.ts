@@ -17,9 +17,10 @@ projectRouter.post('/', authMiddleware, async (request, response) => {
 });
 
 projectRouter.get('/:project', authMiddleware, async (request, response) => {
-  const getSpotsService = new GetSpotsOnProjectService();
+  const { project } = request.params;
 
-  const spots = await getSpotsService.execute();
+  const getSpotsService = new GetSpotsOnProjectService();
+  const spots = await getSpotsService.execute({ project_id: project });
 
   return response.json(spots);
 });

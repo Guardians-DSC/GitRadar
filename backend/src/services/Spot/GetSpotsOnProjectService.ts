@@ -1,15 +1,20 @@
 import { getRepository } from 'typeorm';
+import AppError from '../../errors/AppError';
+import Project from '../../models/Project';
 import Spot from '../../models/Spot';
 
+interface Request {
+  project_id: string;
+}
+
 class GetSpotsOnProjectService {
-  async execute(): Promise<Spot[]> {
-    const spotsRepository = getRepository(Spot);
+  async execute({ project_id }: Request): Promise<Spot[]> {
+    const projectsRepository = getRepository(Project);
 
-    const spots = await spotsRepository.find({
-      loadEagerRelations: false,
-    });
+    if (!project_id) throw new AppError('Project id is required.', 400);
+    const project = await projectsRepository.findOne(project_id);
 
-    return spots;
+    return project.spots;
   }
 }
 
