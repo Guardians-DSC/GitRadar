@@ -12,7 +12,7 @@ class GetSpotsOnProjectService {
     const projectsRepository = getRepository(Project);
 
     if (!project_id) throw new AppError('Project id is required.', 400);
-    const project = await projectsRepository.findOne(project_id);
+    const project = await projectsRepository.findOne({ id: project_id });
 
     return project.spots;
   }

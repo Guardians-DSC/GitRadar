@@ -10,7 +10,7 @@ const spotRouter = Router();
 spotRouter.use('/volume', spotVolumeRouter);
 
 spotRouter.post('/', authMiddleware, async (request, response) => {
-  const { github_login } = request.body;
+  const { github_login, project_id } = request.body;
   const { id } = request.manager;
 
   const createSpotService = new CreateSpotService();
@@ -18,6 +18,7 @@ spotRouter.post('/', authMiddleware, async (request, response) => {
   const spot = await createSpotService.execute({
     manager_id: id,
     spot_github_login: github_login,
+    project_id,
   });
 
   return response.json(spot);

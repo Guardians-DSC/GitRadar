@@ -5,10 +5,12 @@ import { AppError } from '../../errors/AppError';
 import api from '../githubApi/GraphQLApi';
 import Repository from '../../models/Repository';
 import { queueProvider } from '../../app';
+import Project from '../../models/Project';
 
 interface Request {
   manager_id: string;
   spot_github_login: string;
+  project_id: string;
 }
 
 interface RepositoryInfo {
@@ -37,26 +39,59 @@ interface Response {
 }
 
 class CreateSpotService {
-  async execute({ manager_id, spot_github_login }: Request): Promise<Response> {
+  async execute({
+    manager_id,
+    spot_github_login,
+    project_id,
+  }: Request): Promise<Response> {
     const managersRepository = getRepository(Manager);
     const spotsRepository = getRepository(Spot);
-    const repositoriesRepository = getRepository(Repository);
+    const projectsRepository = getRepository(Project);
 
     const existsManager = await managersRepository.findOne({
       id: manager_id,
     });
 
     if (!existsManager) {
-      throw new AppError('Manager does not exists');
+      throw new AppError('Manager does not exist');
     }
 
-    const existsSpot = await spotsRepository.findOne({
+    const project = await projectsRepository.findOne({ id: project_id });
+    if (!project) {
+      throw new AppError('Project does not exist');
+    }
+
+    let spot = await spotsRepository.findOne({
       github_login: spot_github_login,
     });
 
-    if (existsSpot) {
+    if (project.spots.includes(spot)) {
       throw new AppError('Spot already registered');
     }
+
+    if (!spot) {
+      spot = await this.createSpot(spot_github_login, manager_id);
+    }
+
+    project.spots.push(spot);
+
+    await projectsRepository.save(project);
+
+    const repositories = await this.getRepositories(spot.id);
+
+    return {
+      avatar_url: spot.avatar_url,
+      github_login: spot.github_login,
+      repositories,
+    };
+  }
+
+  private async createSpot(
+    spot_github_login: string,
+    manager_id: string,
+  ): Promise<Spot> {
+    const spotsRepository = getRepository(Spot);
+    const repositoriesRepository = getRepository(Repository);
 
     const spotGithubData = await api.post('', {
       query: this.getQuery(spot_github_login),
@@ -106,15 +141,28 @@ class CreateSpotService {
       await repositoriesRepository.save(repository);
     }
 
-    const { github_login, avatar_url } = await spotsRepository.findOne({
-      id: spot_id,
+    queueProvider.add({
+      job: {
+        spot_id: spot.id,
+      },
+      jobName: `${spot.github_login} process initial request`,
+      queueName: 'initial-spot-process-requester',
+      opts: {
+        removeOnComplete: false,
+      },
     });
+
+    return savedSpot;
+  }
+
+  private async getRepositories(spot_id: string): Promise<RepositoryInfo[]> {
+    const repositoriesRepository = getRepository(Repository);
 
     const spotRepositories = await repositoriesRepository.find({
       spot_id,
     });
 
-    const repositoriesReponse: RepositoryInfo[] = spotRepositories.map(
+    const repositoriesResponse: RepositoryInfo[] = spotRepositories.map(
       ({
         id: repository_id,
         name: repository_name,
@@ -134,18 +182,7 @@ class CreateSpotService {
       },
     );
 
-    queueProvider.add({
-      job: {
-        spot_id: spot.id,
-      },
-      jobName: `${spot.github_login} process initial request`,
-      queueName: 'initial-spot-process-requester',
-      opts: {
-        removeOnComplete: false,
-      },
-    });
-
-    return { github_login, avatar_url, repositories: repositoriesReponse };
+    return repositoriesResponse;
   }
 
   private getQuery(github_id: string): string {
