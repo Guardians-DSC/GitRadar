@@ -56,16 +56,22 @@ class CreateSpotService {
       throw new AppError('Manager does not exist');
     }
 
-    const project = await projectsRepository.findOne({ id: project_id });
+    const project = await projectsRepository.findOne(
+      { id: project_id },
+      { relations: ['spots'] },
+    );
     if (!project) {
       throw new AppError('Project does not exist');
     }
 
-    let spot = await spotsRepository.findOne({
-      github_login: spot_github_login,
-    });
+    let spot = await spotsRepository.findOne(
+      {
+        github_login: spot_github_login,
+      },
+      { loadEagerRelations: false },
+    );
 
-    if (project.spots.includes(spot)) {
+    if (project.spots.find(current => current.id === spot.id)) {
       throw new AppError('Spot already registered');
     }
 
@@ -74,11 +80,9 @@ class CreateSpotService {
     }
 
     project.spots.push(spot);
-
     await projectsRepository.save(project);
 
     const repositories = await this.getRepositories(spot.id);
-
     return {
       avatar_url: spot.avatar_url,
       github_login: spot.github_login,

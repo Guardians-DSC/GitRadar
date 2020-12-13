@@ -5,20 +5,20 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export default class createProjectSpotsSpot1607633780038
+export default class createProjectsSpotsSpots1607633780038
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'project_spots_spot',
+        name: 'projects_spots_spots',
         columns: [
           {
-            name: 'project_id',
+            name: 'projectsId',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'spot_id',
+            name: 'spotsId',
             type: 'uuid',
             isNullable: false,
           },
@@ -26,10 +26,10 @@ export default class createProjectSpotsSpot1607633780038
       }),
     );
     await queryRunner.createForeignKey(
-      'project_spots_spot',
+      'projects_spots_spots',
       new TableForeignKey({
-        name: 'projectId',
-        columnNames: ['project_id'],
+        name: 'projectsId',
+        columnNames: ['projectsId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'projects',
         onDelete: 'CASCADE',
@@ -37,10 +37,10 @@ export default class createProjectSpotsSpot1607633780038
       }),
     );
     await queryRunner.createForeignKey(
-      'project_spots_spot',
+      'projects_spots_spots',
       new TableForeignKey({
-        name: 'spotId',
-        columnNames: ['spot_id'],
+        name: 'spotsId',
+        columnNames: ['spotsId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'spots',
         onDelete: 'CASCADE',
@@ -50,8 +50,8 @@ export default class createProjectSpotsSpot1607633780038
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('project_spots_spot', 'spotId');
-    await queryRunner.dropForeignKey('project_spots_spot', 'projectId');
-    await queryRunner.dropTable('project_spots_spot');
+    await queryRunner.dropForeignKey('projects_spots_spots', 'spotsId');
+    await queryRunner.dropForeignKey('projects_spots_spots', 'projectsId');
+    await queryRunner.dropTable('projects_spots_spots');
   }
 }

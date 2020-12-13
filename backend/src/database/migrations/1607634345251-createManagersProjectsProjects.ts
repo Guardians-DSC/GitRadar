@@ -5,20 +5,20 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export default class createManagerProjectsProject1607634345251
+export default class createManagersProjectsProjects1607634345251
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'manager_projects_project',
+        name: 'managers_projects_projects',
         columns: [
           {
-            name: 'manager_id',
+            name: 'managersId',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'project_id',
+            name: 'projectsId',
             type: 'uuid',
             isNullable: false,
           },
@@ -26,10 +26,10 @@ export default class createManagerProjectsProject1607634345251
       }),
     );
     await queryRunner.createForeignKey(
-      'manager_projects_project',
+      'managers_projects_projects',
       new TableForeignKey({
-        name: 'managerId',
-        columnNames: ['manager_id'],
+        name: 'managersId',
+        columnNames: ['managersId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'managers',
         onDelete: 'CASCADE',
@@ -37,10 +37,10 @@ export default class createManagerProjectsProject1607634345251
       }),
     );
     await queryRunner.createForeignKey(
-      'manager_projects_project',
+      'managers_projects_projects',
       new TableForeignKey({
-        name: 'projectId',
-        columnNames: ['project_id'],
+        name: 'projectsId',
+        columnNames: ['projectsId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'projects',
         onDelete: 'CASCADE',
@@ -50,8 +50,14 @@ export default class createManagerProjectsProject1607634345251
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('manager_projects_project', 'projectId');
-    await queryRunner.dropForeignKey('manager_projects_project', 'managerId');
-    await queryRunner.dropTable('manager_projects_project');
+    await queryRunner.dropForeignKey(
+      'managers_projects_projects',
+      'projectsId',
+    );
+    await queryRunner.dropForeignKey(
+      'managers_projects_projects',
+      'managersId',
+    );
+    await queryRunner.dropTable('managers_projects_projects');
   }
 }

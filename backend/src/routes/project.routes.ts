@@ -3,7 +3,8 @@ import authMiddleware from '../middlewares/authMiddleware';
 import CreateProjectService from '../services/Project/CreateProjectService';
 import GetBelowAverageOnProjectService from '../services/Project/GetBelowAverageOnProjectService';
 import GetProjectReportService from '../services/Project/GetProjectReport';
-import GetSpotsOnProjectService from '../services/Spot/GetSpotsOnProjectService';
+import GetProjectsService from '../services/Project/GetProjectsService';
+import GetProjectService from '../services/Project/GetProjectService';
 
 const projectRouter = Router();
 
@@ -16,17 +17,24 @@ projectRouter.post('/', authMiddleware, async (request, response) => {
   return response.json(project);
 });
 
-projectRouter.get('/:project', authMiddleware, async (request, response) => {
-  const { project } = request.params;
+projectRouter.get('/', authMiddleware, async (request, response) => {
+  const getProjects = new GetProjectsService();
 
-  const getSpotsService = new GetSpotsOnProjectService();
-  const spots = await getSpotsService.execute({ project_id: project });
+  const projects = await getProjects.execute();
+  return response.json(projects);
+});
 
-  return response.json(spots);
+projectRouter.get('/:project_id', authMiddleware, async (request, response) => {
+  const { project_id } = request.params;
+
+  const getProjectService = new GetProjectService();
+  const project = await getProjectService.execute({ project_id });
+
+  return response.json(project);
 });
 
 projectRouter.get(
-  '/:project/below_average',
+  '/:project_id/below_average',
   authMiddleware,
   async (request, response) => {
     const getBelowAverageOnProjectService = new GetBelowAverageOnProjectService();
@@ -45,7 +53,7 @@ projectRouter.get(
 );
 
 projectRouter.get(
-  '/:project/report',
+  '/:project_id/report',
   authMiddleware,
   async (request, response) => {
     const getProjectReportService = new GetProjectReportService();
