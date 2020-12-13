@@ -1,4 +1,6 @@
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, getRepository } from 'typeorm';
+import AppError from '../../errors/AppError';
+import Project from '../../models/Project';
 import SpotDailyReportsRepository from '../../repositories/SpotDailyReportsRepository';
 
 interface Response {
@@ -11,6 +13,7 @@ interface Response {
 interface Request {
   since: string;
   until: string;
+  project_id: string;
 }
 
 interface Report {
@@ -26,10 +29,26 @@ interface Report {
 }
 
 class GetProjectReportService {
-  async execute({ since, until }: Request): Promise<Response> {
+  async execute({ since, until, project_id }: Request): Promise<Response> {
+    const projectsRepository = getRepository(Project);
     const reportsRepository = getCustomRepository(SpotDailyReportsRepository);
 
-    const reports = await reportsRepository.findByPeriod(since, until);
+    if (!project_id) {
+      throw new AppError('Project id is required.');
+    }
+
+    const project = await projectsRepository.findOne(
+      { id: project_id },
+      { relations: ['spots'] },
+    );
+    if (!project) {
+      throw new AppError('Project does not exist.');
+    }
+
+    let reports = await reportsRepository.findByPeriod(since, until);
+    reports = reports.filter(({ spot }) =>
+      project.spots.find(current => current.id === spot.id),
+    );
 
     const projectReports = this.parseProjectReport(reports);
 

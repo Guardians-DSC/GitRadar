@@ -60,6 +60,7 @@ projectRouter.get(
   async (request, response) => {
     const getProjectReportService = new GetProjectReportService();
 
+    const { project_id } = request.params;
     let { until } = request.query;
     until = until || new Date().toISOString();
     const { since } = request.query;
@@ -67,6 +68,7 @@ projectRouter.get(
     const spots = await getProjectReportService.execute({
       since: since as string,
       until: until as string,
+      project_id,
     });
 
     return response.json(spots);
