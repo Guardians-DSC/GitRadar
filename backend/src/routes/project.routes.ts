@@ -10,9 +10,10 @@ const projectRouter = Router();
 
 projectRouter.post('/', authMiddleware, async (request, response) => {
   const { name } = request.body;
+  const { id: manager_id } = request.manager;
 
   const createProject = new CreateProjectService();
-  const project = await createProject.execute({ name });
+  const project = await createProject.execute({ name, manager_id });
 
   return response.json(project);
 });

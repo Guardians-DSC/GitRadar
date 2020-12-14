@@ -35,6 +35,9 @@ class Manager {
   @Column('varchar')
   github_id: string;
 
+  @Column('int2')
+  projects_limit: number;
+
   @ManyToMany(() => Project)
   @JoinTable()
   projects: Project[];
