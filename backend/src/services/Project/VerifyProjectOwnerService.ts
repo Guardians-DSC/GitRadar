@@ -31,6 +31,7 @@ class VerifyProjectOwnerService {
     if (!projectFound) {
       throw new AppError(
         'the project does not exist or does not belong to the manager.',
+        403,
       );
     }
   }
