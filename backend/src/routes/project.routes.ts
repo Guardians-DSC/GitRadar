@@ -5,6 +5,7 @@ import GetBelowAverageOnProjectService from '../services/Project/GetBelowAverage
 import GetProjectReportService from '../services/Project/GetProjectReport';
 import GetProjectsService from '../services/Project/GetProjectsService';
 import GetProjectService from '../services/Project/GetProjectService';
+import VerifyProjectOwnerService from '../services/Project/VerifyProjectOwnerService';
 
 const projectRouter = Router();
 
@@ -29,6 +30,10 @@ projectRouter.get('/', authMiddleware, async (request, response) => {
 
 projectRouter.get('/:project_id', authMiddleware, async (request, response) => {
   const { project_id } = request.params;
+  const { id: manager_id } = request.manager;
+
+  const verifyProjectOwner = new VerifyProjectOwnerService();
+  await verifyProjectOwner.execute({ manager_id, project_id });
 
   const getProjectService = new GetProjectService();
   const project = await getProjectService.execute({ project_id });
@@ -40,13 +45,18 @@ projectRouter.get(
   '/:project_id/below_average',
   authMiddleware,
   async (request, response) => {
-    const getBelowAverageOnProjectService = new GetBelowAverageOnProjectService();
-
     const { project_id } = request.params;
+
     let { until } = request.query;
     until = until || new Date().toISOString();
     const { since } = request.query;
 
+    const { id: manager_id } = request.manager;
+
+    const verifyProjectOwner = new VerifyProjectOwnerService();
+    await verifyProjectOwner.execute({ manager_id, project_id });
+
+    const getBelowAverageOnProjectService = new GetBelowAverageOnProjectService();
     const spots = await getBelowAverageOnProjectService.execute({
       since: since as string,
       until: until as string,
@@ -64,9 +74,15 @@ projectRouter.get(
     const getProjectReportService = new GetProjectReportService();
 
     const { project_id } = request.params;
+
     let { until } = request.query;
     until = until || new Date().toISOString();
     const { since } = request.query;
+
+    const { id: manager_id } = request.manager;
+
+    const verifyProjectOwner = new VerifyProjectOwnerService();
+    await verifyProjectOwner.execute({ manager_id, project_id });
 
     const spots = await getProjectReportService.execute({
       since: since as string,
