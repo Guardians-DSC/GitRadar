@@ -1,13 +1,20 @@
 import { getRepository } from 'typeorm';
+import Manager from '../../models/Manager';
 import Project from '../../models/Project';
 
+interface Request {
+  manager_id: string;
+}
 class GetProjectsService {
-  async execute(): Promise<Project[]> {
-    const projectsRepository = getRepository(Project);
+  async execute({ manager_id }: Request): Promise<Project[]> {
+    const managersRepository = getRepository(Manager);
 
-    const projects = await projectsRepository.find();
+    const manager = await managersRepository.findOne(
+      { id: manager_id },
+      { relations: ['projects'] },
+    );
 
-    return projects;
+    return manager.projects;
   }
 }
 

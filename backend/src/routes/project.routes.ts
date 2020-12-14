@@ -19,9 +19,11 @@ projectRouter.post('/', authMiddleware, async (request, response) => {
 });
 
 projectRouter.get('/', authMiddleware, async (request, response) => {
-  const getProjects = new GetProjectsService();
+  const { id: manager_id } = request.manager;
 
-  const projects = await getProjects.execute();
+  const getProjects = new GetProjectsService();
+  const projects = await getProjects.execute({ manager_id });
+
   return response.json(projects);
 });
 
