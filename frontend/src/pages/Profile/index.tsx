@@ -75,6 +75,7 @@ const Profile: React.FC = () => {
   const [deletions, setDeletions] = useState(0);
   const [newIssues, setNewIssues] = useState(0);
   const [newPrs, setNewPrs] = useState(0);
+  const [newPrsReview, setNewPrsReview] = useState(0);
   const [newRepos, setNewRepos] = useState(0);
   const [commits, setCommits] = useState<Commit[]>([]);
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -110,6 +111,7 @@ const Profile: React.FC = () => {
       setNewIssues(metrics.new_issues);
       setNewPrs(metrics.new_prs);
       setNewRepos(metrics.new_repositories);
+      setNewPrsReview(metrics.new_prs_review);
 
       setCommits(responseCommits);
     } catch (error) {
@@ -244,6 +246,9 @@ const Profile: React.FC = () => {
             />
             <ShowInformation number={newIssues} label="Novas Issues" />
             <ShowInformation number={newPrs} label="Novas PR's" />
+            <ShowInformation 
+              number={newPrsReview} 
+              label="Novas revisões de PR" />
             <ShowInformation number={newRepos} label="Novos Repositórios" />
           </ReportInfo>
         </ProfileContainer>
